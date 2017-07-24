@@ -2,34 +2,35 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+        <item android:title="View">
+            <menu>
+                <item
+                    android:id="@+id/nav_view_timetable"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="@string/nav_timetable" />
+                <item
+                    android:id="@+id/nav_view_upcoming_events"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="@string/nav_upcoming_events" />
+            </menu>
+        </item>
+
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Maintain">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_maintain_timetable"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/nav_timetable" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_maintain_lecture_times"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="@string/nav_lecture_times" />
+            <item
+                android:id="@+id/nav_maintain_schedule_event"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/nav_schedule_event" />
         </menu>
     </item>
 

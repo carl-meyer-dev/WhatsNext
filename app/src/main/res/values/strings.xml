@@ -19,4 +19,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings related to Navigation Drawer -->
+    <string name="nav_timetable">Time Table</string>
+    <string name="nav_upcoming_events">Upcoming Events</string>
+    <string name="nav_lecture_times">Lecture Times</string>
+    <string name="nav_schedule_event">Schedule Event</string>
 </resources>
