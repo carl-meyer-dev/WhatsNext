@@ -21,8 +21,14 @@
     </string>
 
     <!-- Strings related to Navigation Drawer -->
+    <!-- Student Nav Bar -->
     <string name="nav_timetable">Time Table</string>
     <string name="nav_upcoming_events">Upcoming Events</string>
     <string name="nav_lecture_times">Lecture Times</string>
     <string name="nav_schedule_event">Schedule Event</string>
+    <!-- Lecturer Nav Bar -->
+    <string name="nav_assignments">Assignments</string>
+    <string name="nav_tests">Tests</string>
+    <string name="nav_notification">Send Notification</string>
+
 </resources>

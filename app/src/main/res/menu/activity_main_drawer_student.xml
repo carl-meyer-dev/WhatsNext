@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:title="View">
+            <menu>
+                <item
+                    android:id="@+id/nav_view_timetable"
+                    android:icon="@drawable/ic_event_black_48dp"
+                    android:title="@string/nav_timetable" />
+                <item
+                    android:id="@+id/nav_view_upcoming_events"
+                    android:icon="@drawable/ic_event_note_black_48dp"
+                    android:title="@string/nav_upcoming_events" />
+            </menu>
+        </item>
+
+    </group>
+
+    <item android:title="Maintain">
+        <menu>
+            <item
+                android:id="@+id/nav_maintain_timetable"
+                android:icon="@drawable/ic_cached_black_48dp"
+                android:title="@string/nav_timetable" />
+            <item
+                android:id="@+id/nav_maintain_lecture_times"
+                android:icon="@drawable/ic_schedule_black_48dp"
+                android:title="@string/nav_lecture_times" />
+            <item
+                android:id="@+id/nav_maintain_schedule_event"
+                android:icon="@drawable/ic_control_point_black_48dp"
+                android:title="@string/nav_schedule_event" />
+        </menu>
+    </item>
+
+</menu>

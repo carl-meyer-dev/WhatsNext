@@ -6,11 +6,11 @@
             <menu>
                 <item
                     android:id="@+id/nav_view_timetable"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/ic_event_black_48dp"
                     android:title="@string/nav_timetable" />
                 <item
                     android:id="@+id/nav_view_upcoming_events"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@drawable/ic_event_note_black_48dp"
                     android:title="@string/nav_upcoming_events" />
             </menu>
         </item>
@@ -20,17 +20,17 @@
     <item android:title="Maintain">
         <menu>
             <item
-                android:id="@+id/nav_maintain_timetable"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/nav_timetable" />
+                android:id="@+id/nav_maintain_assignments"
+                android:icon="@drawable/ic_content_paste_black_48dp"
+                android:title="@string/nav_assignments" />
             <item
-                android:id="@+id/nav_maintain_lecture_times"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/nav_lecture_times" />
+                android:id="@+id/nav_maintain_tests"
+                android:icon="@drawable/ic_create_black_48dp"
+                android:title="@string/nav_tests" />
             <item
-                android:id="@+id/nav_maintain_schedule_event"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/nav_schedule_event" />
+                android:id="@+id/nav_maintain_send_notification"
+                android:icon="@drawable/ic_error_outline_black_48dp"
+                android:title="@string/nav_notification" />
         </menu>
     </item>
 
