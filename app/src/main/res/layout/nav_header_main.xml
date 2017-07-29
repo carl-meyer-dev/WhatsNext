@@ -13,10 +13,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvNavHeaderName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView2"
+        android:layout_above="@+id/tvNavHeaderUsername"
         android:layout_alignParentStart="true"
         android:paddingTop="0dp"
         android:text="Carl Meyer"
@@ -25,7 +25,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvNavHeaderDegree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -34,14 +34,14 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvNavHeaderUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView"
+        android:layout_above="@+id/tvNavHeaderDegree"
         android:layout_alignParentStart="true"
         android:paddingBottom="0dp"
         android:paddingTop="0dp"
-        android:text="s215006941@nmu.ac.za"
+        android:text="s215006941"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="12sp" />
 

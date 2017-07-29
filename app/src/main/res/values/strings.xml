@@ -4,7 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Log Out</string>
+    <string name="action_settings_logout">Log Out</string>
+    <string name="action_settings_switch_user">Switch User</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -29,6 +30,6 @@
     <!-- Lecturer Nav Bar -->
     <string name="nav_assignments">Assignments</string>
     <string name="nav_tests">Tests</string>
-    <string name="nav_notification">Send Notification</string>
+    <string name="nav_email">Send Email</string>
 
 </resources>

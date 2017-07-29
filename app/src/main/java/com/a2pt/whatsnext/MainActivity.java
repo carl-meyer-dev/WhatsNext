@@ -1,9 +1,9 @@
 package com.a2pt.whatsnext;
 
+
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,12 +12,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static FragmentManager fragmentManager;
+    //temporary variable for menu purposes
+    /*
+    The following variable is a temporary variable to help with Testing and Demo Purposes.
+    The int usertype stores an integer according to what user is logged in.
+    The Default user is 0 - Student and once Switch User is pressed in the toolbar Menu it switches between 1 and 0.
+     */
+    int userType = 0;
+
+    //Make View Variables
+    //==============================================================================================
+    NavigationView navigationView;
+
+    //TextViews
+    TextView tvNavHeaderName;
+    TextView tvNavHeaderUsername;
+    TextView tvNavHeaderDegree;
+
+    //==============================================================================================
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Generated OnCreate Code From Nav Drawer
+        //==========================================================================================
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -29,10 +54,29 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //==========================================================================================
+        //OnCreate Custom Code:
+        //Get Reference to Views:
+
+
+        //Handle Fragments and FragmentManager
+        fragmentManager = getSupportFragmentManager(); //get the fragment manager, using supportFragment Manager to support earlier versions of Android
+        //Get the Frame Layout that will hold the Fragments
+       Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
+
+        //if no fragment in the Start of the app then set current fragment to HomeFragment
+        if(fragment == null){
+            fragment = new HomeFragment();
+            fragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit();
+        }
+
     }
 
+    /**
+     * Generated code for when Back button is Pressed
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -58,7 +102,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings_logout) {
             return true;
         }
 
@@ -71,20 +115,74 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
         if (id == R.id.nav_view_timetable ){
-            // Handle the camera action
+            TimetableFragment timetableFragment = new TimetableFragment(); //get reference to Timetable Fragment
+            //Begin transaction with fragment manager, replace the fragment_container with TimeTable Fragment
+            //We place the new Fragment on the backstack so that when the Back button is pressed it will go back to the Home Fragment
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, timetableFragment).addToBackStack(null).commit();
         } else if (id == R.id.nav_view_upcoming_events) {
+            //similarly replace the fragment_container with Upcoming Events Fragment
+            UpcomingEventsFragment upcomingEventsFragment = new UpcomingEventsFragment();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, upcomingEventsFragment).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_maintain_timetable) {
-
+            //Resynchronize Time Table
+            //Make Popup Dialog "Do you want to resynchronise timetable?"
+            //Run SQL Query to refresh time table
         } else if (id == R.id.nav_maintain_lecture_times) {
-
+            //similarly replace the fragment_container with Maintain Lecture Times Fragment
+            MaintainLectureTimesFragment maintainLectureTimesFragment = new MaintainLectureTimesFragment();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainLectureTimesFragment).addToBackStack(null).commit();
         } else if (id == R.id.nav_maintain_schedule_event) {
+            //Create an intent that will Open the Default Calendar app on the Phone
+
+        }else if (id == R.id.nav_maintain_assignments) {
+            //similarly replace the fragment_container with Maintain Assignments Fragment
+            MaintainAssignmentFragment maintainAssignmentFragment = new MaintainAssignmentFragment();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainAssignmentFragment).addToBackStack(null).commit();
+
+        }else if (id == R.id.nav_maintain_tests) {
+            //similarly replace the fragment_container with Maintain Tests Fragment
+            MaintainTestFragment maintainTestFragment = new MaintainTestFragment();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainTestFragment).addToBackStack(null).commit();
+
+        }else if (id == R.id.nav_maintain_send_email) {
+            //similarly replace the fragment_container with Send Email Fragment
+            SendEmailFragment sendEmailFragment = new SendEmailFragment();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, sendEmailFragment).addToBackStack(null).commit();
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void SwitchUser(MenuItem item) {
+
+
+        if(userType == 0){
+            //Clear the current Drawer Menu
+            navigationView.getMenu().clear();
+            //inflate the new drawer menu (lecturer Drawer Menu)
+            navigationView.inflateMenu(R.menu.activity_main_drawer_lecturer);
+            userType = 1;
+            //remove all fragments from fragmentStack to go back to HomeFragment
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }else {
+            //Clear the current Drawer Menu
+            navigationView.getMenu().clear();
+            //inflate the new drawer menu (lecturer Drawer Menu)
+            navigationView.inflateMenu(R.menu.activity_main_drawer_student);
+            userType = 1;
+            //remove all fragments from fragmentStack to go back to HomeFragment
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+    }
+
+    public void LogOut(MenuItem item) {
+        //Go to Login Screen
     }
 }

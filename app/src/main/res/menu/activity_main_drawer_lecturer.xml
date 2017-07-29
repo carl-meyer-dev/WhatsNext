@@ -28,9 +28,9 @@
                 android:icon="@drawable/ic_create_black_48dp"
                 android:title="@string/nav_tests" />
             <item
-                android:id="@+id/nav_maintain_send_notification"
+                android:id="@+id/nav_maintain_send_email"
                 android:icon="@drawable/ic_error_outline_black_48dp"
-                android:title="@string/nav_notification" />
+                android:title="@string/nav_email" />
         </menu>
     </item>
 
