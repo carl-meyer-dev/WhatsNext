@@ -59,8 +59,12 @@ public class MainActivity extends AppCompatActivity
         //==========================================================================================
         //OnCreate Custom Code:
         //Get Reference to Views:
+        //==============================================================================================
+        tvNavHeaderDegree = (TextView)findViewById(R.id.tvNavHeaderDegree);
+        tvNavHeaderName = (TextView)findViewById(R.id.tvNavHeaderName);
+        tvNavHeaderUsername = (TextView)findViewById(R.id.tvNavHeaderUsername);
 
-
+        //==============================================================================================
         //Handle Fragments and FragmentManager
         fragmentManager = getSupportFragmentManager(); //get the fragment manager, using supportFragment Manager to support earlier versions of Android
         //Get the Frame Layout that will hold the Fragments
@@ -170,6 +174,16 @@ public class MainActivity extends AppCompatActivity
             userType = 1;
             //remove all fragments from fragmentStack to go back to HomeFragment
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            //set the NavHeader Textviews text (this will later be done when Logged in. This is only for testing purposes)
+            tvNavHeaderDegree = (TextView)findViewById(R.id.tvNavHeaderDegree);
+            tvNavHeaderName = (TextView)findViewById(R.id.tvNavHeaderName);
+            tvNavHeaderUsername = (TextView)findViewById(R.id.tvNavHeaderUsername);
+
+            tvNavHeaderName.setText("Dieter Vogts");
+            tvNavHeaderUsername.setText("Dieter.Vogts@nmu.ac.za");
+            tvNavHeaderDegree.setText("WRAP301, WRAP302, WRA301");
+
+
         }else {
             //Clear the current Drawer Menu
             navigationView.getMenu().clear();
@@ -178,6 +192,15 @@ public class MainActivity extends AppCompatActivity
             userType = 1;
             //remove all fragments from fragmentStack to go back to HomeFragment
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            //set the NavHeader Textviews text (this will later be done when Logged in. This is only for testing purposes)
+            tvNavHeaderDegree = (TextView)findViewById(R.id.tvNavHeaderDegree);
+            tvNavHeaderName = (TextView)findViewById(R.id.tvNavHeaderName);
+            tvNavHeaderUsername = (TextView)findViewById(R.id.tvNavHeaderUsername);
+
+            tvNavHeaderName.setText("Carl Meyer");
+            tvNavHeaderUsername.setText("s215006941@nmmu.ac.za");
+            tvNavHeaderDegree.setText("BSc Computer Science");
+
         }
 
     }
