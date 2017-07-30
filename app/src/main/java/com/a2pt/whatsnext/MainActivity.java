@@ -124,11 +124,28 @@ public class MainActivity extends AppCompatActivity
             TimetableFragment timetableFragment = new TimetableFragment(); //get reference to Timetable Fragment
             //Begin transaction with fragment manager, replace the fragment_container with TimeTable Fragment
             //We place the new Fragment on the backstack so that when the Back button is pressed it will go back to the Home Fragment
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, timetableFragment).addToBackStack(null).commit();
+
+            if(fragmentManager.getBackStackEntryCount() == 0){
+                //if Home Screen is the Only Fragment on the BackStack then simply add the new Fragment to the backstack
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, timetableFragment).addToBackStack(null).commit();
+            }else if(fragmentManager.getBackStackEntryCount() > 0){
+                //if another Fragment is being shown on top of Home Screen, then Remove it first before adding new Fragment to Backstack
+                fragmentManager.popBackStack(); //pop unwanted fragment form backstack
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, timetableFragment).addToBackStack(null).commit(); //show and add new Fragment
+            }
+
+
         } else if (id == R.id.nav_view_upcoming_events) {
             //similarly replace the fragment_container with Upcoming Events Fragment
             UpcomingEventsFragment upcomingEventsFragment = new UpcomingEventsFragment();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, upcomingEventsFragment).addToBackStack(null).commit();
+
+            if(fragmentManager.getBackStackEntryCount() == 0){
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, upcomingEventsFragment).addToBackStack(null).commit();
+            }else if(fragmentManager.getBackStackEntryCount() > 0){
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, upcomingEventsFragment).addToBackStack(null).commit();
+            }
+
 
         } else if (id == R.id.nav_maintain_timetable) {
             //Resynchronize Time Table
@@ -137,24 +154,50 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_maintain_lecture_times) {
             //similarly replace the fragment_container with Maintain Lecture Times Fragment
             MaintainLectureTimesFragment maintainLectureTimesFragment = new MaintainLectureTimesFragment();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainLectureTimesFragment).addToBackStack(null).commit();
+
+            if(fragmentManager.getBackStackEntryCount() == 0){
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainLectureTimesFragment).addToBackStack(null).commit();
+            }else if(fragmentManager.getBackStackEntryCount() > 0){
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainLectureTimesFragment).addToBackStack(null).commit();
+            }
+
+
         } else if (id == R.id.nav_maintain_schedule_event) {
             //Create an intent that will Open the Default Calendar app on the Phone
 
         }else if (id == R.id.nav_maintain_assignments) {
             //similarly replace the fragment_container with Maintain Assignments Fragment
             MaintainAssignmentFragment maintainAssignmentFragment = new MaintainAssignmentFragment();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainAssignmentFragment).addToBackStack(null).commit();
+            if(fragmentManager.getBackStackEntryCount() == 0){
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainAssignmentFragment).addToBackStack(null).commit();
+            }else if(fragmentManager.getBackStackEntryCount() > 0){
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainAssignmentFragment).addToBackStack(null).commit();
+            }
+
 
         }else if (id == R.id.nav_maintain_tests) {
             //similarly replace the fragment_container with Maintain Tests Fragment
             MaintainTestFragment maintainTestFragment = new MaintainTestFragment();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainTestFragment).addToBackStack(null).commit();
+            if(fragmentManager.getBackStackEntryCount() == 0){
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainTestFragment).addToBackStack(null).commit();
+            }else if(fragmentManager.getBackStackEntryCount() > 0){
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainTestFragment).addToBackStack(null).commit();
+            }
+
 
         }else if (id == R.id.nav_maintain_send_email) {
             //similarly replace the fragment_container with Send Email Fragment
             SendEmailFragment sendEmailFragment = new SendEmailFragment();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, sendEmailFragment).addToBackStack(null).commit();
+            if(fragmentManager.getBackStackEntryCount() == 0){
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, sendEmailFragment).addToBackStack(null).commit();
+            }else if(fragmentManager.getBackStackEntryCount() > 0){
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, sendEmailFragment).addToBackStack(null).commit();
+            }
+
 
         }
 
