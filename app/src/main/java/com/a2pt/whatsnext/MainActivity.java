@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static FragmentManager fragmentManager;
+    public static FragmentManager fragmentManager;
     //temporary variable for menu purposes
     /*
     The following variable is a temporary variable to help with Testing and Demo Purposes.

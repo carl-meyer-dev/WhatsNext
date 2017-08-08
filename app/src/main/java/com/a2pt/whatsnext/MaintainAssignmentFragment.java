@@ -2,6 +2,7 @@ package com.a2pt.whatsnext;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.Spinner;
 
 public class MaintainAssignmentFragment extends Fragment {
     View view;
+    FloatingActionButton fabNew;
+    NewAssignmentFragment newAssignmentFragment = new NewAssignmentFragment();
 
     @Nullable
     @Override
@@ -27,6 +30,15 @@ public class MaintainAssignmentFragment extends Fragment {
         Spinner spinner = (Spinner)view.findViewById(R.id.spnModules);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.modules, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
+
+        fabNew = (FloatingActionButton)view.findViewById(R.id.fabNewAssignment);
+
+        fabNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, newAssignmentFragment).addToBackStack(null).commit();
+            }
+        });
 
 
         return view;
