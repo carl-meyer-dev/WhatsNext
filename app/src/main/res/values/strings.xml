@@ -8,6 +8,8 @@
     <string name="action_settings_switch_user">Switch User</string>
     <string name="title_activity_login">Sign in</string>
 
+
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -31,5 +33,12 @@
     <string name="nav_assignments">Assignments</string>
     <string name="nav_tests">Tests</string>
     <string name="nav_email">Send Email</string>
+
+    <!-- Test Values for Spinner -->
+    <string-array name="modules">
+        <item>WRAP301</item>
+        <item>WRAP302</item>
+        <item>WRA301</item>
+    </string-array>
 
 </resources>

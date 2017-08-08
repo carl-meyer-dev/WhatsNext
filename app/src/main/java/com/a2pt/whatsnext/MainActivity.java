@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -58,13 +59,17 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         //==========================================================================================
         //OnCreate Custom Code:
+
+
         //Get Reference to Views:
-        //==============================================================================================
+        //==========================================================================================
         tvNavHeaderDegree = (TextView)findViewById(R.id.tvNavHeaderDegree);
         tvNavHeaderName = (TextView)findViewById(R.id.tvNavHeaderName);
         tvNavHeaderUsername = (TextView)findViewById(R.id.tvNavHeaderUsername);
 
-        //==============================================================================================
+
+
+        //==========================================================================================
         //Handle Fragments and FragmentManager
         fragmentManager = getSupportFragmentManager(); //get the fragment manager, using supportFragment Manager to support earlier versions of Android
         //Get the Frame Layout that will hold the Fragments
@@ -98,6 +103,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Generated code for when Options item selected
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
