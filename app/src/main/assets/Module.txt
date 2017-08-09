@@ -1,0 +1,5 @@
+INSERT INTO TABLE Module (ModID, ModName) VALUES ('EBM202', 'Logistics and Purchasing Management')
+INSERT INTO TABLE Module (ModID, ModName) VALUES ('WRAP302', 'Advanced Programming 3.2')
+INSERT INTO TABLE Module (ModID, ModName) VALUES ('WRB302', 'Management Information System 3.2')
+INSERT INTO TABLE Module (ModID, ModName) VALUES ('WRUI301', 'User Interface Design')
+INSERT INTO TABLE Module (ModID, ModName) VALUES ('WRR301', 'Project')
