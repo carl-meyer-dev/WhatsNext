@@ -63,7 +63,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
             while(line != null)
             {
                 db.execSQL(line);
-
                 //reads the next line in the text file if there is one
                 br.readLine();
             }
