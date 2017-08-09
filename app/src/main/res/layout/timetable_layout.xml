@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:text="Time Table "
         android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -31,7 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Monday"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+                    android:textColor="@color/colorPrimaryDark" />
             </LinearLayout>
 
             <LinearLayout
@@ -91,7 +93,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Tuesday"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+                    android:textColor="@color/colorPrimaryDark" />
             </LinearLayout>
 
             <LinearLayout
@@ -156,7 +159,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Wednesday"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+                    android:textColor="@color/colorPrimaryDark" />
             </LinearLayout>
 
             <LinearLayout
@@ -221,7 +225,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Thursday"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+                    android:textColor="@color/colorPrimaryDark" />
             </LinearLayout>
 
             <LinearLayout
@@ -287,7 +292,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Friday"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
+                    />
             </LinearLayout>
 
             <LinearLayout

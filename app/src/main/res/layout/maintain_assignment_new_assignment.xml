@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Assignment TItle"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp" />
 
     <EditText
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Due Date"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -51,7 +53,7 @@
             android:textStyle="bold" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabDate"
+            android:id="@+id/fabAssignmentDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
@@ -69,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Due Time"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -87,7 +90,7 @@
             android:textStyle="bold" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabTime"
+            android:id="@+id/fabAssignmentTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
@@ -108,6 +111,7 @@
         android:layout_marginTop="100dp"
         android:background="@color/colorPrimary"
         android:elevation="0dp"
-        android:text="Create Event" />
+        android:text="Create Event"
+        android:textSize="16sp" />
 
 </LinearLayout>

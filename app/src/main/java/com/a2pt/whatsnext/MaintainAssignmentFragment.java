@@ -27,9 +27,10 @@ public class MaintainAssignmentFragment extends Fragment {
         //This code is for Testing purposes, it should be replaced with a proper adapter that obtains items from Database
         //https://developer.android.com/guide/topics/ui/controls/spinner.html
         //TODO: Change adapter correct adapter obtaining info from Database
-        Spinner spinner = (Spinner)view.findViewById(R.id.spnModules);
+        Spinner spinner = (Spinner)view.findViewById(R.id.spnModulesAssignment);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.modules, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         fabNew = (FloatingActionButton)view.findViewById(R.id.fabNewAssignment);
 

@@ -20,10 +20,9 @@ import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
  */
-public class NewAssignmentFragment extends Fragment {
+public class NewTestFragment extends Fragment {
+
     //Custom Variables
     private FloatingActionButton fabDate;
     private FloatingActionButton fabTime;
@@ -34,20 +33,21 @@ public class NewAssignmentFragment extends Fragment {
     private TimePickerDialog.OnTimeSetListener timeSetListener;
 
 
-    public NewAssignmentFragment() {
+    public NewTestFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.maintain_assignment_new_assignment, container, false);
-        tvDate = (TextView)view.findViewById(R.id.tvMA_Date);
-        tvTime = (TextView)view.findViewById(R.id.tvMA_Time);
 
-        fabDate = (FloatingActionButton) view.findViewById(R.id.fabAssignmentDate);
+        view = inflater.inflate(R.layout.maintain_test_new_test, container, false);
+
+        tvDate = (TextView)view.findViewById(R.id.tvMT_Date);
+        tvTime = (TextView)view.findViewById(R.id.tvMT_Time);
+
+        fabDate = (FloatingActionButton) view.findViewById(R.id.fabTestDate);
 
         fabDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class NewAssignmentFragment extends Fragment {
         });
 
 
-        fabTime = (FloatingActionButton)view.findViewById(R.id.fabAssignmentTime);
+        fabTime = (FloatingActionButton)view.findViewById(R.id.fabTestTime);
 
         fabTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,9 +96,9 @@ public class NewAssignmentFragment extends Fragment {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String time;
                 if(minute == 0){
-                     time = hourOfDay + ":" + minute + "0";
+                    time = hourOfDay + ":" + minute + "0";
                 }else {
-                     time = hourOfDay + ":" + minute;
+                    time = hourOfDay + ":" + minute;
                 }
 
                 tvTime.setText(time);

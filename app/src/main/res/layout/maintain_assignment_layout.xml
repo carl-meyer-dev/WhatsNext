@@ -12,18 +12,20 @@
         android:layout_height="wrap_content"
         android:text="Maintain Assignment"
         android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <Spinner
-        android:id="@+id/spnModules"
+        android:id="@+id/spnModulesAssignment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginTop="15dp"
+        android:entries="@array/modules"
         android:paddingBottom="25dp"
         android:paddingTop="25dp"
         tools:layout_editor_absoluteX="8dp"

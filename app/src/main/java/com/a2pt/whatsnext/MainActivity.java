@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void SwitchUser(MenuItem item) {
-
+        //TODO: This will be set Dynamically according to user log in
 
         if(userType == 0){
             //Clear the current Drawer Menu
