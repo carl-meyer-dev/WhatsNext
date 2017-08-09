@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:text="Home"
         android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         android:textStyle="bold" />
 </LinearLayout>
