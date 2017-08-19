@@ -1,6 +1,7 @@
 package com.a2pt.whatsnext.models;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 import java.io.Serializable;
@@ -21,12 +22,14 @@ public class Activity implements Serializable {
 
     //Assignment variables
     private String assignmentTitle;
-    private DateTime assignmentDueDate; //This includes the Due Time According to How Date works
+    private LocalDate assignmentDueDate; //This includes the Due Time According to How Date works
+    private LocalTime assignmentDueTime;
     private Assignment_Status assignmentStatus;
 
     //test variiables
     private String testDescriiption; //We might have left this out ?
-    private Date testDate; //This includes Date and Time
+    private LocalDate testDate; //This includes Date and Time
+    private LocalTime testTime;
     private String testVenue;
 
     //Lecture Variables
@@ -36,20 +39,22 @@ public class Activity implements Serializable {
     private String dayOfWeek;
 
     //Constructor for Assignment Activity
-    public Activity(String modID, Activity_Type actType, String assignmentTitle, DateTime assignmentDueDate, Assignment_Status assignmentStatus) {
+    public Activity(String modID, Activity_Type actType, String assignmentTitle, LocalDate assignmentDueDate, LocalTime assignmentDueTime, Assignment_Status assignmentStatus) {
         this.modID = modID;
         this.actType = actType;
         this.assignmentTitle = assignmentTitle;
         this.assignmentDueDate = assignmentDueDate;
+        this.assignmentDueTime = assignmentDueTime;
         this.assignmentStatus = assignmentStatus;
     }
 
     //Constructor for Test Activity
-    public Activity(String modID, Activity_Type actType, String testDescriiption, Date testDate, String testVenue) {
+    public Activity(String modID, Activity_Type actType, String testDescriiption, LocalDate testDate, LocalTime testTime, String testVenue) {
         this.modID = modID;
         this.actType = actType;
         this.testDescriiption = testDescriiption;
         this.testDate = testDate;
+        this.testTime = testTime;
         this.testVenue = testVenue;
     }
 
@@ -74,7 +79,7 @@ public class Activity implements Serializable {
         return assignmentTitle;
     }
 
-    public DateTime getAssignmentDueDate() {
+    public LocalDate getAssignmentDueDate() {
         return assignmentDueDate;
     }
 
@@ -86,7 +91,7 @@ public class Activity implements Serializable {
         return testDescriiption;
     }
 
-    public Date getTestDate() {
+    public LocalDate getTestDate() {
         return testDate;
     }
 
@@ -106,7 +111,7 @@ public class Activity implements Serializable {
         this.assignmentTitle = assignmentTitle;
     }
 
-    public void setAssignmentDueDate(DateTime assignmentDueDate) {
+    public void setAssignmentDueDate(LocalDate assignmentDueDate) {
         this.assignmentDueDate = assignmentDueDate;
     }
 
@@ -118,7 +123,7 @@ public class Activity implements Serializable {
         this.testDescriiption = testDescriiption;
     }
 
-    public void setTestDate(Date testDate) {
+    public void setTestDate(LocalDate testDate) {
         this.testDate = testDate;
     }
 
@@ -133,5 +138,14 @@ public class Activity implements Serializable {
     public String getDayOfWeek() {
         return dayOfWeek;
     }
+
+    public LocalTime getAssignmentDueTime() {
+        return assignmentDueTime;
+    }
+
+    public LocalTime getTestTime() {
+        return testTime;
+    }
 }
+
 

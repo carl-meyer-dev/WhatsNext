@@ -56,7 +56,7 @@ public class ActivityAdapter extends ArrayAdapter<Activity>{
             //Change colour of background
             lLayout.setBackgroundColor(Color.parseColor("#8BC34A"));
             //set text view values
-            tvValue1.setText(activity.getAssignmentDueDate().toString());
+            tvValue1.setText(activity.getAssignmentDueTime().toString().substring(0,5));
             tvValue2.setText(activity.getModID());
             tvValue3.setText(activity.getAssignmentTitle());
 
@@ -64,7 +64,7 @@ public class ActivityAdapter extends ArrayAdapter<Activity>{
             //Change colour of background
             lLayout.setBackgroundColor(Color.parseColor("#f44336"));
             //set text view values
-            tvValue1.setText(activity.getTestDate().toString());
+            tvValue1.setText(activity.getTestTime().toString().substring(0,5));
             tvValue2.setText(activity.getModID());
             tvValue3.setText(activity.getTestVenue());
 

@@ -5,17 +5,16 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
-    android:background="@drawable/activity_style"
+    android:background="@android:color/holo_blue_dark"
     android:orientation="horizontal"
     android:paddingBottom="7dp"
     android:paddingTop="7dp">
 
     <TextView
         android:id="@+id/tvActValue1"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_weight="1"
+        android:layout_marginLeft="5dp"
         android:text="07:45"
         android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
@@ -24,10 +23,9 @@
 
     <TextView
         android:id="@+id/tvActValue2"
-        android:layout_width="wrap_content"
+        android:layout_width="95dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_weight="1"
         android:text="MATH203"
         android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
@@ -36,10 +34,9 @@
 
     <TextView
         android:id="@+id/tvActValue3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_weight="1"
         android:text="35 00 17"
         android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"

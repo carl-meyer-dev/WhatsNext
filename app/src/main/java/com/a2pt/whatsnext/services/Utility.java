@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 public class Utility {
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    public static void setListViewHeightBasedOnChildren(ListView listView, int minus) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             // pre-condition
@@ -24,7 +24,7 @@ public class Utility {
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += listItem.getMeasuredHeight() - 319;
+            totalHeight += listItem.getMeasuredHeight() - minus;
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
