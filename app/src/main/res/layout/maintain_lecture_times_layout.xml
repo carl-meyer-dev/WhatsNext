@@ -60,14 +60,14 @@
         android:layout_height="match_parent"
         android:layout_marginTop="25dp">
 
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_margin="15dp">
 
-        </android.support.v7.widget.RecyclerView>
+        </ListView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton2"

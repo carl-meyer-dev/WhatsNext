@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
             {
                 db.execSQL(line);
                 //reads the next line in the text file if there is one
-                br.readLine();
+                line = br.readLine();
             }
 
         } catch (FileNotFoundException e) {
