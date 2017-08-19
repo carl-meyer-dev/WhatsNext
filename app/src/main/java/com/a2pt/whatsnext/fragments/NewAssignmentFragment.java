@@ -1,4 +1,4 @@
-package com.a2pt.whatsnext;
+package com.a2pt.whatsnext.fragments;
 
 
 import android.app.DatePickerDialog;
@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.a2pt.whatsnext.R;
 
 import java.util.Calendar;
 

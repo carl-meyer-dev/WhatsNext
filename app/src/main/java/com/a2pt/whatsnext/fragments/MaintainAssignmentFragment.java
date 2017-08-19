@@ -1,4 +1,4 @@
-package com.a2pt.whatsnext;
+package com.a2pt.whatsnext.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.a2pt.whatsnext.R;
+import com.a2pt.whatsnext.activities.MainActivity;
 
 /**
  * Created by Carl on 2017-07-29.

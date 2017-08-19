@@ -1,4 +1,4 @@
-package com.a2pt.whatsnext;
+package com.a2pt.whatsnext.activities;
 
 
 import android.support.v4.app.FragmentManager;
@@ -7,13 +7,21 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.a2pt.whatsnext.fragments.HomeFragment;
+import com.a2pt.whatsnext.fragments.MaintainAssignmentFragment;
+import com.a2pt.whatsnext.fragments.MaintainLectureTimesFragment;
+import com.a2pt.whatsnext.fragments.MaintainTestFragment;
+import com.a2pt.whatsnext.R;
+import com.a2pt.whatsnext.fragments.SendEmailFragment;
+import com.a2pt.whatsnext.fragments.TimetableFragment;
+import com.a2pt.whatsnext.fragments.UpcomingEventsFragment;
 
 
 public class MainActivity extends AppCompatActivity

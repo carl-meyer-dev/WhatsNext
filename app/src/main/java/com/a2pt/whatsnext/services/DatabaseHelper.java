@@ -1,4 +1,4 @@
-package com.a2pt.whatsnext;
+package com.a2pt.whatsnext.services;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
