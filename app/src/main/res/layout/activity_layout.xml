@@ -3,41 +3,46 @@
     android:id="@+id/linlayActivity"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
     android:background="@drawable/activity_style"
     android:orientation="horizontal"
-    android:paddingBottom="5dp"
-    android:paddingTop="5dp">
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp">
 
     <TextView
         android:id="@+id/tvActValue1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:layout_weight="1"
         android:text="07:45"
-        android:textAlignment="center"
-        android:textSize="18sp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvActValue2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
         android:layout_weight="1"
         android:text="MATH203"
-        android:textAlignment="center"
-        android:textSize="18sp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvActValue3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
         android:layout_weight="1"
         android:text="35 00 17"
-        android:textAlignment="center"
-        android:textSize="18sp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
         android:textStyle="bold" />
 </LinearLayout>

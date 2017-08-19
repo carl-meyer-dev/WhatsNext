@@ -72,12 +72,12 @@ public class ActivityAdapter extends ArrayAdapter<Activity>{
             //Change colour of background
             lLayout.setBackgroundColor(Color.parseColor("#1E88E5"));
             //set text view values
-            tvValue1.setText(activity.getLecStartTime().toString());
+            tvValue1.setText(activity.getLecStartTime().toString().substring(0,5));
             tvValue2.setText(activity.getModID());
             tvValue3.setText(activity.getLectureVenue());
 
         }
 
-        return super.getView(position, convertView, parent);
+        return view;
     }
 }

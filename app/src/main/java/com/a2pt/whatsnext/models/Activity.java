@@ -1,5 +1,6 @@
 package com.a2pt.whatsnext.models;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class Activity implements Serializable {
 
     //Assignment variables
     private String assignmentTitle;
-    private Date assignmentDueDate; //This includes the Due Time According to How Date works
+    private DateTime assignmentDueDate; //This includes the Due Time According to How Date works
     private Assignment_Status assignmentStatus;
 
     //test variiables
@@ -35,7 +36,7 @@ public class Activity implements Serializable {
     private String dayOfWeek;
 
     //Constructor for Assignment Activity
-    public Activity(String modID, Activity_Type actType, String assignmentTitle, Date assignmentDueDate, Assignment_Status assignmentStatus) {
+    public Activity(String modID, Activity_Type actType, String assignmentTitle, DateTime assignmentDueDate, Assignment_Status assignmentStatus) {
         this.modID = modID;
         this.actType = actType;
         this.assignmentTitle = assignmentTitle;
@@ -53,11 +54,11 @@ public class Activity implements Serializable {
     }
 
     //constructor for Lecture Activity
-    public Activity(String modID, Activity_Type actType, String lectureVenue, int sessionID) {
+    public Activity(String modID, Activity_Type actType, String lectureVenue, LocalTime lecStartTime) {
         this.modID = modID;
         this.actType = actType;
         this.lectureVenue = lectureVenue;
-        this.sessionID = sessionID;
+        this.lecStartTime = lecStartTime;
     }
 
     //GETTERS & SETTERS
@@ -73,7 +74,7 @@ public class Activity implements Serializable {
         return assignmentTitle;
     }
 
-    public Date getAssignmentDueDate() {
+    public DateTime getAssignmentDueDate() {
         return assignmentDueDate;
     }
 
@@ -105,7 +106,7 @@ public class Activity implements Serializable {
         this.assignmentTitle = assignmentTitle;
     }
 
-    public void setAssignmentDueDate(Date assignmentDueDate) {
+    public void setAssignmentDueDate(DateTime assignmentDueDate) {
         this.assignmentDueDate = assignmentDueDate;
     }
 
