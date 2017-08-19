@@ -124,4 +124,13 @@ public class Activity implements Serializable {
     public void setTestVenue(String testVenue) {
         this.testVenue = testVenue;
     }
+
+    public LocalTime getLecStartTime() {
+        return lecStartTime;
+    }
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
 }
+
