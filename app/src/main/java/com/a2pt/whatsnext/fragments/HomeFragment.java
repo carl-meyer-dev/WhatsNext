@@ -40,9 +40,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_layout, container, false);
 
-        lvAssignments = (ListView)view.findViewById(R.id.lvAssignments);
-        lvTests = (ListView)view.findViewById(R.id.lvTests);
-        lvLectures = (ListView)view.findViewById(R.id.lvLectures);
+        lvAssignments = (ListView)view.findViewById(R.id.home_lvAssignments);
+        lvTests = (ListView)view.findViewById(R.id.home_lvTests);
+        lvLectures = (ListView)view.findViewById(R.id.home_lvLectures);
 
         final List<Activity> Lectures = new ArrayList<>();
         final List<Activity> Assignments = new ArrayList<>();
@@ -52,8 +52,8 @@ public class HomeFragment extends Fragment {
         //TODO: this will change when we integrate the Database
         Lectures.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
         Lectures.add(new Activity("WRAP302", Activity.Activity_Type.LECTURE, "35 01 01", new LocalTime(9,5)));
-        //Lectures.add(new Activity("WRL301", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(10,25)));
-       // Lectures.add(new Activity("MATH203", Activity.Activity_Type.LECTURE, "5 00 07", new LocalTime(14,5)));
+        Lectures.add(new Activity("WRL301", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(10,25)));
+        Lectures.add(new Activity("MATH203", Activity.Activity_Type.LECTURE, "5 00 07", new LocalTime(14,5)));
         Lectures.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "07 02 50", new LocalTime(16,45)));
 
         lecturesAdapter = new ActivityAdapter(getActivity(), Lectures);

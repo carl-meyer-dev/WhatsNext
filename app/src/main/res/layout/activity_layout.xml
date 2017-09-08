@@ -23,7 +23,7 @@
 
     <TextView
         android:id="@+id/tvActValue2"
-        android:layout_width="95dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:text="MATH203"
@@ -36,7 +36,7 @@
         android:id="@+id/tvActValue3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="5dp"
         android:text="35 00 17"
         android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"

@@ -105,7 +105,7 @@
                     </LinearLayout>
 
                     <ListView
-                        android:id="@+id/lvLectures"
+                        android:id="@+id/home_lvLectures"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:dividerHeight="5dp" />
@@ -168,7 +168,7 @@
                     </LinearLayout>
 
                     <ListView
-                        android:id="@+id/lvAssignments"
+                        android:id="@+id/home_lvAssignments"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:dividerHeight="5dp" />
@@ -231,7 +231,7 @@
                     </LinearLayout>
 
                     <ListView
-                        android:id="@+id/lvTests"
+                        android:id="@+id/home_lvTests"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:dividerHeight="5dp" />
