@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linlayActivity"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:background="@android:color/holo_green_light"
+    android:orientation="horizontal"
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp">
+
+    <TextView
+        android:id="@+id/als_tvDate"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="09 / 20"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/als_tvTime"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="07:45"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/als_tvTitle"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Assignment 5"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/als_tvModule"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="WRAP302"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</LinearLayout>

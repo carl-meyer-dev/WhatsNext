@@ -20,11 +20,11 @@ import java.util.List;
  * Created by Carl on 2017-08-19.
  */
 
-public class ActivityAdapter extends ArrayAdapter<Activity>{
+public class TestAdapter extends ArrayAdapter<Activity>{
 
 
     //generated constructor method
-    public ActivityAdapter(@NonNull Context context, List<Activity> activities) {
+    public TestAdapter(@NonNull Context context, List<Activity> activities) {
         super(context,R.layout.activity_layout_lecture,activities);
 
     }

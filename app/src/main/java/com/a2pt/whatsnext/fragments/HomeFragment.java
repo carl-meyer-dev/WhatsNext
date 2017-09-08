@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment {
 
     private Activity curActivity;
     private ActivityAdapter lecturesAdapter, assignmentsAdapter, testsAdapter;
-    ListView lvLectures, lvAssignments, lvTests;
+    private ListView lvLectures, lvAssignments, lvTests;
 
 
 

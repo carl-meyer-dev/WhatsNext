@@ -82,8 +82,10 @@
                 </LinearLayout>
 
                 <ListView
+                    android:id="@+id/ue_lvAssignments"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:dividerHeight="5dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -144,8 +146,10 @@
                 </LinearLayout>
 
                 <ListView
+                    android:id="@+id/ue_lvTests"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:dividerHeight="5dp" />
             </LinearLayout>
 
 
