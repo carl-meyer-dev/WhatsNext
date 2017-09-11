@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.adapters.ActivityAdapter;
+import com.a2pt.whatsnext.adapters.AssignmentAdapter;
+import com.a2pt.whatsnext.adapters.TestAdapter;
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.services.Utility;
 
@@ -26,7 +28,8 @@ import java.util.List;
 public class UpcomingEventsFragment extends Fragment {
 
     View view;
-    private ActivityAdapter assignmentsAdapter, testsAdapter;
+    private AssignmentAdapter assignmentsAdapter;
+    private TestAdapter testsAdapter;
     private ListView lvAssignments, lvTests;
 
     @Nullable
@@ -55,8 +58,8 @@ public class UpcomingEventsFragment extends Fragment {
         tests.add(new Activity("MATH203", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Heinz Benz Hall"));
         tests.add(new Activity("MATH214", Activity.Activity_Type.TEST, "Seme Test 3",new LocalDate(2017,10,19),new LocalTime(18,0), "Heinz Benz Hall"));
 
-        assignmentsAdapter = new ActivityAdapter(getActivity(), assignments);
-        testsAdapter = new ActivityAdapter(getActivity(), tests);
+        assignmentsAdapter = new AssignmentAdapter(getActivity(), assignments);
+        testsAdapter = new TestAdapter(getActivity(), tests);
 
         lvAssignments.setAdapter(assignmentsAdapter);
         lvTests.setAdapter(testsAdapter);

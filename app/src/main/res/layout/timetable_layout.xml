@@ -73,8 +73,9 @@
                             android:id="@+id/textView25"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Time" />
+                            android:layout_weight="0.8"
+                            android:text="Time"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView26"
@@ -82,7 +83,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Module" />
+                            android:text="Module"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView27"
@@ -90,7 +92,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Venue" />
+                            android:text="Venue"
+                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <View
@@ -160,8 +163,9 @@
                             android:id="@+id/textView40"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Time" />
+                            android:layout_weight="0.8"
+                            android:text="Time"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView41"
@@ -169,7 +173,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Module" />
+                            android:text="Module"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView43"
@@ -177,7 +182,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Venue" />
+                            android:text="Venue"
+                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <View
@@ -247,8 +253,9 @@
                             android:id="@+id/textView30"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Time" />
+                            android:layout_weight="0.8"
+                            android:text="Time"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView31"
@@ -256,7 +263,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Module" />
+                            android:text="Module"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView32"
@@ -264,7 +272,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Venue" />
+                            android:text="Venue"
+                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <View
@@ -334,8 +343,9 @@
                             android:id="@+id/textView45"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Time" />
+                            android:layout_weight="0.8"
+                            android:text="Time"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView46"
@@ -343,7 +353,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Module" />
+                            android:text="Module"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView47"
@@ -351,7 +362,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Venue" />
+                            android:text="Venue"
+                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <View
@@ -423,8 +435,9 @@
                             android:id="@+id/textView33"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Time" />
+                            android:layout_weight="0.8"
+                            android:text="Time"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView34"
@@ -432,7 +445,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Module" />
+                            android:text="Module"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/textView35"
@@ -440,7 +454,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:text="Venue" />
+                            android:text="Venue"
+                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <View

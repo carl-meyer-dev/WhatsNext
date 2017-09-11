@@ -25,7 +25,7 @@ public class AssignmentAdapter extends ArrayAdapter<Activity>{
 
     //generated constructor method
     public AssignmentAdapter(@NonNull Context context, List<Activity> activities) {
-        super(context,R.layout.activity_layout_lecture,activities);
+        super(context,R.layout.activity_layout_assignment,activities);
 
     }
 
@@ -38,44 +38,29 @@ public class AssignmentAdapter extends ArrayAdapter<Activity>{
 
         if(view == null){
             LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.activity_layout_lecture, parent, false);
+            view = inflater.inflate(R.layout.activity_layout_assignment, parent, false);
         }
 
         view.setTag(getItem(position));
 
-        TextView tvValue1 = (TextView)view.findViewById(R.id.tvActValue1);
-        TextView tvValue2 = (TextView)view.findViewById(R.id.tvActValue2);
-        TextView tvValue3 = (TextView)view.findViewById(R.id.tvActValue3);
-        LinearLayout lLayout = (LinearLayout)view.findViewById(R.id.linlayActivity);
+        TextView tvDate = (TextView)view.findViewById(R.id.als_tvDate);
+        TextView tvTime = (TextView)view.findViewById(R.id.als_tvTime);
+        TextView tvTitle = (TextView)view.findViewById(R.id.als_tvTitle);
+        TextView tvModule = (TextView)view.findViewById(R.id.als_tvModule);
+        LinearLayout lLayout = (LinearLayout)view.findViewById(R.id.als_linLay);
 
 
         Activity activity = getItem(position);
-        if(activity.getActType() == Activity.Activity_Type.ASSIGNMENT){
 
             //Change colour of background
             lLayout.setBackgroundColor(Color.parseColor("#8BC34A"));
             //set text view values
-            tvValue1.setText(activity.getAssignmentDueTime().toString().substring(0,5));
-            tvValue2.setText(activity.getModID());
-            tvValue3.setText(activity.getAssignmentTitle());
+            tvDate.setText(activity.getAssignmentDueDate().toString().substring(5));
+            tvTime.setText(activity.getAssignmentDueTime().toString().substring(0,5));
+            tvModule.setText(activity.getModID());
+            tvTitle.setText(activity.getAssignmentTitle());
 
-        }else if(activity.getActType() == Activity.Activity_Type.TEST){
-            //Change colour of background
-            lLayout.setBackgroundColor(Color.parseColor("#f44336"));
-            //set text view values
-            tvValue1.setText(activity.getTestTime().toString().substring(0,5));
-            tvValue2.setText(activity.getModID());
-            tvValue3.setText(activity.getTestVenue());
 
-        }else {
-            //Change colour of background
-            lLayout.setBackgroundColor(Color.parseColor("#1E88E5"));
-            //set text view values
-            tvValue1.setText(activity.getLecStartTime().toString().substring(0,5));
-            tvValue2.setText(activity.getModID());
-            tvValue3.setText(activity.getLectureVenue());
-
-        }
 
         return view;
     }

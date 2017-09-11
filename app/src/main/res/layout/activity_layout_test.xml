@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linlayActivity"
+    android:id="@+id/alt_linLay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
@@ -12,42 +12,45 @@
 
     <TextView
         android:id="@+id/alt_tvDate"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_weight="0.6"
         android:text="09 / 15"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/alt_tvTime"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:layout_weight="0.5"
         android:text="18:00"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/alt_tvVenue"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1.2"
         android:text="Heinz Benz Hall"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/alt_tvModule"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="0.8"
         android:text="MATH214"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />

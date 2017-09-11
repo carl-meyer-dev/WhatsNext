@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.adapters.ActivityAdapter;
+import com.a2pt.whatsnext.adapters.AssignmentAdapter;
+import com.a2pt.whatsnext.adapters.TestAdapter;
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.services.Utility;
 
@@ -28,7 +30,9 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private Activity curActivity;
-    private ActivityAdapter lecturesAdapter, assignmentsAdapter, testsAdapter;
+    private ActivityAdapter lecturesAdapter;
+    private AssignmentAdapter assignmentsAdapter;
+    private TestAdapter testsAdapter;
     private ListView lvLectures, lvAssignments, lvTests;
 
 
@@ -53,7 +57,7 @@ public class HomeFragment extends Fragment {
         Lectures.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
         Lectures.add(new Activity("WRAP302", Activity.Activity_Type.LECTURE, "35 01 01", new LocalTime(9,5)));
         Lectures.add(new Activity("WRL301", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(10,25)));
-        Lectures.add(new Activity("MATH203", Activity.Activity_Type.LECTURE, "5 00 07", new LocalTime(14,5)));
+        Lectures.add(new Activity("MATH203", Activity.Activity_Type.LECTURE, "05 00 07", new LocalTime(14,5)));
         Lectures.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "07 02 50", new LocalTime(16,45)));
 
         lecturesAdapter = new ActivityAdapter(getActivity(), Lectures);
@@ -64,13 +68,13 @@ public class HomeFragment extends Fragment {
         Assignments.add(new Activity("WRUI301", Activity.Activity_Type.ASSIGNMENT, "UI Analysis", new LocalDate(2017,8,22), new LocalTime(12,0), Activity.Assignment_Status.PENDING));
        // Assignments.add(new Activity("WRR301", Activity.Activity_Type.ASSIGNMENT, "Presentation", new LocalDate(2017,8,22), new LocalTime(14,5), Activity.Assignment_Status.PENDING));
 
-        assignmentsAdapter = new ActivityAdapter(getActivity(), Assignments);
+        assignmentsAdapter = new AssignmentAdapter(getActivity(), Assignments);
         lvAssignments.setAdapter(assignmentsAdapter);
         Utility.setListViewHeightBasedOnChildren(lvAssignments, 380);
 
         Tests.add(new Activity("MATH214", Activity.Activity_Type.TEST, "Semester Test 1",new LocalDate(2017,8,17),new LocalTime(18,0), "Heinz Benz Hall"));
 
-        testsAdapter = new ActivityAdapter(getActivity(), Tests);
+        testsAdapter = new TestAdapter(getActivity(), Tests);
         lvTests.setAdapter(testsAdapter);
         Utility.setListViewHeightBasedOnChildren(lvTests, 300);
 
