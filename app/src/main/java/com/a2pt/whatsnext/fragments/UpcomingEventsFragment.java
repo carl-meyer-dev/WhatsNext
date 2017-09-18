@@ -50,13 +50,15 @@ public class UpcomingEventsFragment extends Fragment {
         assignments.add(new Activity("WRR301", Activity.Activity_Type.ASSIGNMENT, "Final", new LocalDate(2017,10,23), new LocalTime(12,0), Activity.Assignment_Status.PENDING));
 
 
+
         tests.add(new Activity("STAT203", Activity.Activity_Type.TEST, "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48"));
         tests.add(new Activity("MATH214", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,9,14),new LocalTime(18,0), "Heinz Benz Hall"));
         tests.add(new Activity("WRL301", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,4),new LocalTime(18,0), "35 00 17"));
         tests.add(new Activity("WRAP302", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04"));
         tests.add(new Activity("STAT203", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,10),new LocalTime(18,0), "07 02 48"));
-        tests.add(new Activity("MATH203", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Heinz Benz Hall"));
-        tests.add(new Activity("MATH214", Activity.Activity_Type.TEST, "Seme Test 3",new LocalDate(2017,10,19),new LocalTime(18,0), "Heinz Benz Hall"));
+        tests.add(new Activity("MATH203", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre"));
+
+
 
         assignmentsAdapter = new AssignmentAdapter(getActivity(), assignments);
         testsAdapter = new TestAdapter(getActivity(), tests);
@@ -64,8 +66,8 @@ public class UpcomingEventsFragment extends Fragment {
         lvAssignments.setAdapter(assignmentsAdapter);
         lvTests.setAdapter(testsAdapter);
 
-        Utility.setListViewHeightBasedOnChildren(lvAssignments, 350);
-        Utility.setListViewHeightBasedOnChildren(lvTests, 450);
+        Utility.setListViewHeightBasedOnChildren(lvAssignments, 240);
+        Utility.setListViewHeightBasedOnChildren(lvTests, 240);
 
         return view;
     }

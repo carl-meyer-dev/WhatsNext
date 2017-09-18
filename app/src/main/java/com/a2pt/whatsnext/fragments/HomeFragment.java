@@ -70,13 +70,13 @@ public class HomeFragment extends Fragment {
 
         assignmentsAdapter = new AssignmentAdapter(getActivity(), Assignments);
         lvAssignments.setAdapter(assignmentsAdapter);
-        Utility.setListViewHeightBasedOnChildren(lvAssignments, 380);
+        Utility.setListViewHeightBasedOnChildren(lvAssignments, 240);
 
         Tests.add(new Activity("MATH214", Activity.Activity_Type.TEST, "Semester Test 1",new LocalDate(2017,8,17),new LocalTime(18,0), "Heinz Benz Hall"));
 
         testsAdapter = new TestAdapter(getActivity(), Tests);
         lvTests.setAdapter(testsAdapter);
-        Utility.setListViewHeightBasedOnChildren(lvTests, 300);
+        Utility.setListViewHeightBasedOnChildren(lvTests, 240);
 
         return view;
     }

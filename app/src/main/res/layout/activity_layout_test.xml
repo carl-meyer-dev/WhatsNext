@@ -12,45 +12,46 @@
 
     <TextView
         android:id="@+id/alt_tvDate"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.6"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
         android:text="09 / 15"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/alt_tvTime"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:text="18:00"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/alt_tvVenue"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.2"
-        android:text="Heinz Benz Hall"
-        android:textAlignment="center"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:text="Indoor Sport Centre"
+        android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/alt_tvModule"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:text="MATH214"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />

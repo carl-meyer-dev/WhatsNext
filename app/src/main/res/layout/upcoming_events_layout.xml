@@ -54,35 +54,35 @@
 
                     <TextView
                         android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
+                        android:layout_weight="1"
                         android:text="Date"
-                        android:textAlignment="center" />
+                        android:textAlignment="textStart" />
 
                     <TextView
                         android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_weight="1"
                         android:text="Time"
-                        android:textAlignment="center" />
+                        android:textAlignment="textStart" />
 
                     <TextView
                         android:id="@+id/textView21"
-                        android:layout_width="wrap_content"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1"
                         android:text="Title"
-                        android:textAlignment="center" />
+                        android:textAlignment="textStart" />
 
                     <TextView
                         android:id="@+id/textView23"
-                        android:layout_width="wrap_content"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
+                        android:layout_weight="1"
                         android:text="Module"
-                        android:textAlignment="center" />
+                        android:textAlignment="textStart" />
                 </LinearLayout>
 
                 <ListView
@@ -122,35 +122,36 @@
 
                     <TextView
                         android:id="@+id/textView24"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
+                        android:layout_weight="1"
                         android:text="Date"
-                        android:textAlignment="center" />
+                        android:textAlignment="textStart" />
 
                     <TextView
                         android:id="@+id/textView25"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:text="Time"
-                        android:textAlignment="center" />
+                        android:textAlignment="textStart" />
 
                     <TextView
                         android:id="@+id/textView26"
-                        android:layout_width="wrap_content"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1"
                         android:text="Venue"
-                        android:textAlignment="center" />
+                        android:textAlignment="textStart" />
 
                     <TextView
                         android:id="@+id/textView27"
-                        android:layout_width="wrap_content"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
+                        android:layout_weight="1"
                         android:text="Module"
-                        android:textAlignment="center" />
+                        android:textAlignment="textStart" />
                 </LinearLayout>
 
                 <ListView
