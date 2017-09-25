@@ -1,8 +1,11 @@
 package com.a2pt.whatsnext.services;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.a2pt.whatsnext.models.Activity;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 {
 
     //Creating the variables needed
-    private static final String databaseName = "WhatsNext";
+    private static final String databaseName = "WhatsNext.db";
     private static final int databaseVersion = 1;
     private SQLiteDatabase db;
 
@@ -35,21 +38,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
         //on onCreate Method setupTables is called to create the tables of the database.
         db = database;
         setupTables();
-        inputValuesIntoTables();
+        insertData();
+
+        //Once all the information has been inserted into the database it should be closed.
+        db.close();
 
     }
 
-    //Loads SQL queries setup in text files (Preset)
-    //Injects these queries into the database to add the variables into their respective tables
-    private void inputValuesIntoTables() {
-
-        inputUser("User.txt");
-        inputUser("Activity.txt");
-        inputUser("Module.txt");
-        inputUser("Session");
-    }
-
-    private void inputUser(String s) {
+    public void inputText(String s) {
 
         try {
             //initialising the buffered reader to read user.txt and  string builder
@@ -79,25 +75,78 @@ public class DatabaseHelper extends SQLiteOpenHelper
     //Setting up of each individual table
     private void setupTables() {
 
-        //Creating SQL strings which will build tables
-        String userTableSQL = "CREATE TABLE User (UserID varchar(25) NOT NULL UNIQUE PRIMARY KEY, UserEmail varchar(50) NOT NULL, UserPass varchar(30) NOT NULL, UserType varchar(20) DEFAULT 'Student')";
-        String lecturerTableSQL = "CREATE TABLE Lecturer (UserID varchar(25) NOT NULL UNIQUE PRIMARY KEY)";
-        String teachesTableSQL = "CREATE TABLE Teaches (SessionID int NOT NULL PRIMARY KEY, UserID varchar(25) NOT NULL FOREIGN KEY, ModID varchar(8) NOT NULL FOREIGN KEY)";
-        String sessionTableSQL = "CREATE TABLE Session (SessionID int NOT NULL PRIMARY KEY AUTO_INCREMENT, SessionStart time, SessionEnd time)";
-        String activityTableSQL = "CREATE TABLE Activity (ModID varchar(8) NOT NULL PRIMARY KEY, ActType varchar(25), AssignmentTitle varchar(50), AssignmentDueDate date, AssignmentSubmissionTime time, AssignmentStatus boolean, TestName varchar(25, TestTime time, LectureVenue varchar(50), SessionID int NOT NULL FOREIGN KEY)";
-        String moduleTableSQL = "CREATE TABLE Module (ModID varchar(8) NOT NULL UNIQUE PRIMARY KEY, ModName varchar(100)";
-
-        //Executing the SQL strings above to create database tables
-        db.execSQL(userTableSQL);
-        db.execSQL(lecturerTableSQL);
-        db.execSQL(teachesTableSQL);
-        db.execSQL(sessionTableSQL);
-        db.execSQL(activityTableSQL);
-        db.execSQL(moduleTableSQL);
+        //Calling inputText which reads in the SQL query from text file to create up the tables
+        inputText("TableCreate.txt");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        db.execSQL("DROP TF EXISTS User");
+        db.execSQL("DROP TF EXISTS Teaches");
+        db.execSQL("DROP TF EXISTS Session");
+        db.execSQL("DROP TF EXISTS Activity");
+        db.execSQL("DROP TF EXISTS Module");
 
+        onCreate(sqLiteDatabase);
+    }
+
+    //Calls in the data from textfile "Test.txt" Puts the various information from textfile into the database
+    public void insertData()
+    {
+        inputText("Test.txt");
+        inputText("Lecture.txt");
+        inputText("Assignment.txt");
+    }
+
+    //Takes in a activity as input
+    //The various information from the activity are read and inserted into the database
+    public void insertNewTest(Activity activityTest)
+    {
+        //Gets the database and allows it to be editted
+        db = this.getReadableDatabase();
+
+        //Gets information from the activityTest and inserts it into the database
+        db.execSQL("INSERT INTO Activity (ModID, ActType, TestName, TestTime, TestVenue) VALUES ('"+ activityTest.getModID() + "', '" + activityTest.getActType()
+                + ", " + activityTest.getTestDescriiption() + "', '" + activityTest.getTestTime() + "', '" + activityTest.getTestVenue() +"')");
+
+        db.close();
+    }
+
+    //The same as the above mentioned method
+    public void insertNewAssignment(Activity activityAssignment)
+    {
+        //Gets the database and allows it to be editted
+        db = this.getReadableDatabase();
+
+        //Gets information from the activityAssignment and inserts it into the database
+        db.execSQL("INSERT INTO TABLE Activity (ModID, ActType, AssignmentTitle, AssignmentDueDate, AssignmentSubmissionTime, AssignmentStatus) VALUES ('"+ activityAssignment.getModID() + "', '" + activityAssignment.getActType()
+                + ", " + activityAssignment.getAssignmentTitle() + "', '" + activityAssignment.getAssignmentDueDate() + "', '" + activityAssignment.getAssignmentDueTime() + "', '" + activityAssignment.getAssignmentStatus() +"')");
+
+        db.close();
+    }
+
+    public boolean checkUserCredentials(String userName, String password) {
+        //Creating database to be read/write from
+        SQLiteDatabase dbToCheck = this.getReadableDatabase();
+
+        //Array of selection arguments that the cursor has to traverse through;
+        String[] selectionArgs = {userName, password};
+        String[] selection = {"UserID"};
+
+        //Cursor traverses the column user, it applies conditions to search if the user exits
+        //Stores a result in the cursor
+        Cursor cursor = db.query("User", selection, "UserEmail = ? AND UserPass = ?", selectionArgs, null, null, null);
+
+        //If the user exits a value will be given (eg 1) if not -1 will be returned
+        int count = cursor.getCount();
+
+        cursor.close();
+        dbToCheck.close();
+
+        if (count > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }
