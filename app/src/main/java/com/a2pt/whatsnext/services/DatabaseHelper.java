@@ -143,6 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         cursor.close();
         dbToCheck.close();
 
+        //If the User exists in the database then the count will be 1 and then true will be returned
         if (count > 0)
         {
             return true;
