@@ -148,6 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             return true;
         }
+        //If there is no user false will be returned
         return false;
     }
 }
