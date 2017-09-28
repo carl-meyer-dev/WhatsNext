@@ -1,6 +1,11 @@
 package com.a2pt.whatsnext.activities;
 
 
+import android.content.ContentUris;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.provider.CalendarContract;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -22,6 +27,8 @@ import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.fragments.SendEmailFragment;
 import com.a2pt.whatsnext.fragments.TimetableFragment;
 import com.a2pt.whatsnext.fragments.UpcomingEventsFragment;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity
@@ -57,6 +64,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Once the user has logged into the application then the system should remain logged in
+        setLoginStatus();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,6 +98,17 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
 
+    }
+
+    //Sets the sharedPreferences of the application.
+    //This ensures that if a user was previously logged into the application they will not have
+    //reenter their credentials and just move straight into the main menu
+    private void setLoginStatus() {
+        SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("loggedIn", "");
+        editor.commit();
     }
 
     /**
@@ -181,6 +201,16 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_maintain_schedule_event) {
             //Create an intent that will Open the Default Calendar app on the Phone
+            Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+
+            //Sets the opening of the calendar based on time not event
+            builder.appendPath("time");
+            //Sets the calendar on the right time
+            ContentUris.appendId(builder, Calendar.getInstance().getTimeInMillis());
+            //Create new intent and start activity
+            Intent intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
+            startActivity(intent);
+
 
         }else if (id == R.id.nav_maintain_assignments) {
             //similarly replace the fragment_container with Maintain Assignments Fragment
@@ -266,5 +296,14 @@ public class MainActivity extends AppCompatActivity
 
     public void LogOut(MenuItem item) {
         //Go to Login Screen
+        SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("loggedIn");
+        editor.commit();
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

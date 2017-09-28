@@ -1,1 +1,0 @@
-INSERT INTO TABLE Activity (ModID, ActType, TestName, TestTime, TestVenue) VALUES ('WRAP302', 'test', 'Semester Test 1', '17:00', '9 02 06')
