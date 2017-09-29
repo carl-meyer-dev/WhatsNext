@@ -35,8 +35,8 @@
 
     <!-- Test Values for Spinner -->
     <string-array name="modules">
-        <item>WRAP301</item>
         <item>WRAP302</item>
+        <item>WRAP301</item>
         <item>WRA301</item>
     </string-array>
 

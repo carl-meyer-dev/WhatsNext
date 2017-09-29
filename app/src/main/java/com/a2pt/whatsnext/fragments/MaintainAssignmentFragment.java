@@ -8,10 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.activities.MainActivity;
+import com.a2pt.whatsnext.adapters.AssignmentAdapter;
+import com.a2pt.whatsnext.models.Activity;
+import com.a2pt.whatsnext.services.Utility;
+
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Carl on 2017-07-29.
@@ -21,11 +31,25 @@ public class MaintainAssignmentFragment extends Fragment {
     View view;
     FloatingActionButton fabNew;
     NewAssignmentFragment newAssignmentFragment = new NewAssignmentFragment();
+    ListView lvAssignments;
+    AssignmentAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.maintain_assignment_layout, container, false);
+
+        lvAssignments = (ListView)view.findViewById(R.id.ma_lvAssignments);
+
+        final List<Activity> assignments = new ArrayList<>();
+
+        assignments.add(new Activity("WRAP302", Activity.Activity_Type.ASSIGNMENT, "Assignment 05", new LocalDate(2017,9,19), new LocalTime(23,35), Activity.Assignment_Status.PENDING));
+        assignments.add(new Activity("WRAP302", Activity.Activity_Type.ASSIGNMENT, "Assignment 6", new LocalDate(2017,9,24), new LocalTime(12,5), Activity.Assignment_Status.PENDING));
+
+        adapter = new AssignmentAdapter(getActivity(), assignments);
+
+        lvAssignments.setAdapter(adapter);
+
 
         //This code is for Testing purposes, it should be replaced with a proper adapter that obtains items from Database
         //https://developer.android.com/guide/topics/ui/controls/spinner.html
@@ -43,6 +67,7 @@ public class MaintainAssignmentFragment extends Fragment {
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, newAssignmentFragment).addToBackStack(null).commit();
             }
         });
+
 
 
         return view;
