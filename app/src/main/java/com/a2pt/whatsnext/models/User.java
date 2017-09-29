@@ -8,16 +8,16 @@ import java.io.Serializable;
 
 public class User implements Serializable{
 
-    public static enum User_Type {STUDENT, LECTURER};
+
 
     private String userID;
     private String userName; //We need to add User Name and Surname so we can Display it on the Nav Header
     private String userEmail;
     private String userPassword;
-    private User_Type userType;
+    private String userType;
     private String courseInfo; //we need to add this, as this will be either "BSc Computer Science" for Students or "WRAP302, WRAP301, WRA301" for lecturers
 
-    public User(String userID, String userName, String userEmail, String userPassword, User_Type userType, String courseInfo) {
+    public User(String userID, String userName, String userEmail, String userPassword, String userType, String courseInfo) {
         this.userID = userID;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -42,11 +42,23 @@ public class User implements Serializable{
         return userPassword;
     }
 
-    public User_Type getUserType() {
+    public String getUserType() {
         return userType;
     }
 
     public String getCourseInfo() {
         return courseInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID='" + userID + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userType='" + userType + '\'' +
+                ", courseInfo='" + courseInfo + '\'' +
+                '}';
     }
 }

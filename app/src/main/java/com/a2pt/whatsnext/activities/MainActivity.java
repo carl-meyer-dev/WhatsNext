@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.a2pt.whatsnext.fragments.HomeFragment;
@@ -27,6 +28,7 @@ import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.fragments.SendEmailFragment;
 import com.a2pt.whatsnext.fragments.TimetableFragment;
 import com.a2pt.whatsnext.fragments.UpcomingEventsFragment;
+import com.a2pt.whatsnext.models.User;
 
 import java.util.Calendar;
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     The Default user is 0 - Student and once Switch User is pressed in the toolbar Menu it switches between 1 and 0.
      */
     int userType = 0;
+    User user;
 
     //Make View Variables
     //==============================================================================================
@@ -76,17 +79,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         //==========================================================================================
         //OnCreate Custom Code:
-
-
-        //Get Reference to Views:
         //==========================================================================================
-        tvNavHeaderDegree = (TextView)findViewById(R.id.tvNavHeaderDegree);
-        tvNavHeaderName = (TextView)findViewById(R.id.tvNavHeaderName);
-        tvNavHeaderUsername = (TextView)findViewById(R.id.tvNavHeaderUsername);
-
-
+        //Get Bundle, Set Nav Menu and User Info
+        Bundle bundle = getIntent().getExtras();
+        user = (User)bundle.getSerializable("user");
 
         //==========================================================================================
+
         //Handle Fragments and FragmentManager
         fragmentManager = getSupportFragmentManager(); //get the fragment manager, using supportFragment Manager to support earlier versions of Android
         //Get the Frame Layout that will hold the Fragments
@@ -97,7 +96,15 @@ public class MainActivity extends AppCompatActivity
             fragment = new HomeFragment();
             fragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
+        //==========================================================================================
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        setNavDrawer();
     }
 
     //Sets the sharedPreferences of the application.
@@ -108,7 +115,7 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("loggedIn", "");
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -252,6 +259,35 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void setNavDrawer(){
+        //Clear the current Drawer Menu
+        navigationView.getMenu().clear();
+
+        if(user.getUserType().equalsIgnoreCase("student")) {
+            System.out.println("LOGGED IN AS STUDENT");
+            //inflate the new drawer menu (lecturer Drawer Menu)
+            navigationView.inflateMenu(R.menu.activity_main_drawer_student);
+            userType = 0;
+        }else {
+            System.out.println("LOGGED IN AS LECTURER");
+            //inflate the new drawer menu (lecturer Drawer Menu)
+            navigationView.inflateMenu(R.menu.activity_main_drawer_lecturer);
+            userType = 1;
+        }
+
+        View header = navigationView.getHeaderView(0);
+
+        tvNavHeaderDegree = (TextView)header.findViewById(R.id.tvNavHeaderDegree);
+        tvNavHeaderName = (TextView)header.findViewById(R.id.tvNavHeaderName);
+        tvNavHeaderUsername = (TextView)header.findViewById(R.id.tvNavHeaderUsername);
+
+        tvNavHeaderName.setText(user.getUserName());
+        tvNavHeaderUsername.setText(user.getUserEmail());
+        tvNavHeaderDegree.setText(user.getCourseInfo());
+
+
+    }
+
     public void SwitchUser(MenuItem item) {
         //TODO: This will be set Dynamically according to user log in
 
@@ -278,7 +314,7 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().clear();
             //inflate the new drawer menu (lecturer Drawer Menu)
             navigationView.inflateMenu(R.menu.activity_main_drawer_student);
-            userType = 1;
+            userType = 0;
             //remove all fragments from fragmentStack to go back to HomeFragment
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             //set the NavHeader Textviews text (this will later be done when Logged in. This is only for testing purposes)
