@@ -1,0 +1,5 @@
+CREATE TABLE User (UserID varchar(25) NOT NULL UNIQUE PRIMARY KEY, UserEmail varchar(50) NOT NULL, UserPass varchar(30) NOT NULL, UserType varchar(20) DEFAULT 'Student')
+CREATE TABLE Teaches (SessionID int NOT NULL PRIMARY KEY, UserID varchar(25) NOT NULL FOREIGN KEY, ModID varchar(8) NOT NULL FOREIGN KEY)
+CREATE TABLE Session (SessionID int NOT NULL PRIMARY KEY AUTO_INCREMENT, SessionStart time, SessionEnd time)
+CREATE TABLE Activity (ModID varchar(8) NOT NULL PRIMARY KEY, ActType varchar(25), AssignmentTitle varchar(50), AssignmentDueDate date, AssignmentSubmissionTime time, AssignmentStatus boolean, TestName varchar(25, TestTime time, LectureVenue varchar(50), SessionID int NOT NULL FOREIGN KEY)
+CREATE TABLE Module (ModID varchar(8) NOT NULL UNIQUE PRIMARY KEY, ModName varchar(100)

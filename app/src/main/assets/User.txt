@@ -1,1 +1,0 @@
-INSERT INTO TABLE User (UserID, UserEmail, UserPass, UserType) VALUES ("s215144988", "s215144988@nmmu.ac.za", "logmein", "student")
