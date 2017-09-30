@@ -47,6 +47,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //=========================================================================================
+
+        SharedPreferences getState = getSharedPreferences("State", MODE_PRIVATE);
+
+        if (getState.getString("loggedIn", "").toString().equals("loggedIn"))
+        {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void login(View view) {
@@ -71,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
+            finish(); //This removes the users ability to go back into the login screen
 
         }else{
             Toast toast = Toast.makeText(this, "Invalid Login!", Toast.LENGTH_LONG);
