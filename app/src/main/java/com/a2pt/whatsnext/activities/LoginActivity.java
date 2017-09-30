@@ -48,13 +48,16 @@ public class LoginActivity extends AppCompatActivity {
 
         //=========================================================================================
 
-        SharedPreferences getState = getSharedPreferences("State", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
 
-        if (getState.getString("loggedIn", "").toString().equals("loggedIn"))
+        boolean check = preferences.getBoolean("loggedIn", false);
+        if (check)
         {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
+
     }
 
     public void login(View view) {
@@ -72,6 +75,10 @@ public class LoginActivity extends AppCompatActivity {
             //Get the user Object from the Database
             User user = ITSdb.getUser(loginUsername);
             System.out.println(user.toString());
+
+            //Sets the users state to be true. This will if they have logged in before to instantly go to their main page
+            setState(loginUsername, user.getUserType());
+
             //put user inside bundle to be sent
             Bundle bundle= new Bundle();
             bundle.putSerializable("user", user);
@@ -89,6 +96,16 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void setState(String usertype, String loginUsername) {
+        SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("loggedIn", true);
+        editor.putString("userName", loginUsername);
+        editor.putString("usertype", usertype);
+        editor.commit();
     }
 
     public void insertData(){
