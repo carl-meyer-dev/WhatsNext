@@ -15,4 +15,20 @@ public class Module implements Serializable {
         this.modID = modID;
         this.modName = modName;
     }
+
+    public String getModID() {
+        return modID;
+    }
+
+    public void setModID(String modID) {
+        this.modID = modID;
+    }
+
+    public String getModName() {
+        return modName;
+    }
+
+    public void setModName(String modName) {
+        this.modName = modName;
+    }
 }

@@ -1,11 +1,16 @@
 package com.a2pt.whatsnext.services;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.a2pt.whatsnext.models.Activity;
+import com.a2pt.whatsnext.models.Module;
+import com.a2pt.whatsnext.models.Session;
+import com.a2pt.whatsnext.models.Teaches;
 import com.a2pt.whatsnext.models.User;
 
 /**
@@ -18,6 +23,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ITS.db";
 
+    //Creating the User table
     private static final String TABLE_USERS = "users";
     private static final String KEY_ID = "id";
     private static final String KEY_USERNAME = "username";
@@ -25,6 +31,37 @@ public class ITSdbManager extends SQLiteOpenHelper{
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_TYPE_OF_USER = "type_of_user";
     private static final String KEY_COURSEINFO = "course_info";
+
+    //Creating the ACTIVITY Table
+    private static final String TABLE_ACTIVITY = "activity";
+    private static final String KEY_ACT_MOD_ID = "mod_id";
+    private static final String KEY_ACT_ACT_TYPE = "act_type";
+    private static final String KEY_ACT_TITLE = "title";
+    private static final String KEY_ACT_DUE_DATE = "assignment_due_date";
+    private static final String KEY_ACT_SUBMISSION_TIME = "assignment_submission_time";
+    private static final String KEY_ACT_STATUS = "assignment_status";
+    private static final String KEY_ACT_TEST_NAME = "test_name";
+    private static final String KEY_ACT_TEST_TIME = "test_time";
+    private static final String KEY_ACT_LECTURE_VENUE = "lecture_venue";
+    private static final String KEY_ACT_SESSION_ID = "session_id";
+
+    //Creating the Module Table
+    private static final String TABLE_MODULE = "modules";
+    private static final String KEY_MODULE_MOD_ID = "mod_id";
+    private static final String KEY_MODULE_MOD_NAME = "mod_name";
+
+    //Creating the Teaches Table
+    private static final String TABLE_TEACHES = "teaches";
+    private static final String KEY_TEACHES_SESSION_ID = "session_id";
+    private static final String KEY_TEACHES_ID = "teaches_id"; //This is the same as the userid
+    private static final String KEY_TEACHES_MOD_ID = "mod_id";
+
+    //Creating the Session Table
+    private static final String TABLE_SESSION = "sessions";
+    private static final String KEY_SESSION_SESSION_ID = "session_id";
+    private static final String KEY_SESSION_SESSION_START = "session_start";
+    private static final String KEY_SESSION_SESSION_END = "session_end";
+    private static final String KEY_SESSION_DAY_OF_WEEK = "session_day_of_week";
 
 
 
@@ -46,7 +83,42 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_COURSEINFO + " TEXT"
                 + ")";
 
+        String CREATE_MODULE_TABLE = "CREATE TABLE " + TABLE_MODULE + " ("
+                + KEY_MODULE_MOD_ID + " TEXT PRIMARY KEY,"
+                + KEY_MODULE_MOD_NAME + " TEXT"
+                + ")";
+
+        String CREATE_TEACHES_TABLE = "CREATE TABLE " + TABLE_TEACHES + " ("
+                + KEY_TEACHES_SESSION_ID + " INTEGER PRIMARY KEY,"
+                + KEY_TEACHES_ID + " TEXT,"
+                + KEY_TEACHES_MOD_ID + " TEXT, "
+                + "FOREIGN KEY(" + KEY_TEACHES_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_ID + "), "
+                + "FOREIGN KEY (" + KEY_TEACHES_MOD_ID + ") REFERENCES " + TABLE_MODULE + "(" + KEY_MODULE_MOD_ID + "))";
+
+        String CREATE_SESSION_TABLE = "CREATE TABLE " + TABLE_SESSION + " ("
+                + KEY_SESSION_SESSION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_SESSION_SESSION_START + " TIME,"
+                + KEY_SESSION_SESSION_END + " TIME,"
+                + KEY_SESSION_DAY_OF_WEEK + " TEXT)";
+
+        String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + TABLE_ACTIVITY + " ("
+                + KEY_ACT_MOD_ID + " TEXT PRIMARY KEY,"
+                + KEY_ACT_ACT_TYPE + " TEXT,"
+                + KEY_ACT_TITLE + " TEXT,"
+                + KEY_ACT_DUE_DATE + " DATE,"
+                + KEY_ACT_SUBMISSION_TIME + " DATE,"
+                + KEY_ACT_STATUS + " boolean,"
+                + KEY_ACT_TEST_NAME + " TEXT,"
+                + KEY_ACT_TEST_TIME + " TIME,"
+                + KEY_ACT_LECTURE_VENUE + " TEXT,"
+                + KEY_ACT_SESSION_ID + " INTEGER,"
+                + " FOREIGN KEY(" + KEY_ACT_SESSION_ID + ") REFERENCES " + TABLE_SESSION + "("+KEY_SESSION_SESSION_ID+"))";
+
         db.execSQL(CREATE_USERS_TABLE);
+        db.execSQL(CREATE_MODULE_TABLE);
+        db.execSQL(CREATE_TEACHES_TABLE);
+        db.execSQL(CREATE_SESSION_TABLE);
+        db.execSQL(CREATE_ACTIVITY_TABLE);
     }
 
     @Override
@@ -70,6 +142,69 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_COURSEINFO, user.getCourseInfo());
 
         db.insert(TABLE_USERS, null, values);
+        db.close();
+    }
+
+    public void insertActivity(Activity activity)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_ACT_MOD_ID, activity.getModID());
+        values.put(KEY_ACT_ACT_TYPE, activity.getActType().toString());
+        values.put(KEY_ACT_TITLE, activity.getAssignmentTitle());
+        values.put(KEY_ACT_DUE_DATE, activity.getAssignmentDueDate().toString());
+        values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString());
+        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus().toString());
+        values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
+        values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString());
+        values.put(KEY_ACT_LECTURE_VENUE, activity.getTestVenue());
+        values.put(KEY_ACT_SESSION_ID, activity.getSessionID());
+
+        db.insert(TABLE_ACTIVITY, null, values);
+        db.close();
+    }
+
+    public void insertSession(Session session)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_SESSION_SESSION_ID, session.getSessionID());
+        values.put(KEY_SESSION_SESSION_START, session.getStartTime().toString());
+        values.put(KEY_SESSION_SESSION_END, session.getEndTime().toString());
+        values.put(KEY_SESSION_DAY_OF_WEEK, session.getDayOfWeek().toString());
+
+        db.insert(TABLE_SESSION, null, values);
+        db.close();
+    }
+
+    public void insertTeaches(Teaches teaches)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_TEACHES_SESSION_ID, teaches.getSessionID());
+        values.put(KEY_TEACHES_ID, teaches.getUserID());
+        values.put(KEY_TEACHES_MOD_ID, teaches.getModID());
+
+        db.insert(TABLE_TEACHES, null, values);
+        db.close();
+    }
+
+    public void insertModule(Module module)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_MODULE_MOD_ID, module.getModID());
+        values.put(KEY_MODULE_MOD_NAME, module.getModName());
+
+        db.insert(TABLE_MODULE, null, values);
         db.close();
     }
 
