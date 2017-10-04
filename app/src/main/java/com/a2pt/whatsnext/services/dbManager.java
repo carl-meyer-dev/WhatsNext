@@ -1,6 +1,5 @@
 package com.a2pt.whatsnext.services;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,14 +13,12 @@ import com.a2pt.whatsnext.models.Teaches;
 import com.a2pt.whatsnext.models.User;
 
 /**
- * Created by Carl on 2017-09-29.
+ * Created by Carl on 2017-10-04.
  */
 
-public class ITSdbManager extends SQLiteOpenHelper{
-
-    // ITS Database Schema
+public class dbManager extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "ITS.db";
+    private static final String DATABASE_NAME = "local.db";
 
     //Creating the User table
     private static final String TABLE_USERS = "users";
@@ -65,7 +62,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
 
 
-    public ITSdbManager(Context context) {
+    public dbManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -233,49 +230,5 @@ public class ITSdbManager extends SQLiteOpenHelper{
         return user;
     }
 
-    public boolean getCompareLoginCredentials(String loginUsername, String loginPassword) {
-
-        System.out.println("CHECKING LOGIN DETAILS");
-        SQLiteDatabase db = this.getReadableDatabase();
-
-
-
-        boolean validLogin = false;
-
-        //Get all the Usernames and Passwords from the Users Table
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS, null);
-        System.out.println("SUCESSFULLY QUERIED DB");
-
-        //get Column index of userID and password fields
-        int userIDIndex = cursor.getColumnIndex("id");
-        int passwordIndex = cursor.getColumnIndex("password");
-        cursor.moveToFirst();
-        System.out.println(cursor.moveToFirst());
-
-        // loop through data to get and compare login details
-        if(true){ //Go to first entry
-            do {
-                System.out.println("DB DEBUG: getting username and password from Table");
-                String dbUsername = cursor.getString(userIDIndex);
-                String dbPassword = cursor.getString(passwordIndex);
-                System.out.println("DB DEBUG: dbUsername = " + dbUsername);
-                System.out.println("DB DEBUG: dbPassword = " + dbPassword);
-
-
-                if (dbUsername.equals(loginUsername) && dbPassword.equals(loginPassword)) {
-                    validLogin = true;
-                    break;
-                }
-
-
-            }while(cursor.moveToNext());
-        }
-
-
-        cursor.close();
-
-
-        return validLogin;
-    }
 
 }
