@@ -21,6 +21,7 @@ import com.a2pt.whatsnext.models.User;
 import com.a2pt.whatsnext.services.ITSdbManager;
 import com.a2pt.whatsnext.services.dbManager;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 import java.io.File;
@@ -193,6 +194,26 @@ public class LoginActivity extends AppCompatActivity {
         ITSdb.insertLecture(activity);
         activity = new Activity("WRMS302", "lecture", "09 02 02", new LocalTime(9,5), "friday", 0);
         ITSdb.insertLecture(activity);
+
+        activity = new Activity("WRAP302", "assignment", "Assignment 5", new LocalDate(2017,9,12), new LocalTime(23,35), 0);
+        ITSdb.insertAssignment(activity);
+        activity = new Activity("STAT203", "assignment", "Prac 2", new LocalDate(2017,9,12), new LocalTime(14,5), 0);
+        ITSdb.insertAssignment(activity);
+        activity = new Activity("WRR301", "assignment", "Final", new LocalDate(2017,10,23), new LocalTime(12,0), 0);
+        ITSdb.insertAssignment(activity);
+
+        activity = new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48");
+        ITSdb.insertTest(activity);
+        activity = new Activity("MATH214", "test", "Seme Test 2",new LocalDate(2017,9,14),new LocalTime(18,0), "Heinz Benz Hall");
+        ITSdb.insertTest(activity);
+        activity = new Activity("WRL301", "test", "Seme Test 2",new LocalDate(2017,10,4),new LocalTime(18,0), "35 00 17");
+        ITSdb.insertTest(activity);
+        activity = new Activity("WRAP302", "test", "Seme Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04");
+        ITSdb.insertTest(activity);
+        activity = new Activity("STAT203", "test", "Seme Test 2",new LocalDate(2017,10,10),new LocalTime(18,0), "07 02 48");
+        ITSdb.insertTest(activity);
+        activity = new Activity("MATH203", "test", "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre");
+        ITSdb.insertTest(activity);
 
     }
 

@@ -38,6 +38,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
     //Creating the ACTIVITY Table
     private static final String TABLE_ACTIVITY = "activity";
+    private static final String KEY_ACT_ID = "id";
     private static final String KEY_ACT_MOD_ID = "mod_id";
     private static final String KEY_ACT_ACT_TYPE = "act_type";
     private static final String KEY_ACT_TITLE = "title";
@@ -113,7 +114,8 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_SESSION_DAY_OF_WEEK + " TEXT)";
 
         String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + TABLE_ACTIVITY + " ("
-                + KEY_ACT_MOD_ID + " TEXT PRIMARY KEY,"
+                + KEY_ACT_ID + " INTEGER PRIMARY KEY,"
+                + KEY_ACT_MOD_ID + " TEXT ,"
                 + KEY_ACT_ACT_TYPE + " TEXT,"
                 + KEY_ACT_TITLE + " TEXT,"
                 + KEY_ACT_DUE_DATE + " DATE,"
@@ -204,8 +206,9 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_MOD_ID, activity.getModID());
         values.put(KEY_ACT_ACT_TYPE, activity.getActType());
         values.put(KEY_ACT_VENUE, activity.getLectureVenue());
-        values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString());
+        values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString().substring(0,5));
         values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
+        values.put(KEY_ACT_LECTURE_DUPLICATE, activity.getIsDuplicate());
 
         db.insert(TABLE_ACTIVITY, null, values);
         db.close();
@@ -223,7 +226,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_ACT_TYPE, activity.getActType());
         values.put(KEY_ACT_TITLE, activity.getAssignmentTitle());
         values.put(KEY_ACT_DUE_DATE, activity.getAssignmentDueDate().toString());
-        values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString());
+        values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString().substring(0,5));
         values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
 
         db.insert(TABLE_ACTIVITY, null, values);
@@ -241,7 +244,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_ACT_TYPE, activity.getActType());
         values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
         values.put(KEY_ACT_TEST_DATE, activity.getTestDate().toString());
-        values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString());
+        values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString().substring(0,5));
         values.put(KEY_ACT_VENUE, activity.getTestVenue());
 
         db.insert(TABLE_ACTIVITY, null, values);

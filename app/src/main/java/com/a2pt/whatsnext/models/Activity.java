@@ -102,6 +102,10 @@ public class Activity implements Serializable {
         return lectureVenue;
     }
 
+    public int getIsDuplicate() {
+        return isDuplicate;
+    }
+
     public int getSessionID() {
         return sessionID;
     }
