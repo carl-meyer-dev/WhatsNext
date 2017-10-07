@@ -155,42 +155,44 @@ public class LoginActivity extends AppCompatActivity {
         ITSdb.insertData(user);
         user = new User("Nel.Janine", "Janine Nel", "Nel.Janine@nmmu.ac.za", "wrr301", "lecturer", "Computer Science", "WRR301, WRI201, WRI202");
         ITSdb.insertData(user);
+        user = new User("admin", "admin", "admin@nmmu.ac.za", "admin", "lecturer", "admin", "admin");
+        ITSdb.insertData(user);
         //Insert Activities
         Activity activity = new Activity("MATH203", "lecture", "35 00 17", new LocalTime(7,45),"monday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("WRAP302", "lecture", "35 01 01", new LocalTime(9,5), "monday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
 
         activity = new Activity("MATH214 Tut", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("STAT203", "lecture", "04 00 3", new LocalTime(14,5), "tuesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("STAT203 Prac","lecture", "07 02 48", new LocalTime(15,30), "tuesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("STAT203 Tut","lecture", "07 02 48", new LocalTime(16,45), "tuesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
 
         activity = new Activity("STAT203", "lecture", "35 00 17", new LocalTime(7,45),"wednesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("MATH203", "lecture", "35 00 18", new LocalTime(9,5),"wednesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("WRR301", "lecture", "09 02 02", new LocalTime(10,25),"wednesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(14,5),"wednesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("WRAP302 Prac", "lecture", "09 02 04", new LocalTime(15,35),"wednesday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
 
         activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(7,45),"thursday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("WRL301", "lecture", "35 00 18", new LocalTime(10,25),"thursday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("WRL301 Tut", "lecture", "35 00 16", new LocalTime(14,5),"thursday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("STAT203", "lecture", "35 00 18", new LocalTime(16,45),"thursday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
         activity = new Activity("WRMS302", "lecture", "09 02 02", new LocalTime(9,5), "friday", 0);
-        ITSdb.insertActivity(activity);
+        ITSdb.insertLecture(activity);
 
     }
 

@@ -65,7 +65,8 @@ public class HomeFragment extends Fragment {
         Utility.setListViewHeightBasedOnChildren(lvLectures, 340); //The second parameter is the MAGIC NUMBER which corrects the height
         //Add Dummy Assignments
         //Assignments.add(new Activity("WRAP302", Activity.Activity_Type.ASSIGNMENT, "Assignment 05", new LocalDate(2017,9,20), new LocalTime(23,35), Activity.Assignment_Status.PENDING));
-        Assignments.add(new Activity("WRR301","assignment", "Presentation", new LocalDate(2017,9,20), new LocalTime(12,0), 0));
+        Assignments.add(new Activity("WRR301","assignment", "Presentation", new LocalDate(2017,9,20), new LocalTime(12,0), 0
+        ));
        // Assignments.add(new Activity("WRR301", Activity.Activity_Type.ASSIGNMENT, "Presentation", new LocalDate(2017,8,22), new LocalTime(14,5), Activity.Assignment_Status.PENDING));
 
         assignmentsAdapter = new AssignmentAdapter(getActivity(), Assignments);

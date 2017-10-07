@@ -47,7 +47,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
     private static final String KEY_ACT_TEST_NAME = "test_name";
     private static final String KEY_ACT_TEST_TIME = "test_time";
     private static final String KEY_ACT_TEST_DATE = "test_date";
-    private static final String KEY_ACT_LECTURE_VENUE = "lecture_venue";
+    private static final String KEY_ACT_VENUE = "venue";
     private static final String KEY_ACT_LECTURE_START_TIME = "lecture_start_time";
     private static final String KEY_ACT_LECTURE_DAY_OF_WEEK = "lecture_day_of_week";
     private static final String KEY_ACT_LECTURE_DUPLICATE = "duplicate_lecture";
@@ -122,7 +122,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_ACT_TEST_NAME + " TEXT,"
                 + KEY_ACT_TEST_TIME + " TIME,"
                 + KEY_ACT_TEST_DATE + " DATE,"
-                + KEY_ACT_LECTURE_VENUE + " TEXT,"
+                + KEY_ACT_VENUE + " TEXT,"
                 + KEY_ACT_LECTURE_START_TIME + " TEXT,"
                 + KEY_ACT_LECTURE_DAY_OF_WEEK + " TEXT,"
                 + KEY_ACT_LECTURE_DUPLICATE + " INTEGER)";
@@ -150,7 +150,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        //TODO: Here we can have a loop inserting all Dummy Accounts
+
 
         values.put(KEY_ID, user.getUserID());
         values.put(KEY_USERNAME, user.getUserName());
@@ -164,8 +164,12 @@ public class ITSdbManager extends SQLiteOpenHelper{
         db.close();
     }
 
+    /*
+    * THIS WILL NOT WORK. It causes Nullpointer Exceptions and does not insert activities correctly
+    *
     public void insertActivity(Activity activity)
     {
+        System.out.println("INSERT ACTIVITY!");
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -178,13 +182,71 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
         values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
         values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString());
-        values.put(KEY_ACT_LECTURE_VENUE, activity.getTestVenue());
+        values.put(KEY_ACT_VENUE, activity.getTestVenue());
         values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString());
         values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
 
         db.insert(TABLE_ACTIVITY, null, values);
         db.close();
-        System.out.println("INSERTED ACTIVITY OF TYPE " + activity.getActType());
+
+    }
+*/
+
+    /**
+     * Instead have separate insert methods for each activity type.
+     * Then there wont be null exceptions
+     */
+    public void insertLecture(Activity activity){
+        System.out.println("DEBUG ITSdbManager: INSERT LECTURE");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_ACT_MOD_ID, activity.getModID());
+        values.put(KEY_ACT_ACT_TYPE, activity.getActType());
+        values.put(KEY_ACT_VENUE, activity.getLectureVenue());
+        values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString());
+        values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
+
+        db.insert(TABLE_ACTIVITY, null, values);
+        db.close();
+
+    }
+
+    public void insertAssignment(Activity activity){
+        System.out.println("DEBUG ITSdbManager: INSERT ASSIGNMENT");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_ACT_MOD_ID, activity.getModID());
+        values.put(KEY_ACT_ACT_TYPE, activity.getActType());
+        values.put(KEY_ACT_TITLE, activity.getAssignmentTitle());
+        values.put(KEY_ACT_DUE_DATE, activity.getAssignmentDueDate().toString());
+        values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString());
+        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
+
+        db.insert(TABLE_ACTIVITY, null, values);
+        db.close();
+
+    }
+
+    public void insertTest(Activity activity){
+        System.out.println("DEBUG ITSdbManager: INSERT ASSIGNMENT");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_ACT_MOD_ID, activity.getModID());
+        values.put(KEY_ACT_ACT_TYPE, activity.getActType());
+        values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
+        values.put(KEY_ACT_TEST_DATE, activity.getTestDate().toString());
+        values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString());
+        values.put(KEY_ACT_VENUE, activity.getTestVenue());
+
+        db.insert(TABLE_ACTIVITY, null, values);
+        db.close();
+
     }
 
     public void insertSession(Session session)
