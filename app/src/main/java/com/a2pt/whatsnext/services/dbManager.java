@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.icu.text.SimpleDateFormat;
+import android.os.Environment;
 
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.models.Module;
@@ -17,6 +18,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.io.File;
 
 /**
  * Created by Carl on 2017-10-04.
@@ -47,8 +50,9 @@ public class dbManager extends SQLiteOpenHelper {
     private static final String KEY_ACT_TEST_NAME = "test_name";
     private static final String KEY_ACT_TEST_TIME = "test_time";
     private static final String KEY_ACT_TEST_DATE = "test_date";
-    private static final String KEY_ACT_LECTURE_VENUE = "lecture_venue";
-    private static final String KEY_ACT_SESSION_ID = "session_id";
+    private static final String KEY_ACT_VENUE = "venue";
+    private static final String KEY_ACT_LECTURE_START_TIME = "lecture_start_time";
+    private static final String KEY_ACT_LECTURE_DAY_OF_WEEK = "lecture_day_of_week";
     private static final String KEY_ACT_LECTURE_DUPLICATE = "duplicate_lecture";
 
     //Creating the Module Table
@@ -73,6 +77,7 @@ public class dbManager extends SQLiteOpenHelper {
 
     public dbManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
     }
 
     //Creating Tables
@@ -114,14 +119,15 @@ public class dbManager extends SQLiteOpenHelper {
                 + KEY_ACT_TITLE + " TEXT,"
                 + KEY_ACT_DUE_DATE + " DATE,"
                 + KEY_ACT_SUBMISSION_TIME + " DATE,"
-                + KEY_ACT_STATUS + " boolean,"
+                + KEY_ACT_STATUS + " INTEGER,"
                 + KEY_ACT_TEST_NAME + " TEXT,"
                 + KEY_ACT_TEST_TIME + " TIME,"
                 + KEY_ACT_TEST_DATE + " DATE,"
-                + KEY_ACT_LECTURE_VENUE + " TEXT,"
-                + KEY_ACT_SESSION_ID + " INTEGER,"
-                + KEY_ACT_LECTURE_DUPLICATE + " boolean,"
-                + " FOREIGN KEY(" + KEY_ACT_SESSION_ID + ") REFERENCES " + TABLE_SESSION + "("+KEY_SESSION_SESSION_ID+"))";
+                + KEY_ACT_VENUE + " TEXT,"
+                + KEY_ACT_LECTURE_START_TIME + " TIME,"
+                + KEY_ACT_LECTURE_DAY_OF_WEEK + " TEXT,"
+                + KEY_ACT_LECTURE_DUPLICATE + " INTEGER";
+
 
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_MODULE_TABLE);
@@ -169,11 +175,12 @@ public class dbManager extends SQLiteOpenHelper {
         values.put(KEY_ACT_TITLE, activity.getAssignmentTitle());
         values.put(KEY_ACT_DUE_DATE, activity.getAssignmentDueDate().toString());
         values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString());
-        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus().toString());
+        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
         values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
         values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString());
-        values.put(KEY_ACT_LECTURE_VENUE, activity.getTestVenue());
-        values.put(KEY_ACT_SESSION_ID, activity.getSessionID());
+        values.put(KEY_ACT_VENUE, activity.getTestVenue());
+        values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString());
+        values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
 
         db.insert(TABLE_ACTIVITY, null, values);
         db.close();
@@ -247,7 +254,7 @@ public class dbManager extends SQLiteOpenHelper {
     //adds the module into the database
     public void addAssignment(String modCode, ITSdbManager itsDatabase)
     {
-        String type = "ASSIGNMENT";
+        String type = "assignment";
         String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
             + KEY_ACT_MOD_ID + " = ?";
 
@@ -258,6 +265,7 @@ public class dbManager extends SQLiteOpenHelper {
         try
         {
             cursor = dbToCheck.rawQuery(query, values);
+            cursor.moveToFirst();
 
             do {
                 String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
@@ -267,13 +275,30 @@ public class dbManager extends SQLiteOpenHelper {
                 String submissionTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SUBMISSION_TIME));
                 String status = cursor.getString(cursor.getColumnIndex(KEY_ACT_STATUS));
 
+                /*
+
                 DateTimeFormatter formatterDate = DateTimeFormat.forPattern("dd/MM/yyyy");
                 DateTimeFormatter formatterTime = DateTimeFormat.forPattern("HH:mm:ss");
 
                 LocalTime time = formatterTime.parseLocalTime(submissionTime);
                 LocalDate date = formatterDate.parseLocalDate(dueDate);
+*/
+                //The Dates in the databse will be like 2017/10/23
+                //The TIme in the databse will be like 17:45
 
-                Activity activity = new Activity(id, Activity.Activity_Type.valueOf(typeOfActivity), title, date,time, Activity.Assignment_Status.valueOf(status));
+                String[] temdate = dueDate.split("/"); //split date up into 2017, 10, 23
+                int year = Integer.parseInt(temdate[0]);  //save year as 2017
+                int month = Integer.parseInt(temdate[1]);  //save month as 10
+                int day = Integer.parseInt(temdate[2]); //save day as 23
+                LocalDate dDate = new LocalDate(year, month,day);  //create new local date
+
+
+                String[] temptime = submissionTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime dTime = new LocalTime(hours, minutes);
+
+                Activity activity = new Activity(id, typeOfActivity, title, dDate,dTime, status);
 
                 insertActivity(activity);
             }while(cursor.moveToNext());
@@ -292,7 +317,7 @@ public class dbManager extends SQLiteOpenHelper {
 
     public void addTest(String modCode, ITSdbManager itsDatabase)
     {
-        String type = "TEST";
+        String type = "test";
         String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
                 + KEY_ACT_MOD_ID + " = ?";
 
@@ -308,17 +333,34 @@ public class dbManager extends SQLiteOpenHelper {
                 String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
                 String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
                 String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_NAME));
-                String dueDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_DATE));
-                String submissionTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SUBMISSION_TIME));
-                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_VENUE));
+                String testDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_DATE));
+                String testTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_TIME));
+                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_VENUE));
+
+                /*
 
                 DateTimeFormatter formatterDate = DateTimeFormat.forPattern("dd/MM/yyyy");
                 DateTimeFormatter formatterTime = DateTimeFormat.forPattern("HH:mm:ss");
 
                 LocalTime time = formatterTime.parseLocalTime(submissionTime);
                 LocalDate date = formatterDate.parseLocalDate(dueDate);
+*/
+                //The Dates in the databse will be like 2017/10/23
+                //The TIme in the databse will be like 17:45
 
-                Activity activity = new Activity(id, Activity.Activity_Type.valueOf(typeOfActivity), title, date,time, venue);
+                String[] temdate = testDate.split("/"); //split date up into 2017, 10, 23
+                int year = Integer.parseInt(temdate[0]);  //save year as 2017
+                int month = Integer.parseInt(temdate[1]);  //save month as 10
+                int day = Integer.parseInt(temdate[2]); //save day as 23
+                LocalDate tDate = new LocalDate(year, month,day);  //create new local date
+
+
+                String[] temptime = testTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime startTime = new LocalTime(hours, minutes);
+
+                Activity activity = new Activity(id, typeOfActivity, title, tDate,startTime, venue);
 
                 insertActivity(activity);
             }while(cursor.moveToNext());
@@ -337,7 +379,7 @@ public class dbManager extends SQLiteOpenHelper {
 
     public void addLecture(String modCode, ITSdbManager itsDatabase)
     {
-        String type = "LECTURE";
+        String type = "lecture";
         String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
                 + KEY_ACT_MOD_ID + " = ?";
 
@@ -350,13 +392,19 @@ public class dbManager extends SQLiteOpenHelper {
         {
             cursor = dbToCheck.rawQuery(query, values);
 
+            cursor.moveToFirst();
+
+
+
             do {
                 String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
                 String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
-                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_VENUE));
-                String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SESSION_ID));
-                boolean duplicate = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
+                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_VENUE));
+                String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_START_TIME));
+                String lectureDayOfWeek = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DAY_OF_WEEK));
+                int duplicate = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
 
+                /*
                 //Adding query for checking the session
                 String queryToCheck = "SELECT " + KEY_SESSION_SESSION_START + " FROM " + TABLE_SESSION + " WHERE " + KEY_SESSION_SESSION_ID + " = ?";
                 String[] args = {lectureTime};
@@ -371,11 +419,21 @@ public class dbManager extends SQLiteOpenHelper {
                 String timeLecture = cursorToCheckSession.getString(0);
 
                 DateTimeFormatter formatterTime = DateTimeFormat.forPattern("HH:mm:ss");
-                LocalTime time = formatterTime.parseLocalTime(timeLecture);
+                LocalTime time = formatterTime.parseLocalTime(lectureTime);
+                */
 
-                Activity activity = new Activity(id, Activity.Activity_Type.valueOf(typeOfActivity), venue, time, duplicate);
+                //Note that in the Database the time is stores like this - 17:45
+                //Note that Local Time takes in (int Hours, int Minutes)_ as parameters
+
+                String[] temptime = lectureTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime startTime = new LocalTime(hours, minutes);
+
+                Activity activity = new Activity(id,typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate);
 
                 insertActivity(activity);
+
             }while(cursor.moveToNext());
 
             cursor.close();

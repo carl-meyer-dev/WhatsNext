@@ -43,8 +43,8 @@ public class MaintainAssignmentFragment extends Fragment {
 
         final List<Activity> assignments = new ArrayList<>();
 
-        assignments.add(new Activity("WRAP302", Activity.Activity_Type.ASSIGNMENT, "Assignment 05", new LocalDate(2017,9,19), new LocalTime(23,35), Activity.Assignment_Status.PENDING));
-        assignments.add(new Activity("WRAP302", Activity.Activity_Type.ASSIGNMENT, "Assignment 6", new LocalDate(2017,9,24), new LocalTime(12,5), Activity.Assignment_Status.PENDING));
+        assignments.add(new Activity("WRAP302", "assignment", "Assignment 05", new LocalDate(2017,9,19), new LocalTime(23,35), 0));
+        assignments.add(new Activity("WRAP302", "assignment", "Assignment 6", new LocalDate(2017,9,24), new LocalTime(12,5), 0));
 
         adapter = new AssignmentAdapter(getActivity(), assignments);
 

@@ -44,19 +44,18 @@ public class UpcomingEventsFragment extends Fragment {
         final List<Activity> tests = new ArrayList<>();
 
         //add dummy variables
-        assignments.add(new Activity("WRAP302", Activity.Activity_Type.ASSIGNMENT, "Assignment 5", new LocalDate(2017,9,12), new LocalTime(23,35), Activity.Assignment_Status.PENDING));
-        assignments.add(new Activity("STAT203", Activity.Activity_Type.ASSIGNMENT, "Prac 2", new LocalDate(2017,9,12), new LocalTime(14,5), Activity.Assignment_Status.PENDING));
-        assignments.add(new Activity("WRR301", Activity.Activity_Type.ASSIGNMENT, "Presentation", new LocalDate(2017,9,20), new LocalTime(10,25), Activity.Assignment_Status.PENDING));
-        assignments.add(new Activity("WRR301", Activity.Activity_Type.ASSIGNMENT, "Final", new LocalDate(2017,10,23), new LocalTime(12,0), Activity.Assignment_Status.PENDING));
+        assignments.add(new Activity("WRAP302", "assignment", "Assignment 5", new LocalDate(2017,9,12), new LocalTime(23,35), 0));
+        assignments.add(new Activity("STAT203", "assignment", "Prac 2", new LocalDate(2017,9,12), new LocalTime(14,5), 0));
+        assignments.add(new Activity("WRR301", "assignment", "Final", new LocalDate(2017,10,23), new LocalTime(12,0), 0));
 
 
 
-        tests.add(new Activity("STAT203", Activity.Activity_Type.TEST, "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48"));
-        tests.add(new Activity("MATH214", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,9,14),new LocalTime(18,0), "Heinz Benz Hall"));
-        tests.add(new Activity("WRL301", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,4),new LocalTime(18,0), "35 00 17"));
-        tests.add(new Activity("WRAP302", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04"));
-        tests.add(new Activity("STAT203", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,10),new LocalTime(18,0), "07 02 48"));
-        tests.add(new Activity("MATH203", Activity.Activity_Type.TEST, "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre"));
+        tests.add(new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48"));
+        tests.add(new Activity("MATH214", "test", "Seme Test 2",new LocalDate(2017,9,14),new LocalTime(18,0), "Heinz Benz Hall"));
+        tests.add(new Activity("WRL301", "test", "Seme Test 2",new LocalDate(2017,10,4),new LocalTime(18,0), "35 00 17"));
+        tests.add(new Activity("WRAP302", "test", "Seme Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04"));
+        tests.add(new Activity("STAT203", "test", "Seme Test 2",new LocalDate(2017,10,10),new LocalTime(18,0), "07 02 48"));
+        tests.add(new Activity("MATH203", "test", "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre"));
 
 
 

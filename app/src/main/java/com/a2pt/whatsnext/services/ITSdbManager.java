@@ -6,12 +6,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.models.Module;
 import com.a2pt.whatsnext.models.Session;
 import com.a2pt.whatsnext.models.Teaches;
 import com.a2pt.whatsnext.models.User;
+
+import java.io.File;
 
 /**
  * Created by Carl on 2017-09-29.
@@ -45,7 +48,8 @@ public class ITSdbManager extends SQLiteOpenHelper{
     private static final String KEY_ACT_TEST_TIME = "test_time";
     private static final String KEY_ACT_TEST_DATE = "test_date";
     private static final String KEY_ACT_LECTURE_VENUE = "lecture_venue";
-    private static final String KEY_ACT_SESSION_ID = "session_id";
+    private static final String KEY_ACT_LECTURE_START_TIME = "lecture_start_time";
+    private static final String KEY_ACT_LECTURE_DAY_OF_WEEK = "lecture_day_of_week";
     private static final String KEY_ACT_LECTURE_DUPLICATE = "duplicate_lecture";
 
     //Creating the Module Table
@@ -69,7 +73,10 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
 
     public ITSdbManager(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        super(context, DATABASE_NAME , null, DATABASE_VERSION); //for default location
+
+
     }
 
     //Creating Tables
@@ -111,14 +118,15 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_ACT_TITLE + " TEXT,"
                 + KEY_ACT_DUE_DATE + " DATE,"
                 + KEY_ACT_SUBMISSION_TIME + " DATE,"
-                + KEY_ACT_STATUS + " boolean,"
+                + KEY_ACT_STATUS + " INTEGER,"
                 + KEY_ACT_TEST_NAME + " TEXT,"
                 + KEY_ACT_TEST_TIME + " TIME,"
                 + KEY_ACT_TEST_DATE + " DATE,"
                 + KEY_ACT_LECTURE_VENUE + " TEXT,"
-                + KEY_ACT_SESSION_ID + " INTEGER,"
-                + KEY_ACT_LECTURE_DUPLICATE + " boolean,"
-                + " FOREIGN KEY(" + KEY_ACT_SESSION_ID + ") REFERENCES " + TABLE_SESSION + "("+KEY_SESSION_SESSION_ID+"))";
+                + KEY_ACT_LECTURE_START_TIME + " TEXT,"
+                + KEY_ACT_LECTURE_DAY_OF_WEEK + " TEXT,"
+                + KEY_ACT_LECTURE_DUPLICATE + " INTEGER)";
+
 
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_MODULE_TABLE);
@@ -163,18 +171,20 @@ public class ITSdbManager extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
 
         values.put(KEY_ACT_MOD_ID, activity.getModID());
-        values.put(KEY_ACT_ACT_TYPE, activity.getActType().toString());
+        values.put(KEY_ACT_ACT_TYPE, activity.getActType());
         values.put(KEY_ACT_TITLE, activity.getAssignmentTitle());
         values.put(KEY_ACT_DUE_DATE, activity.getAssignmentDueDate().toString());
         values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString());
-        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus().toString());
+        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
         values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
         values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString());
         values.put(KEY_ACT_LECTURE_VENUE, activity.getTestVenue());
-        values.put(KEY_ACT_SESSION_ID, activity.getSessionID());
+        values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString());
+        values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
 
         db.insert(TABLE_ACTIVITY, null, values);
         db.close();
+        System.out.println("INSERTED ACTIVITY OF TYPE " + activity.getActType());
     }
 
     public void insertSession(Session session)

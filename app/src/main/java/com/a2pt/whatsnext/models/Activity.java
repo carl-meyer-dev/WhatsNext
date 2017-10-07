@@ -13,18 +13,14 @@ import java.util.Date;
 
 public class Activity implements Serializable {
 
-    public static enum Activity_Type {LECTURE, ASSIGNMENT, TEST};
-    public static enum Assignment_Status {PENDING, COMPLETED};
-    public static enum Day_Of_Week {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY};
-
     private String modID;
-    private Activity_Type actType;
+    private String actType;
 
     //Assignment variables
     private String assignmentTitle;
     private LocalDate assignmentDueDate; //This includes the Due Time According to How Date works
     private LocalTime assignmentDueTime;
-    private Assignment_Status assignmentStatus;
+    private int assignmentStatus;
 
     //test variiables
     private String testDescriiption; //We might have left this out ?
@@ -37,10 +33,10 @@ public class Activity implements Serializable {
     private int sessionID; //From that Session Table
     private LocalTime lecStartTime;
     private String dayOfWeek;
-    private boolean isDuplicate;
+    private int isDuplicate;
 
     //Constructor for Assignment Activity
-    public Activity(String modID, Activity_Type actType, String assignmentTitle, LocalDate assignmentDueDate, LocalTime assignmentDueTime, Assignment_Status assignmentStatus) {
+    public Activity(String modID, String actType, String assignmentTitle, LocalDate assignmentDueDate, LocalTime assignmentDueTime, int assignmentStatus) {
         this.modID = modID;
         this.actType = actType;
         this.assignmentTitle = assignmentTitle;
@@ -50,7 +46,7 @@ public class Activity implements Serializable {
     }
 
     //Constructor for Test Activity
-    public Activity(String modID, Activity_Type actType, String testDescriiption, LocalDate testDate, LocalTime testTime, String testVenue) {
+    public Activity(String modID, String actType, String testDescriiption, LocalDate testDate, LocalTime testTime, String testVenue) {
         this.modID = modID;
         this.actType = actType;
         this.testDescriiption = testDescriiption;
@@ -60,11 +56,12 @@ public class Activity implements Serializable {
     }
 
     //constructor for Lecture Activity
-    public Activity(String modID, Activity_Type actType, String lectureVenue, LocalTime lecStartTime, boolean isDuplicate) {
+    public Activity(String modID, String actType, String lectureVenue, LocalTime lecStartTime, String dayOfWeek, int isDuplicate) {
         this.modID = modID;
         this.actType = actType;
         this.lectureVenue = lectureVenue;
         this.lecStartTime = lecStartTime;
+        this.dayOfWeek = dayOfWeek;
         this.isDuplicate = isDuplicate;
     }
 
@@ -73,7 +70,7 @@ public class Activity implements Serializable {
         return modID;
     }
 
-    public Activity_Type getActType() {
+    public String getActType() {
         return actType;
     }
 
@@ -85,7 +82,7 @@ public class Activity implements Serializable {
         return assignmentDueDate;
     }
 
-    public Assignment_Status getAssignmentStatus() {
+    public int getAssignmentStatus() {
         return assignmentStatus;
     }
 
@@ -117,7 +114,7 @@ public class Activity implements Serializable {
         this.assignmentDueDate = assignmentDueDate;
     }
 
-    public void setAssignmentStatus(Assignment_Status assignmentStatus) {
+    public void setAssignmentStatus(int assignmentStatus) {
         this.assignmentStatus = assignmentStatus;
     }
 

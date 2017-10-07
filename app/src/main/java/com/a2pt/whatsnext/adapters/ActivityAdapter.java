@@ -50,7 +50,7 @@ public class ActivityAdapter extends ArrayAdapter<Activity>{
 
 
         Activity activity = getItem(position);
-        if(activity.getActType() == Activity.Activity_Type.ASSIGNMENT){
+        if(activity.getActType().equalsIgnoreCase("assignment")){
 
             //Change colour of background
             lLayout.setBackgroundColor(Color.parseColor("#8BC34A"));
@@ -59,7 +59,7 @@ public class ActivityAdapter extends ArrayAdapter<Activity>{
             tvValue2.setText(activity.getModID());
             tvValue3.setText(activity.getAssignmentTitle());
 
-        }else if(activity.getActType() == Activity.Activity_Type.TEST){
+        }else if(activity.getActType().equalsIgnoreCase("assignment")){
             //Change colour of background
             lLayout.setBackgroundColor(Color.parseColor("#f44336"));
             //set text view values

@@ -44,7 +44,7 @@ public class MaintainTestFragment extends Fragment {
 
         final List<Activity> tests = new ArrayList<>();
 
-        tests.add(new Activity("WRAP302", Activity.Activity_Type.TEST, "Semester Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04"));
+        tests.add(new Activity("WRAP302", "test", "Semester Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04"));
 
         adapter = new TestAdapter(getActivity(), tests);
 

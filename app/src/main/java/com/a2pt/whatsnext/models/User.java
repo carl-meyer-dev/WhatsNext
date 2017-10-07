@@ -28,6 +28,7 @@ public class User implements Serializable{
         this.userPassword = userPassword;
         this.userType = userType;
         this.courseInfo = courseInfo;
+        this.moduleString = moduleInfo;
         this.modules = moduleInfo.split(",");
         this.moduleString = moduleInfo;
     }
@@ -52,6 +53,14 @@ public class User implements Serializable{
         return userType;
     }
 
+    public String getModuleString() {
+        return moduleString;
+    }
+
+    public String[] getModules() {
+        return modules;
+    }
+
     public String getCourseInfo() {
         return courseInfo;
     }
@@ -66,10 +75,6 @@ public class User implements Serializable{
                 ", userType='" + userType + '\'' +
                 ", courseInfo='" + courseInfo + '\'' +
                 '}';
-    }
-
-    public String[] getModules() {
-        return modules;
     }
 
     public String getModuleInfo()
