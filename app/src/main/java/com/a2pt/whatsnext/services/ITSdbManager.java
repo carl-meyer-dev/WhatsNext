@@ -43,8 +43,10 @@ public class ITSdbManager extends SQLiteOpenHelper{
     private static final String KEY_ACT_STATUS = "assignment_status";
     private static final String KEY_ACT_TEST_NAME = "test_name";
     private static final String KEY_ACT_TEST_TIME = "test_time";
+    private static final String KEY_ACT_TEST_DATE = "test_date";
     private static final String KEY_ACT_LECTURE_VENUE = "lecture_venue";
     private static final String KEY_ACT_SESSION_ID = "session_id";
+    private static final String KEY_ACT_LECTURE_DUPLICATE = "duplicate_lecture";
 
     //Creating the Module Table
     private static final String TABLE_MODULE = "modules";
@@ -81,7 +83,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_USEREMAIL + " TEXT,"
                 + KEY_PASSWORD + " TEXT,"
                 + KEY_TYPE_OF_USER + " TEXT,"
-                + KEY_COURSEINFO + " TEXT"
+                + KEY_COURSEINFO + " TEXT,"
                 + KEY_MODULE_INFO + " TEXT"
                 + ")";
 
@@ -112,8 +114,10 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_ACT_STATUS + " boolean,"
                 + KEY_ACT_TEST_NAME + " TEXT,"
                 + KEY_ACT_TEST_TIME + " TIME,"
+                + KEY_ACT_TEST_DATE + " DATE,"
                 + KEY_ACT_LECTURE_VENUE + " TEXT,"
                 + KEY_ACT_SESSION_ID + " INTEGER,"
+                + KEY_ACT_LECTURE_DUPLICATE + " boolean,"
                 + " FOREIGN KEY(" + KEY_ACT_SESSION_ID + ") REFERENCES " + TABLE_SESSION + "("+KEY_SESSION_SESSION_ID+"))";
 
         db.execSQL(CREATE_USERS_TABLE);
@@ -146,6 +150,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_PASSWORD, user.getUserPassword());
         values.put(KEY_TYPE_OF_USER, user.getUserType());
         values.put(KEY_COURSEINFO, user.getCourseInfo());
+        values.put(KEY_MODULE_INFO, user.getModuleInfo());
 
         db.insert(TABLE_USERS, null, values);
         db.close();
@@ -220,7 +225,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
         Cursor cursor = db.query(
                 TABLE_USERS,                                                                                            //Table Name - SELECT FROM TABLE
-                new String[]{KEY_ID, KEY_USERNAME, KEY_USEREMAIL, KEY_PASSWORD, KEY_TYPE_OF_USER, KEY_COURSEINFO},      //All the Fields that you watn to capture
+                new String[]{KEY_ID, KEY_USERNAME, KEY_USEREMAIL, KEY_PASSWORD, KEY_TYPE_OF_USER, KEY_COURSEINFO, KEY_MODULE_INFO},      //All the Fields that you watn to capture
                 KEY_ID + "=?",                                                                                    //Where Username = ?
                 new String[]{ String.valueOf(username)},                                                                // Where ? = String.Value(What you are looking for)
                 null, null, null, null);
@@ -249,8 +254,8 @@ public class ITSdbManager extends SQLiteOpenHelper{
         System.out.println("SUCESSFULLY QUERIED DB");
 
         //get Column index of userID and password fields
-        int userIDIndex = cursor.getColumnIndex("id");
-        int passwordIndex = cursor.getColumnIndex("password");
+        int userIDIndex = cursor.getColumnIndex(KEY_ID);
+        int passwordIndex = cursor.getColumnIndex(KEY_PASSWORD);
         cursor.moveToFirst();
         System.out.println(cursor.moveToFirst());
 
@@ -260,6 +265,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 System.out.println("DB DEBUG: getting username and password from Table");
                 String dbUsername = cursor.getString(userIDIndex);
                 String dbPassword = cursor.getString(passwordIndex);
+
                 System.out.println("DB DEBUG: dbUsername = " + dbUsername);
                 System.out.println("DB DEBUG: dbPassword = " + dbPassword);
 
@@ -279,5 +285,4 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
         return validLogin;
     }
-
 }

@@ -5,12 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.icu.text.SimpleDateFormat;
 
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.models.Module;
 import com.a2pt.whatsnext.models.Session;
 import com.a2pt.whatsnext.models.Teaches;
 import com.a2pt.whatsnext.models.User;
+
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Created by Carl on 2017-10-04.
@@ -28,7 +34,7 @@ public class dbManager extends SQLiteOpenHelper {
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_TYPE_OF_USER = "type_of_user";
     private static final String KEY_COURSEINFO = "course_info";
-    private static final String KEY_MODULEINFO = "course_info";
+    private static final String KEY_MODULE_INFO = "course_info";
 
     //Creating the ACTIVITY Table
     private static final String TABLE_ACTIVITY = "activity";
@@ -40,8 +46,10 @@ public class dbManager extends SQLiteOpenHelper {
     private static final String KEY_ACT_STATUS = "assignment_status";
     private static final String KEY_ACT_TEST_NAME = "test_name";
     private static final String KEY_ACT_TEST_TIME = "test_time";
+    private static final String KEY_ACT_TEST_DATE = "test_date";
     private static final String KEY_ACT_LECTURE_VENUE = "lecture_venue";
     private static final String KEY_ACT_SESSION_ID = "session_id";
+    private static final String KEY_ACT_LECTURE_DUPLICATE = "duplicate_lecture";
 
     //Creating the Module Table
     private static final String TABLE_MODULE = "modules";
@@ -78,8 +86,8 @@ public class dbManager extends SQLiteOpenHelper {
                 + KEY_USEREMAIL + " TEXT,"
                 + KEY_PASSWORD + " TEXT,"
                 + KEY_TYPE_OF_USER + " TEXT,"
-                + KEY_COURSEINFO + " TEXT"
-                + KEY_MODULEINFO + " TEXT"
+                + KEY_COURSEINFO + " TEXT,"
+                + KEY_MODULE_INFO + " TEXT"
                 + ")";
 
         String CREATE_MODULE_TABLE = "CREATE TABLE " + TABLE_MODULE + " ("
@@ -109,8 +117,10 @@ public class dbManager extends SQLiteOpenHelper {
                 + KEY_ACT_STATUS + " boolean,"
                 + KEY_ACT_TEST_NAME + " TEXT,"
                 + KEY_ACT_TEST_TIME + " TIME,"
+                + KEY_ACT_TEST_DATE + " DATE,"
                 + KEY_ACT_LECTURE_VENUE + " TEXT,"
                 + KEY_ACT_SESSION_ID + " INTEGER,"
+                + KEY_ACT_LECTURE_DUPLICATE + " boolean,"
                 + " FOREIGN KEY(" + KEY_ACT_SESSION_ID + ") REFERENCES " + TABLE_SESSION + "("+KEY_SESSION_SESSION_ID+"))";
 
         db.execSQL(CREATE_USERS_TABLE);
@@ -217,7 +227,7 @@ public class dbManager extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(
                 TABLE_USERS,                                                                                            //Table Name - SELECT FROM TABLE
-                new String[]{KEY_ID, KEY_USERNAME, KEY_USEREMAIL, KEY_PASSWORD, KEY_TYPE_OF_USER, KEY_COURSEINFO},      //All the Fields that you watn to capture
+                new String[]{KEY_ID, KEY_USERNAME, KEY_USEREMAIL, KEY_PASSWORD, KEY_TYPE_OF_USER, KEY_COURSEINFO, KEY_MODULE_INFO},      //All the Fields that you watn to capture
                 KEY_ID + "=?",                                                                                    //Where Username = ?
                 new String[]{ String.valueOf(username)},                                                                // Where ? = String.Value(What you are looking for)
                 null, null, null, null);
@@ -232,5 +242,153 @@ public class dbManager extends SQLiteOpenHelper {
         return user;
     }
 
+    //Takes in a module code and the itsdatabase
+    //traverses throughout the itsdatabase looking for assignments matching the module
+    //adds the module into the database
+    public void addAssignment(String modCode, ITSdbManager itsDatabase)
+    {
+        String type = "ASSIGNMENT";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
+            + KEY_ACT_MOD_ID + " = ?";
 
+        String[] values = { type, modCode};
+        SQLiteDatabase dbToCheck = itsDatabase.getReadableDatabase();
+        Cursor cursor = null;
+
+        try
+        {
+            cursor = dbToCheck.rawQuery(query, values);
+
+            do {
+                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TITLE));
+                String dueDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_DUE_DATE));
+                String submissionTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SUBMISSION_TIME));
+                String status = cursor.getString(cursor.getColumnIndex(KEY_ACT_STATUS));
+
+                DateTimeFormatter formatterDate = DateTimeFormat.forPattern("dd/MM/yyyy");
+                DateTimeFormatter formatterTime = DateTimeFormat.forPattern("HH:mm:ss");
+
+                LocalTime time = formatterTime.parseLocalTime(submissionTime);
+                LocalDate date = formatterDate.parseLocalDate(dueDate);
+
+                Activity activity = new Activity(id, Activity.Activity_Type.valueOf(typeOfActivity), title, date,time, Activity.Assignment_Status.valueOf(status));
+
+                insertActivity(activity);
+            }while(cursor.moveToNext());
+
+            cursor.close();
+            dbToCheck.close();
+        }catch (Exception e)
+        {
+            System.out.println("Error in adding the assignment");
+        }
+        finally {
+            cursor.close();
+            dbToCheck.close();
+        }
+    }
+
+    public void addTest(String modCode, ITSdbManager itsDatabase)
+    {
+        String type = "TEST";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
+                + KEY_ACT_MOD_ID + " = ?";
+
+        String[] values = { type, modCode};
+        SQLiteDatabase dbToCheck = itsDatabase.getReadableDatabase();
+        Cursor cursor = null;
+
+        try
+        {
+            cursor = dbToCheck.rawQuery(query, values);
+
+            do {
+                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_NAME));
+                String dueDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_DATE));
+                String submissionTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SUBMISSION_TIME));
+                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_VENUE));
+
+                DateTimeFormatter formatterDate = DateTimeFormat.forPattern("dd/MM/yyyy");
+                DateTimeFormatter formatterTime = DateTimeFormat.forPattern("HH:mm:ss");
+
+                LocalTime time = formatterTime.parseLocalTime(submissionTime);
+                LocalDate date = formatterDate.parseLocalDate(dueDate);
+
+                Activity activity = new Activity(id, Activity.Activity_Type.valueOf(typeOfActivity), title, date,time, venue);
+
+                insertActivity(activity);
+            }while(cursor.moveToNext());
+
+            cursor.close();
+            dbToCheck.close();
+        }catch (Exception e)
+        {
+            System.out.println("Error in adding the test");
+        }
+        finally {
+            cursor.close();
+            dbToCheck.close();
+        }
+    }
+
+    public void addLecture(String modCode, ITSdbManager itsDatabase)
+    {
+        String type = "LECTURE";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
+                + KEY_ACT_MOD_ID + " = ?";
+
+        String[] values = { type, modCode};
+        SQLiteDatabase dbToCheck = itsDatabase.getReadableDatabase();
+        Cursor cursor = null;
+        Cursor cursorToCheckSession = null;
+
+        try
+        {
+            cursor = dbToCheck.rawQuery(query, values);
+
+            do {
+                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_VENUE));
+                String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SESSION_ID));
+                boolean duplicate = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
+
+                //Adding query for checking the session
+                String queryToCheck = "SELECT " + KEY_SESSION_SESSION_START + " FROM " + TABLE_SESSION + " WHERE " + KEY_SESSION_SESSION_ID + " = ?";
+                String[] args = {lectureTime};
+
+                cursorToCheckSession = dbToCheck.rawQuery(queryToCheck, args);
+
+                if(cursorToCheckSession != null)
+                {
+                    cursorToCheckSession.moveToFirst();
+                }
+
+                String timeLecture = cursorToCheckSession.getString(0);
+
+                DateTimeFormatter formatterTime = DateTimeFormat.forPattern("HH:mm:ss");
+                LocalTime time = formatterTime.parseLocalTime(timeLecture);
+
+                Activity activity = new Activity(id, Activity.Activity_Type.valueOf(typeOfActivity), venue, time, duplicate);
+
+                insertActivity(activity);
+            }while(cursor.moveToNext());
+
+            cursor.close();
+            cursorToCheckSession.close();
+            dbToCheck.close();
+        }catch (Exception e)
+        {
+            System.out.println("Error in adding the lecture");
+        }
+        finally {
+            cursor.close();
+            cursorToCheckSession.close();
+            dbToCheck.close();
+        }
+    }
 }

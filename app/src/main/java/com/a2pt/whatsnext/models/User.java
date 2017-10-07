@@ -18,6 +18,7 @@ public class User implements Serializable{
     private String userType;
     private String courseInfo; //we need to add this, as this will be either "BSc Computer Science" for Students or "WRAP302, WRAP301, WRA301" for lecturers
     private String[] modules;
+    private String moduleString;
 
 
     public User(String userID, String userName, String userEmail, String userPassword, String userType, String courseInfo, String moduleInfo) {
@@ -28,6 +29,7 @@ public class User implements Serializable{
         this.userType = userType;
         this.courseInfo = courseInfo;
         this.modules = moduleInfo.split(",");
+        this.moduleString = moduleInfo;
     }
 
     public String getUserID() {
@@ -64,5 +66,14 @@ public class User implements Serializable{
                 ", userType='" + userType + '\'' +
                 ", courseInfo='" + courseInfo + '\'' +
                 '}';
+    }
+
+    public String[] getModules() {
+        return modules;
+    }
+
+    public String getModuleInfo()
+    {
+        return this.moduleString;
     }
 }

@@ -57,8 +57,8 @@ public class TimetableFragment extends Fragment {
 
         //Add Dummy Lectures
         //TODO: this will change when we integrate the Database
-        monday.add(new Activity("MATH203", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
-        monday.add(new Activity("WRAP302", Activity.Activity_Type.LECTURE, "35 01 01", new LocalTime(9,5)));
+        //monday.add(new Activity("MATH203", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
+        //monday.add(new Activity("WRAP302", Activity.Activity_Type.LECTURE, "35 01 01", new LocalTime(9,5)));
 
       /*  monday.add(new Activity("WRAP302", Activity.Activity_Type.LECTURE, "35 01 01", new LocalTime(9,5)));
         monday.add(new Activity("WRAP302", Activity.Activity_Type.LECTURE, "35 01 01", new LocalTime(9,5)));
@@ -67,7 +67,7 @@ public class TimetableFragment extends Fragment {
         monday.add(new Activity("WRAP302", Activity.Activity_Type.LECTURE, "35 01 01", new LocalTime(9,5)));
         monday.add(new Activity("WRAP302", Activity.Activity_Type.LECTURE, "35 01 01", new LocalTime(9,5)));
 */
-        tuesday.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
+        /*tuesday.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
         tuesday.add(new Activity("MATH214 Tut", Activity.Activity_Type.LECTURE, "04 00 01", new LocalTime(9,5)));
         tuesday.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "04 00 3", new LocalTime(14,5)));
         tuesday.add(new Activity("STAT203 Prac", Activity.Activity_Type.LECTURE, "07 02 48", new LocalTime(15,30)));
@@ -78,7 +78,7 @@ public class TimetableFragment extends Fragment {
         tuesday.add(new Activity("STAT203 Tut", Activity.Activity_Type.LECTURE, "07 02 48", new LocalTime(16,45)));
 */
 
-        wednesday.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
+       /* wednesday.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
         wednesday.add(new Activity("MATH203", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(9,5)));
         wednesday.add(new Activity("WRR301", Activity.Activity_Type.LECTURE, "09 02 02", new LocalTime(10,25)));
         wednesday.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "07 02 50", new LocalTime(14,5)));
@@ -88,11 +88,10 @@ public class TimetableFragment extends Fragment {
         wednesday.add(new Activity("WRAP302 Prac", Activity.Activity_Type.LECTURE, "09 02 04", new LocalTime(15,35)));
         wednesday.add(new Activity("WRAP302 Prac", Activity.Activity_Type.LECTURE, "09 02 04", new LocalTime(15,35)));
 */
-        thursday.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "07 02 50", new LocalTime(7,45)));
+        /*thursday.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "07 02 50", new LocalTime(7,45)));
         thursday.add(new Activity("WRL301", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(10,25)));
         thursday.add(new Activity("WRL301 Tut", Activity.Activity_Type.LECTURE, "35 00 16", new LocalTime(14,5)));
         thursday.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(16,45)));
-
 /*
         thursday.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(16,45)));
         thursday.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(16,45)));
@@ -104,7 +103,7 @@ public class TimetableFragment extends Fragment {
         //no classes on monday so I will add an empty activity just so that the array isn't null
         //TODO: cater for when there are no classes on a day
 
-        friday.add(new Activity("WRMS302", Activity.Activity_Type.LECTURE, "09 02 02", new LocalTime(9,5)));
+      //  friday.add(new Activity("WRMS302", Activity.Activity_Type.LECTURE, "09 02 02", new LocalTime(9,5)));
 /*
         friday.add(new Activity("", Activity.Activity_Type.LECTURE, "", new LocalTime(0,0)));
         friday.add(new Activity("", Activity.Activity_Type.LECTURE, "", new LocalTime(0,0)));

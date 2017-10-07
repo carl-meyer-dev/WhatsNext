@@ -54,11 +54,11 @@ public class HomeFragment extends Fragment {
 
         //Add Dummy Lectures
         //TODO: this will change when we integrate the Database
-        Lectures.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
+       /* Lectures.add(new Activity("STAT203", Activity.Activity_Type.LECTURE, "35 00 17", new LocalTime(7,45)));
         Lectures.add(new Activity("MATH203", Activity.Activity_Type.LECTURE, "35 00 18", new LocalTime(9,5)));
         Lectures.add(new Activity("WRR301", Activity.Activity_Type.LECTURE, "09 02 04", new LocalTime(10,25)));
         Lectures.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "07 02 50", new LocalTime(14,5)));
-        Lectures.add(new Activity("WRAP Prac", Activity.Activity_Type.LECTURE, "09 02 04", new LocalTime(15,25)));
+        Lectures.add(new Activity("WRAP Prac", Activity.Activity_Type.LECTURE, "09 02 04", new LocalTime(15,25)));*/
 
         lecturesAdapter = new ActivityAdapter(getActivity(), Lectures);
         lvLectures.setAdapter(lecturesAdapter);

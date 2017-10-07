@@ -18,6 +18,7 @@ import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.models.User;
 
 import com.a2pt.whatsnext.services.ITSdbManager;
+import com.a2pt.whatsnext.services.dbManager;
 
 /**
  * A login screen that offers login via email/password.
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText txtPassword;
     Button btnLogin;
     ITSdbManager ITSdb;
+    dbManager localDB;
 
 
 
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         //=========================================================================================
         //Carl Code:
         ITSdb = new ITSdbManager(this);
+        localDB = new dbManager(this);
         insertData();
 
 
@@ -79,6 +82,9 @@ public class LoginActivity extends AppCompatActivity {
             //Sets the users state to be true. This will if they have logged in before to instantly go to their main page
             setState(loginUsername, user.getUserType());
 
+            //Adding all of the students necessary information into the local.db
+            //setupLocalDB(user);
+
             //put user inside bundle to be sent
             Bundle bundle= new Bundle();
             bundle.putSerializable("user", user);
@@ -98,6 +104,24 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //Adds the user to the database
+    //Pulls all assignments, tests and modules from ITSdatabase
+    //adds to the local.db
+    private void setupLocalDB(User userToAdd) {
+
+        localDB.insertData(userToAdd);
+
+        String[] moduleInfo = userToAdd.getModules();
+
+        for (String moduleDetail: moduleInfo)
+        {
+            localDB.addLecture(moduleDetail, ITSdb);
+            localDB.addAssignment(moduleDetail, ITSdb);
+            localDB.addTest(moduleDetail, ITSdb);
+        }
+
+    }
+
     private void setState(String usertype, String loginUsername) {
         SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
 
@@ -114,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
         User user = new User("s215006941", "Carl Meyer", "s215006941@nmmu.ac.za", "abc123", "student", "BSc Computer Science", "WRAP302,WRL301,MATH214,MATH203,STAT203, WRR301");
         ITSdb.insertData(user);
 
-        user = new User("s215144988", "Gerrit Naude", "ss215144988@nmmu.ac.za", "def456", "student", "BSc Information Systems","WRAP302, EBM302, WRUI301, WRB302, WRR301");
+        user = new User("s215144988", "Gerrit Naude", "ss215144988@nmmu.ac.za", "def456", "student", "BSc Information Systems","WRAP302,EBM302,WRUI301,WRB302,WRR301");
         ITSdb.insertData(user);
 
         user = new User("Vogts.Dieter", "Dieter Vogts", "Vogts.Dieter@nmmu.ac.za", "wrap2017", "lecturer", "Computer Science", "WRAP301,WRAP302,WRA301");
