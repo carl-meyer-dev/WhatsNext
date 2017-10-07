@@ -28,6 +28,7 @@ public class dbManager extends SQLiteOpenHelper {
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_TYPE_OF_USER = "type_of_user";
     private static final String KEY_COURSEINFO = "course_info";
+    private static final String KEY_MODULEINFO = "course_info";
 
     //Creating the ACTIVITY Table
     private static final String TABLE_ACTIVITY = "activity";
@@ -78,6 +79,7 @@ public class dbManager extends SQLiteOpenHelper {
                 + KEY_PASSWORD + " TEXT,"
                 + KEY_TYPE_OF_USER + " TEXT,"
                 + KEY_COURSEINFO + " TEXT"
+                + KEY_MODULEINFO + " TEXT"
                 + ")";
 
         String CREATE_MODULE_TABLE = "CREATE TABLE " + TABLE_MODULE + " ("
@@ -224,7 +226,7 @@ public class dbManager extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
 
-        User user = new User(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4), cursor.getString(5));
+        User user = new User(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
 
         cursor.close();
         return user;

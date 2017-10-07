@@ -1,6 +1,7 @@
 package com.a2pt.whatsnext.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Carl on 2017-08-19.
@@ -16,14 +17,17 @@ public class User implements Serializable{
     private String userPassword;
     private String userType;
     private String courseInfo; //we need to add this, as this will be either "BSc Computer Science" for Students or "WRAP302, WRAP301, WRA301" for lecturers
+    private String[] modules;
 
-    public User(String userID, String userName, String userEmail, String userPassword, String userType, String courseInfo) {
+
+    public User(String userID, String userName, String userEmail, String userPassword, String userType, String courseInfo, String moduleInfo) {
         this.userID = userID;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userType = userType;
         this.courseInfo = courseInfo;
+        this.modules = moduleInfo.split(",");
     }
 
     public String getUserID() {

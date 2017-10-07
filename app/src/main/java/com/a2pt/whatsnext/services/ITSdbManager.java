@@ -25,12 +25,13 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
     //Creating the User table
     private static final String TABLE_USERS = "users";
-    private static final String KEY_ID = "id";
+    private static final String KEY_ID = "user_id";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_USEREMAIL = "user_email";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_TYPE_OF_USER = "type_of_user";
     private static final String KEY_COURSEINFO = "course_info";
+    private static final String KEY_MODULE_INFO = "module_info";
 
     //Creating the ACTIVITY Table
     private static final String TABLE_ACTIVITY = "activity";
@@ -53,7 +54,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
     //Creating the Teaches Table
     private static final String TABLE_TEACHES = "teaches";
     private static final String KEY_TEACHES_SESSION_ID = "session_id";
-    private static final String KEY_TEACHES_ID = "teaches_id"; //This is the same as the userid
+    private static final String KEY_TEACHES_ID = "user_id"; //This is the same as the userid
     private static final String KEY_TEACHES_MOD_ID = "mod_id";
 
     //Creating the Session Table
@@ -81,6 +82,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_PASSWORD + " TEXT,"
                 + KEY_TYPE_OF_USER + " TEXT,"
                 + KEY_COURSEINFO + " TEXT"
+                + KEY_MODULE_INFO + " TEXT"
                 + ")";
 
         String CREATE_MODULE_TABLE = "CREATE TABLE " + TABLE_MODULE + " ("
@@ -227,7 +229,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
             cursor.moveToFirst();
         }
 
-        User user = new User(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4), cursor.getString(5));
+        User user = new User(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
 
         cursor.close();
         return user;
