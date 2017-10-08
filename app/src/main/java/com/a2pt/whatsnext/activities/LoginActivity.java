@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
 
         boolean check = preferences.getBoolean("loggedIn", false);
+
         if (check)
         {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             setState(loginUsername, user.getUserType());
 
             //Adding all of the students necessary information into the local.db
-            //setupLocalDB(user);
+            setupLocalDB(user);
 
             //put user inside bundle to be sent
             Bundle bundle= new Bundle();

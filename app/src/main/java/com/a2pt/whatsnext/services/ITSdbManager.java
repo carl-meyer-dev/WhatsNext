@@ -127,7 +127,8 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_ACT_VENUE + " TEXT,"
                 + KEY_ACT_LECTURE_START_TIME + " TEXT,"
                 + KEY_ACT_LECTURE_DAY_OF_WEEK + " TEXT,"
-                + KEY_ACT_LECTURE_DUPLICATE + " INTEGER)";
+                + KEY_ACT_LECTURE_DUPLICATE + " INTEGER"
+                + ")";
 
 
         db.execSQL(CREATE_USERS_TABLE);
