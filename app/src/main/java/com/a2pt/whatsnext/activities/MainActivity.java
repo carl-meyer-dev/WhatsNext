@@ -342,12 +342,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void LogOut(MenuItem item) {
-        //Go to Login Screen
+        //get preferences file
         SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
-
+        //Set Login status to false
         SharedPreferences.Editor editor = preferences.edit();
         editor.remove("loggedIn");
         editor.commit();
+
+        //Clear Databse
+        localDB.clearLocalDB();
 
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);

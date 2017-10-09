@@ -496,4 +496,16 @@ public class dbManager extends SQLiteOpenHelper {
             }
 
     }
+
+    public void clearLocalDB(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("delete from "+ TABLE_USERS);
+        db.execSQL("delete from "+ TABLE_ACTIVITY);
+        db.execSQL("delete from "+ TABLE_MODULE);
+        db.execSQL("delete from "+ TABLE_SESSION);
+        db.execSQL("delete from "+ TABLE_TEACHES);
+
+    }
 }
