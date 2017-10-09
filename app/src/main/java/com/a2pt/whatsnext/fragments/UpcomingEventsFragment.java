@@ -14,6 +14,7 @@ import com.a2pt.whatsnext.adapters.AssignmentAdapter;
 import com.a2pt.whatsnext.adapters.TestAdapter;
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.services.Utility;
+import com.a2pt.whatsnext.services.dbManager;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -28,6 +29,7 @@ import java.util.List;
 public class UpcomingEventsFragment extends Fragment {
 
     View view;
+    dbManager localDB;
     private AssignmentAdapter assignmentsAdapter;
     private TestAdapter testsAdapter;
     private ListView lvAssignments, lvTests;
@@ -37,27 +39,13 @@ public class UpcomingEventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.upcoming_events_layout, container, false);
 
+        localDB = new dbManager(getActivity());
+
         lvTests = (ListView)view.findViewById(R.id.ue_lvTests);
         lvAssignments = (ListView)view.findViewById(R.id.ue_lvAssignments);
 
-        final List<Activity> assignments = new ArrayList<>();
-        final List<Activity> tests = new ArrayList<>();
-
-        //add dummy variables
-        assignments.add(new Activity("WRAP302", "assignment", "Assignment 5", new LocalDate(2017,9,12), new LocalTime(23,35), 0));
-        assignments.add(new Activity("STAT203", "assignment", "Prac 2", new LocalDate(2017,9,12), new LocalTime(14,5), 0));
-        assignments.add(new Activity("WRR301", "assignment", "Final", new LocalDate(2017,10,23), new LocalTime(12,0), 0));
-
-
-
-        tests.add(new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48"));
-        tests.add(new Activity("MATH214", "test", "Seme Test 2",new LocalDate(2017,9,14),new LocalTime(18,0), "Heinz Benz Hall"));
-        tests.add(new Activity("WRL301", "test", "Seme Test 2",new LocalDate(2017,10,4),new LocalTime(18,0), "35 00 17"));
-        tests.add(new Activity("WRAP302", "test", "Seme Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04"));
-        tests.add(new Activity("STAT203", "test", "Seme Test 2",new LocalDate(2017,10,10),new LocalTime(18,0), "07 02 48"));
-        tests.add(new Activity("MATH203", "test", "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre"));
-
-
+        final List<Activity> assignments = localDB.getUpcomingAssignments();
+        final List<Activity> tests = localDB.getUpcomingTests();
 
         assignmentsAdapter = new AssignmentAdapter(getActivity(), assignments);
         testsAdapter = new TestAdapter(getActivity(), tests);

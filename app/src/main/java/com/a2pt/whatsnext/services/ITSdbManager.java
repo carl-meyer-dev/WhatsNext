@@ -407,6 +407,12 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertAssignment(activity, db);
         activity = new Activity("WRR301", "assignment", "Final", new LocalDate(2017,10,23), new LocalTime(12,0), 0);
         insertAssignment(activity, db);
+        activity = new Activity("WRAP302", "assignment", "Mark Assignment 6", new LocalDate(2017,10,9), new LocalTime(23,0), 0);
+        insertAssignment(activity, db);
+        activity = new Activity("WRR301", "assignment", "KYK PAPPA", new LocalDate(2017,10,9), new LocalTime(23,0), 0);
+        insertAssignment(activity, db);
+        activity = new Activity("MATH203", "assignment", "KYK MAMMA", new LocalDate(2017,10,9), new LocalTime(23,0), 0);
+        insertAssignment(activity, db);
         //Tests
         activity = new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48");
         insertTest(activity, db);
@@ -419,6 +425,8 @@ public class ITSdbManager extends SQLiteOpenHelper{
         activity = new Activity("STAT203", "test", "Seme Test 2",new LocalDate(2017,10,10),new LocalTime(18,0), "07 02 48");
         insertTest(activity, db);
         activity = new Activity("MATH203", "test", "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre");
+        insertTest(activity, db);
+        activity = new Activity("WRR301", "test", "Dummy Test",new LocalDate(2017,10,9),new LocalTime(18,0), "My Room");
         insertTest(activity, db);
 
     }

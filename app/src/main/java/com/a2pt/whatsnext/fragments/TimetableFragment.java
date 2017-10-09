@@ -135,10 +135,14 @@ public class TimetableFragment extends Fragment {
         lvFriday.setAdapter(friAdapter);
         //ADJUST HEIGHTS SO THERE AREN'T ANY WHITE GAPS
         Utility.setListViewHeightBasedOnChildren(lvMonday, 320);
+        Utility.setListViewHeightBasedOnChildren(lvTuesday, 300);
+        Utility.setListViewHeightBasedOnChildren(lvWednesday, 320);
+        Utility.setListViewHeightBasedOnChildren(lvThursday, 320);
+        Utility.setListViewHeightBasedOnChildren(lvFriday, 320);
         //I am using Switch cases since the number of items in the list influences the Utility.SetListViewHeight method. So I had to set custom minus values for amount of items in list
         //Utility class is the only way I got the list views displaying properly so I feel like this is our best working solution atm
-        //TODO: THIS IS NOT WORKING> FIND ANOTHER WAY TO MAKE LIST SIZE OF CONTENT
-
+        //TODO: THIS IS NOT WORKING FIND ANOTHER WAY TO MAKE LIST SIZE OF CONTENT
+/*
         switch (tuesday.size()){
 
             case 1:setMinusAmount(lvTuesday, 320);break;
@@ -190,7 +194,7 @@ public class TimetableFragment extends Fragment {
             case 8: setMinusAmount(lvFriday,200);break;
             default: setMinusAmount(lvFriday,200);break;
         }
-
+*/
         return view;
     }
 
