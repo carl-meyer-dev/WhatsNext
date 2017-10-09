@@ -342,6 +342,14 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * This will return the currently logged in user. This is so that Fragments can get hold of List of Modules fot the spinners
+     * @return
+     */
+    public User getCurUser(){
+        return user;
+    }
+
     public void LogOut(MenuItem item) {
         //get preferences file
         SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);

@@ -70,14 +70,12 @@ public class HomeFragment extends Fragment {
 
         lecturesAdapter = new ActivityAdapter(getActivity(), Lectures);
         lvLectures.setAdapter(lecturesAdapter);
-        Utility.setListViewHeightBasedOnChildren(lvLectures, 340); //The second parameter is the MAGIC NUMBER which corrects the height
+        Utility.setListViewHeightBasedOnChildren(lvLectures, 310); //The second parameter is the MAGIC NUMBER which corrects the height
 
 
         assignmentsAdapter = new AssignmentAdapter(getActivity(), Assignments);
         lvAssignments.setAdapter(assignmentsAdapter);
         Utility.setListViewHeightBasedOnChildren(lvAssignments, 230);
-
-
 
         testsAdapter = new TestAdapter(getActivity(), Tests);
         lvTests.setAdapter(testsAdapter);

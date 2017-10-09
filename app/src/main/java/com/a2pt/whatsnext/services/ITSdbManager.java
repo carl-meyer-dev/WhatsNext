@@ -413,6 +413,10 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertAssignment(activity, db);
         activity = new Activity("MATH203", "assignment", "KYK MAMMA", new LocalDate(2017,10,9), new LocalTime(23,0), 0);
         insertAssignment(activity, db);
+        activity = new Activity("WRAP301", "assignment", "Assignment 01", new LocalDate(2017,3,16), new LocalTime(23,0), 0);
+        insertAssignment(activity, db);
+        activity = new Activity("WRA301", "assignment", "Research Paper", new LocalDate(2017,4,23), new LocalTime(23,0), 0);
+        insertAssignment(activity, db);
         //Tests
         activity = new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48");
         insertTest(activity, db);

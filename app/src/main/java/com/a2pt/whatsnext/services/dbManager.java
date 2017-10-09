@@ -759,6 +759,63 @@ public class dbManager extends SQLiteOpenHelper {
         return tests;
     }
 
+    public List<Activity> getAssignmentsByID(String modID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Activity> assignments = new ArrayList<>();
+        String type = "assignment";
+        //TODO: Filter out assignments that have due dates that is already over
+
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_MOD_ID + " = ?";
+
+        String[] values = {type, modID};
+
+        Cursor cursor = null;
+
+
+        cursor = db.rawQuery(query, values);
+
+        if(cursor != null && cursor.moveToFirst()) {
+
+
+            do {
+
+
+                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TITLE));
+                String dueDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_DUE_DATE));
+                String submissionTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SUBMISSION_TIME));
+                int status = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_STATUS)));
+
+
+                //The Dates in the databse will be like 2017/10/23
+                //The TIme in the databse will be like 17:45
+
+                String[] temdate = dueDate.split("-"); //split date up into 2017, 10, 23
+                int year = Integer.parseInt(temdate[0]);  //save year as 2017
+                int month = Integer.parseInt(temdate[1]);  //save month as 10
+                int day = Integer.parseInt(temdate[2]); //save day as 23
+                LocalDate dDate = new LocalDate(year, month, day);  //create new local date
+                System.out.println(dDate.toString());
+
+                String[] temptime = submissionTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime dTime = new LocalTime(hours, minutes);
+                System.out.println(dTime.toString());
+
+                Activity activity = new Activity(id, typeOfActivity, title, dDate, dTime, status);
+                assignments.add(activity);
+
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+        }
+        return assignments;
+    }
+
     public void clearLocalDB(){
 
         SQLiteDatabase db = this.getWritableDatabase();
