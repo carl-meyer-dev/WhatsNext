@@ -29,7 +29,7 @@ public class User implements Serializable{
         this.userType = userType;
         this.courseInfo = courseInfo;
         this.moduleString = moduleInfo;
-        this.modules = moduleInfo.split(",");
+        this.modules = moduleInfo.split("#");
         this.moduleString = moduleInfo;
     }
 

@@ -14,6 +14,9 @@ import com.a2pt.whatsnext.models.Session;
 import com.a2pt.whatsnext.models.Teaches;
 import com.a2pt.whatsnext.models.User;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
+
 import java.io.File;
 
 /**
@@ -136,6 +139,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         db.execSQL(CREATE_TEACHES_TABLE);
         db.execSQL(CREATE_SESSION_TABLE);
         db.execSQL(CREATE_ACTIVITY_TABLE);
+        insertDummyData(db);
     }
 
     @Override
@@ -148,9 +152,9 @@ public class ITSdbManager extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public void insertData(User user){
+    public void insertData(User user, SQLiteDatabase db){
         //get data repository in write mode
-        SQLiteDatabase db = this.getWritableDatabase();
+
 
         ContentValues values = new ContentValues();
 
@@ -164,44 +168,17 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_MODULE_INFO, user.getModuleInfo());
 
         db.insert(TABLE_USERS, null, values);
-        db.close();
-    }
-
-    /*
-    * THIS WILL NOT WORK. It causes Nullpointer Exceptions and does not insert activities correctly
-    *
-    public void insertActivity(Activity activity)
-    {
-        System.out.println("INSERT ACTIVITY!");
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(KEY_ACT_MOD_ID, activity.getModID());
-        values.put(KEY_ACT_ACT_TYPE, activity.getActType());
-        values.put(KEY_ACT_TITLE, activity.getAssignmentTitle());
-        values.put(KEY_ACT_DUE_DATE, activity.getAssignmentDueDate().toString());
-        values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString());
-        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
-        values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
-        values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString());
-        values.put(KEY_ACT_VENUE, activity.getTestVenue());
-        values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString());
-        values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
-
-        db.insert(TABLE_ACTIVITY, null, values);
-        db.close();
 
     }
-*/
+
 
     /**
      * Instead have separate insert methods for each activity type.
      * Then there wont be null exceptions
      */
-    public void insertLecture(Activity activity){
-        System.out.println("DEBUG ITSdbManager: INSERT LECTURE");
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void insertLecture(Activity activity, SQLiteDatabase db){
+
+
         ContentValues values = new ContentValues();
 
         values.put(KEY_ACT_MOD_ID, activity.getModID());
@@ -212,14 +189,12 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_LECTURE_DUPLICATE, activity.getIsDuplicate());
 
         db.insert(TABLE_ACTIVITY, null, values);
-        db.close();
+
 
     }
 
-    public void insertAssignment(Activity activity){
-        System.out.println("DEBUG ITSdbManager: INSERT ASSIGNMENT");
+    public void insertAssignment(Activity activity, SQLiteDatabase db){
 
-        SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
@@ -231,13 +206,12 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
 
         db.insert(TABLE_ACTIVITY, null, values);
-        db.close();
+
 
     }
 
-    public void insertTest(Activity activity){
-        System.out.println("DEBUG ITSdbManager: INSERT ASSIGNMENT");
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void insertTest(Activity activity, SQLiteDatabase db){
+
 
         ContentValues values = new ContentValues();
 
@@ -249,13 +223,13 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_VENUE, activity.getTestVenue());
 
         db.insert(TABLE_ACTIVITY, null, values);
-        db.close();
+
 
     }
 
-    public void insertSession(Session session)
+    public void insertSession(Session session, SQLiteDatabase db)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+
 
         ContentValues values = new ContentValues();
 
@@ -265,12 +239,12 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_SESSION_DAY_OF_WEEK, session.getDayOfWeek().toString());
 
         db.insert(TABLE_SESSION, null, values);
-        db.close();
+
     }
 
-    public void insertTeaches(Teaches teaches)
+    public void insertTeaches(Teaches teaches, SQLiteDatabase db)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+
 
         ContentValues values = new ContentValues();
 
@@ -279,12 +253,12 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_TEACHES_MOD_ID, teaches.getModID());
 
         db.insert(TABLE_TEACHES, null, values);
-        db.close();
+
     }
 
-    public void insertModule(Module module)
+    public void insertModule(Module module, SQLiteDatabase db)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+
 
         ContentValues values = new ContentValues();
 
@@ -292,7 +266,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_MODULE_MOD_NAME, module.getModName());
 
         db.insert(TABLE_MODULE, null, values);
-        db.close();
+
     }
 
     public User getUser(String username){
@@ -360,5 +334,90 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
 
         return validLogin;
+    }
+
+    public void insertDummyData(SQLiteDatabase db){
+        //Gonna use Dummy Variables here but we will have to set up a fake acounts from Textfile or List or something
+
+        //Dummy Users
+        String insertUserQuery = "INSERT INTO " + TABLE_USERS + "(" + KEY_ID + ", " + KEY_USERNAME + ", " + KEY_USEREMAIL + ", " + KEY_PASSWORD + ", " + KEY_TYPE_OF_USER + ", " + KEY_COURSEINFO + ", " + KEY_MODULE_INFO + " ) values";
+
+       // db.execSQL(insertUserQuery + "(s215006941, Carl Meyer, s215006941@nmmu.ac.za, abc123, student, BSc Computer Science, WRAP302#WRL301#MATH214#MATH203#TAT203#WRR301)");
+       // db.execSQL(insertUserQuery + "(s215144988, Gerrit Naude, ss215144988@nmmu.ac.za, def456, student, BSc Information Systems, WRAP302#EBM302#WRUI301#WRB302#WRR301)");
+       // db.execSQL(insertUserQuery + "(Vogts.Dieter, Dieter Vogts, Vogts.Dieter@nmmu.ac.za, wrap2017, lecturer, Computer Science, WRAP301#WRAP302#WRA301)");
+       // db.execSQL(insertUserQuery + "(Nel.Janine, Janine Nel, Nel.Janine@nmmu.ac.za, wrr301, lecturer, Computer Science, WRR301#WRI201#WRI202)");
+
+        //Insert Activities
+
+
+
+        User user = new User("s215006941", "Carl Meyer", "s215006941@nmmu.ac.za", "abc123", "student", "BSc Computer Science", "WRAP302,WRL301,MATH214,MATH203,STAT203, WRR301");
+        insertData(user, db);
+        user = new User("s215144988", "Gerrit Naude", "ss215144988@nmmu.ac.za", "def456", "student", "BSc Information Systems","WRAP302,EBM302,WRUI301,WRB302,WRR301");
+        insertData(user, db);
+        user = new User("Vogts.Dieter", "Dieter Vogts", "Vogts.Dieter@nmmu.ac.za", "wrap2017", "lecturer", "Computer Science", "WRAP301,WRAP302,WRA301");
+        insertData(user, db);
+        user = new User("Nel.Janine", "Janine Nel", "Nel.Janine@nmmu.ac.za", "wrr301", "lecturer", "Computer Science", "WRR301, WRI201, WRI202");
+        insertData(user, db);
+        user = new User("admin", "admin", "admin@nmmu.ac.za", "admin", "lecturer", "admin", "admin");
+        insertData(user, db);
+
+        //Insert Activities
+        Activity activity = new Activity("MATH203", "lecture", "35 00 17", new LocalTime(7,45),"monday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("WRAP302", "lecture", "35 01 01", new LocalTime(9,5), "monday", 0);
+        insertLecture(activity, db);
+
+        activity = new Activity("MATH214 Tut", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("STAT203", "lecture", "04 00 3", new LocalTime(14,5), "tuesday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("STAT203 Prac","lecture", "07 02 48", new LocalTime(15,30), "tuesday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("STAT203 Tut","lecture", "07 02 48", new LocalTime(16,45), "tuesday", 0);
+        insertLecture(activity, db);
+
+        activity = new Activity("STAT203", "lecture", "35 00 17", new LocalTime(7,45),"wednesday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("MATH203", "lecture", "35 00 18", new LocalTime(9,5),"wednesday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("WRR301", "lecture", "09 02 02", new LocalTime(10,25),"wednesday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(14,5),"wednesday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("WRAP302 Prac", "lecture", "09 02 04", new LocalTime(15,35),"wednesday", 0);
+        insertLecture(activity, db);
+
+        activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(7,45),"thursday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("WRL301", "lecture", "35 00 18", new LocalTime(10,25),"thursday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("WRL301 Tut", "lecture", "35 00 16", new LocalTime(14,5),"thursday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("STAT203", "lecture", "35 00 18", new LocalTime(16,45),"thursday", 0);
+        insertLecture(activity, db);
+        activity = new Activity("WRMS302", "lecture", "09 02 02", new LocalTime(9,5), "friday", 0);
+        insertLecture(activity, db);
+
+        activity = new Activity("WRAP302", "assignment", "Assignment 5", new LocalDate(2017,9,12), new LocalTime(23,35), 0);
+        insertAssignment(activity, db);
+        activity = new Activity("STAT203", "assignment", "Prac 2", new LocalDate(2017,9,12), new LocalTime(14,5), 0);
+        insertAssignment(activity, db);
+        activity = new Activity("WRR301", "assignment", "Final", new LocalDate(2017,10,23), new LocalTime(12,0), 0);
+        insertAssignment(activity, db);
+
+        activity = new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48");
+        insertTest(activity, db);
+        activity = new Activity("MATH214", "test", "Seme Test 2",new LocalDate(2017,9,14),new LocalTime(18,0), "Heinz Benz Hall");
+        insertTest(activity, db);
+        activity = new Activity("WRL301", "test", "Seme Test 2",new LocalDate(2017,10,4),new LocalTime(18,0), "35 00 17");
+        insertTest(activity, db);
+        activity = new Activity("WRAP302", "test", "Seme Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04");
+        insertTest(activity, db);
+        activity = new Activity("STAT203", "test", "Seme Test 2",new LocalDate(2017,10,10),new LocalTime(18,0), "07 02 48");
+        insertTest(activity, db);
+        activity = new Activity("MATH203", "test", "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre");
+        insertTest(activity, db);
+
     }
 }
