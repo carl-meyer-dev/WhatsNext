@@ -369,13 +369,13 @@ public class ITSdbManager extends SQLiteOpenHelper{
         activity = new Activity("WRAP302", "lecture", "35 01 01", new LocalTime(9,5), "monday", 0);
         insertLecture(activity, db);
         //Tuesday Lectures
-        activity = new Activity("MATH214 Tut", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 0);
+        activity = new Activity("MATH214", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 0);
         insertLecture(activity, db);
         activity = new Activity("STAT203", "lecture", "04 00 3", new LocalTime(14,5), "tuesday", 0);
         insertLecture(activity, db);
-        activity = new Activity("STAT203 Prac","lecture", "07 02 48", new LocalTime(15,30), "tuesday", 0);
+        activity = new Activity("STAT203","lecture", "07 02 48", new LocalTime(15,30), "tuesday", 0);
         insertLecture(activity, db);
-        activity = new Activity("STAT203 Tut","lecture", "07 02 48", new LocalTime(16,45), "tuesday", 0);
+        activity = new Activity("STAT203","lecture", "07 02 48", new LocalTime(16,45), "tuesday", 0);
         insertLecture(activity, db);
         //Wednesday Lectures
         activity = new Activity("STAT203", "lecture", "35 00 17", new LocalTime(7,45),"wednesday", 0);
@@ -386,14 +386,14 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertLecture(activity, db);
         activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(14,5),"wednesday", 0);
         insertLecture(activity, db);
-        activity = new Activity("WRAP302 Prac", "lecture", "09 02 04", new LocalTime(15,35),"wednesday", 0);
+        activity = new Activity("WRAP302", "lecture", "09 02 04", new LocalTime(15,35),"wednesday", 0);
         insertLecture(activity, db);
         //Thursday Lectures
         activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(7,45),"thursday", 0);
         insertLecture(activity, db);
         activity = new Activity("WRL301", "lecture", "35 00 18", new LocalTime(10,25),"thursday", 0);
         insertLecture(activity, db);
-        activity = new Activity("WRL301 Tut", "lecture", "35 00 16", new LocalTime(14,5),"thursday", 0);
+        activity = new Activity("WRL301", "lecture", "35 00 16", new LocalTime(14,5),"thursday", 0);
         insertLecture(activity, db);
         activity = new Activity("STAT203", "lecture", "35 00 18", new LocalTime(16,45),"thursday", 0);
         insertLecture(activity, db);

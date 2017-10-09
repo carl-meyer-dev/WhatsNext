@@ -11,7 +11,9 @@ import android.widget.ListView;
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.adapters.ActivityAdapter;
 import com.a2pt.whatsnext.models.Activity;
+import com.a2pt.whatsnext.services.ITSdbManager;
 import com.a2pt.whatsnext.services.Utility;
+import com.a2pt.whatsnext.services.dbManager;
 
 import org.joda.time.LocalTime;
 
@@ -25,6 +27,8 @@ import java.util.List;
 public class TimetableFragment extends Fragment {
     View view;
 
+    dbManager localDB;
+
     private ListView lvMonday, lvTuesday, lvWednesday, lvThursday, lvFriday;
     private ActivityAdapter monAdapter, tueAdapter, wedAdapter, thuAdapter, friAdapter;
 
@@ -33,6 +37,8 @@ public class TimetableFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.timetable_layout, container, false);
 
+        localDB = new dbManager(getActivity());
+
         lvMonday = (ListView)view.findViewById(R.id.tt_lvMonday);
         lvTuesday = (ListView)view.findViewById(R.id.tt_lvTuesday);
         lvWednesday = (ListView)view.findViewById(R.id.tt_lvWednesday);
@@ -40,11 +46,11 @@ public class TimetableFragment extends Fragment {
         lvFriday = (ListView)view.findViewById(R.id.tt_lvFriday);
 
         //make a list for each list view corresponding to each day of the week
-        final List<Activity> monday = new ArrayList<>();
-        final List<Activity> tuesday = new ArrayList<>();
-        final List<Activity> wednesday = new ArrayList<>();
-        final List<Activity> thursday = new ArrayList<>();
-        final List<Activity> friday = new ArrayList<>();
+        final List<Activity> monday = localDB.getLecturesSpecificDay("monday");
+        final List<Activity> tuesday = localDB.getLecturesSpecificDay("tuesday");
+        final List<Activity> wednesday = localDB.getLecturesSpecificDay("wednesday");
+        final List<Activity> thursday = localDB.getLecturesSpecificDay("thursday");
+        final List<Activity> friday = localDB.getLecturesSpecificDay("friday");
 
         ArrayList<List<Activity>> weekSchedule = new ArrayList<>();
             //Don't know if this will be useful yet, but I think we could use this for indexing or if we will have to do if statements
@@ -131,11 +137,13 @@ public class TimetableFragment extends Fragment {
         Utility.setListViewHeightBasedOnChildren(lvMonday, 320);
         //I am using Switch cases since the number of items in the list influences the Utility.SetListViewHeight method. So I had to set custom minus values for amount of items in list
         //Utility class is the only way I got the list views displaying properly so I feel like this is our best working solution atm
+        //TODO: THIS IS NOT WORKING> FIND ANOTHER WAY TO MAKE LIST SIZE OF CONTENT
+
         switch (tuesday.size()){
 
             case 1:setMinusAmount(lvTuesday, 320);break;
             case 2:
-            case 3: setMinusAmount(lvTuesday,350);break;
+            case 3: setMinusAmount(lvTuesday,320);break;
             case 4: setMinusAmount(lvTuesday,380);break;
             case 5:
             case 6: setMinusAmount(lvTuesday,400);break;
