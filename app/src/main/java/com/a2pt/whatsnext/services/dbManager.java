@@ -32,7 +32,7 @@ public class dbManager extends SQLiteOpenHelper {
 
     //Creating the User table
     private static final String TABLE_USERS = "users";
-    private static final String KEY_ID = "id";
+    private static final String KEY_USER_ID = "user_id";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_USEREMAIL = "user_email";
     private static final String KEY_PASSWORD = "password";
@@ -88,7 +88,7 @@ public class dbManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + " ("
-                + KEY_ID + " TEXT PRIMARY KEY,"
+                + KEY_USER_ID + " TEXT PRIMARY KEY,"
                 + KEY_USERNAME + " TEXT,"
                 + KEY_USEREMAIL + " TEXT,"
                 + KEY_PASSWORD + " TEXT,"
@@ -106,7 +106,7 @@ public class dbManager extends SQLiteOpenHelper {
                 + KEY_TEACHES_SESSION_ID + " INTEGER PRIMARY KEY,"
                 + KEY_TEACHES_ID + " TEXT,"
                 + KEY_TEACHES_MOD_ID + " TEXT, "
-                + "FOREIGN KEY(" + KEY_TEACHES_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_ID + "), "
+                + "FOREIGN KEY(" + KEY_TEACHES_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + "), "
                 + "FOREIGN KEY (" + KEY_TEACHES_MOD_ID + ") REFERENCES " + TABLE_MODULE + "(" + KEY_MODULE_MOD_ID + "))";
 
         String CREATE_SESSION_TABLE = "CREATE TABLE " + TABLE_SESSION + " ("
@@ -157,12 +157,13 @@ public class dbManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         //TODO: Here we can have a loop inserting all Dummy Accounts
 
-        values.put(KEY_ID, user.getUserID());
+        values.put(KEY_USER_ID, user.getUserID());
         values.put(KEY_USERNAME, user.getUserName());
         values.put(KEY_USEREMAIL, user.getUserEmail());
         values.put(KEY_PASSWORD, user.getUserPassword());
         values.put(KEY_TYPE_OF_USER, user.getUserType());
         values.put(KEY_COURSEINFO, user.getCourseInfo());
+        values.put(KEY_MODULE_INFO, user.getModuleString());
 
         db.insert(TABLE_USERS, null, values);
         db.close();
@@ -295,8 +296,8 @@ public class dbManager extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(
                 TABLE_USERS,                                                                                            //Table Name - SELECT FROM TABLE
-                new String[]{KEY_ID, KEY_USERNAME, KEY_USEREMAIL, KEY_PASSWORD, KEY_TYPE_OF_USER, KEY_COURSEINFO, KEY_MODULE_INFO},      //All the Fields that you watn to capture
-                KEY_ID + "=?",                                                                                    //Where Username = ?
+                new String[]{KEY_USER_ID, KEY_USERNAME, KEY_USEREMAIL, KEY_PASSWORD, KEY_TYPE_OF_USER, KEY_COURSEINFO, KEY_MODULE_INFO},      //All the Fields that you watn to capture
+                KEY_USER_ID + "=?",                                                                                    //Where Username = ?
                 new String[]{ String.valueOf(username)},                                                                // Where ? = String.Value(What you are looking for)
                 null, null, null, null);
 
@@ -308,6 +309,36 @@ public class dbManager extends SQLiteOpenHelper {
 
         cursor.close();
         return user;
+    }
+
+    public User getUser(){ //Since the local DB will only have 1 user in Database we can just get the first item in the SELECT * statement
+
+        String query = "SELECT * FROM " + TABLE_USERS;
+
+        Cursor cursor = null;
+        cursor = this.getReadableDatabase().rawQuery(query, null);
+
+        if(cursor != null && cursor.moveToFirst()){
+
+            String userID = cursor.getString(cursor.getColumnIndex(KEY_USER_ID));
+            String userName = cursor.getString(cursor.getColumnIndex(KEY_USERNAME));
+            String userEmail = cursor.getString(cursor.getColumnIndex(KEY_USEREMAIL));
+            String userPassword = cursor.getString(cursor.getColumnIndex(KEY_PASSWORD));
+            String userType = cursor.getString(cursor.getColumnIndex(KEY_TYPE_OF_USER));
+            String courseInfo = cursor.getString(cursor.getColumnIndex(KEY_COURSEINFO));
+            String moduleString = cursor.getString(cursor.getColumnIndex(KEY_MODULE_INFO));
+            System.out.println("DEBUG LOGGIN INTO MAIN ACTIVITY: MODULE INFO = " + moduleString);
+
+            cursor.close();
+            return new User(userID,userName,userEmail,userPassword,userType,courseInfo,moduleString);
+
+
+        }else {
+
+            return new User("","","","","","","?,?,?,?");
+
+        }
+
     }
 
     //Takes in a module code and the itsdatabase

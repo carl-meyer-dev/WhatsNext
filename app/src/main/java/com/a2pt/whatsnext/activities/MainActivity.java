@@ -29,6 +29,8 @@ import com.a2pt.whatsnext.fragments.SendEmailFragment;
 import com.a2pt.whatsnext.fragments.TimetableFragment;
 import com.a2pt.whatsnext.fragments.UpcomingEventsFragment;
 import com.a2pt.whatsnext.models.User;
+import com.a2pt.whatsnext.services.ITSdbManager;
+import com.a2pt.whatsnext.services.dbManager;
 
 import java.util.Calendar;
 
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity
      */
     int userType = 0;
     User user;
+    dbManager localDB;
+    ITSdbManager itSdbManager;
 
     //Make View Variables
     //==============================================================================================
@@ -80,9 +84,16 @@ public class MainActivity extends AppCompatActivity
         //==========================================================================================
         //OnCreate Custom Code:
         //==========================================================================================
+        //get reference to local database
+        localDB = new dbManager(this);
+
         //Get Bundle, Set Nav Menu and User Info
-        Bundle bundle = getIntent().getExtras();
-        user = (User)bundle.getSerializable("user");
+        //Bundle bundle = getIntent().getExtras();
+        //user = (User)bundle.getSerializable("user");
+
+        // Instead of logging in with bundle info, get the user from the Local Database
+        user = localDB.getUser();
+
 
         //==========================================================================================
 
@@ -114,7 +125,7 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
 
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("loggedIn", "");
+        editor.putString("loggedIn", "true");
         editor.apply();
     }
 

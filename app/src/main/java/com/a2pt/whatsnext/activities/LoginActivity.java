@@ -53,27 +53,32 @@ public class LoginActivity extends AppCompatActivity {
         ITSdb = new ITSdbManager(this);
         localDB = new dbManager(this);
 
-        try{
-            insertData();
-        }catch (Exception e){
-            //most probably the data already exists and there is a conflict in Primary Keys
-            e.printStackTrace();
-        }
-
-
-
-        //=========================================================================================
-
         SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
 
-        boolean check = preferences.getBoolean("loggedIn", false);
+        // boolean check = preferences.getBoolean("loggedIn", false);
+        String loggedin = preferences.getString("loggedIn", "false");
+        System.out.println("USER ALREADY LOGGED IN? : " + loggedin);
 
-        if (check)
+        //Check if user already Logged in
+        if (loggedin.equalsIgnoreCase("true"))
         {
+            System.out.println("USER ALREADY LOGGED INTO APP");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
+        }else{
+            //Else no user logged in / first time logging in
+            System.out.println("NO USER IS LOGGED INTO APP");
+            try{
+                insertData();
+            }catch (Exception e){
+                //most probably the data already exists and there is a conflict in Primary Keys
+                e.printStackTrace();
+            }
         }
+        //=========================================================================================
+
+
 
     }
 
@@ -140,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
 
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("loggedIn", true);
+        editor.putString("loggedIn", "true");
         editor.putString("userName", loginUsername);
         editor.putString("usertype", usertype);
         editor.commit();
