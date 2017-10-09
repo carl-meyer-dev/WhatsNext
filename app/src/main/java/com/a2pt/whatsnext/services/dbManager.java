@@ -21,6 +21,8 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.io.File;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Carl on 2017-10-04.
@@ -346,6 +348,7 @@ public class dbManager extends SQLiteOpenHelper {
     //adds the module into the database
     public void addAssignment(String modCode, ITSdbManager itsDatabase)
     {
+
         System.out.println(modCode);
         String type = "assignment";
         String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
@@ -394,9 +397,8 @@ public class dbManager extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
 
             cursor.close();
-            dbToCheck.close();
-        }
 
+        }
     }
 
     public void addTest(String modCode, ITSdbManager itsDatabase)
@@ -444,13 +446,14 @@ public class dbManager extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
 
             cursor.close();
-            dbToCheck.close();
+
         }
 
     }
 
     public void addLecture(String modCode, ITSdbManager itsDatabase)
     {
+        System.out.println("DEBUG in dbManager. Adding Lecture for module = " + modCode);
         String type = "lecture";
         String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
                 + KEY_ACT_MOD_ID + " = ?";
@@ -492,8 +495,52 @@ public class dbManager extends SQLiteOpenHelper {
 
                 cursor.close();
 
-                dbToCheck.close();
+
             }
+
+    }
+
+    public List<Activity> getLecturesSpecificDay(String dayOfWeek){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Activity> lectures = new ArrayList<>();
+
+        Cursor cursor = null;
+
+        String query = "SELECT * FROM " + TABLE_ACTIVITY +
+                " WHERE " + KEY_ACT_ACT_TYPE +" = ? AND " + KEY_ACT_LECTURE_DAY_OF_WEEK + " = ? ORDER BY " + KEY_ACT_LECTURE_START_TIME + " ASC";
+
+        String[] values = { "lecture", dayOfWeek};
+        cursor = db.rawQuery(query, values);
+
+        if(cursor != null && cursor.moveToFirst()){
+            System.out.println("DEBUG getLecturesSpecificDay: Number of entries for Monday is: " + cursor.getCount());
+            do{
+
+                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_VENUE));
+                String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_START_TIME));
+                String lectureDayOfWeek = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DAY_OF_WEEK));
+                int duplicate = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
+
+
+                //Note that in the Database the time is stores like this - 17:45
+                //Note that Local Time takes in (int Hours, int Minutes)_ as parameters
+
+                String[] temptime = lectureTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime startTime = new LocalTime(hours, minutes);
+
+                Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate);
+                lectures.add(activity);
+
+            }while (cursor.moveToNext());
+
+        }
+
+        return lectures;
 
     }
 

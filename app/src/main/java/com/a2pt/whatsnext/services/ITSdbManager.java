@@ -351,7 +351,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
 
 
-        User user = new User("s215006941", "Carl Meyer", "s215006941@nmmu.ac.za", "abc123", "student", "BSc Computer Science", "WRAP302,WRL301,MATH214,MATH203,STAT203, WRR301");
+        User user = new User("s215006941", "Carl Meyer", "s215006941@nmmu.ac.za", "abc123", "student", "BSc Computer Science", "WRAP302,WRL301,MATH214,MATH203,STAT203,WRR301");
         insertData(user, db);
         user = new User("s215144988", "Gerrit Naude", "ss215144988@nmmu.ac.za", "def456", "student", "BSc Information Systems","WRAP302,EBM302,WRUI301,WRB302,WRR301");
         insertData(user, db);
@@ -363,11 +363,12 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertData(user, db);
 
         //Insert Activities
+        //Monday Lectures
         Activity activity = new Activity("MATH203", "lecture", "35 00 17", new LocalTime(7,45),"monday", 0);
         insertLecture(activity, db);
         activity = new Activity("WRAP302", "lecture", "35 01 01", new LocalTime(9,5), "monday", 0);
         insertLecture(activity, db);
-
+        //Tuesday Lectures
         activity = new Activity("MATH214 Tut", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 0);
         insertLecture(activity, db);
         activity = new Activity("STAT203", "lecture", "04 00 3", new LocalTime(14,5), "tuesday", 0);
@@ -376,7 +377,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertLecture(activity, db);
         activity = new Activity("STAT203 Tut","lecture", "07 02 48", new LocalTime(16,45), "tuesday", 0);
         insertLecture(activity, db);
-
+        //Wednesday Lectures
         activity = new Activity("STAT203", "lecture", "35 00 17", new LocalTime(7,45),"wednesday", 0);
         insertLecture(activity, db);
         activity = new Activity("MATH203", "lecture", "35 00 18", new LocalTime(9,5),"wednesday", 0);
@@ -387,7 +388,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertLecture(activity, db);
         activity = new Activity("WRAP302 Prac", "lecture", "09 02 04", new LocalTime(15,35),"wednesday", 0);
         insertLecture(activity, db);
-
+        //Thursday Lectures
         activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(7,45),"thursday", 0);
         insertLecture(activity, db);
         activity = new Activity("WRL301", "lecture", "35 00 18", new LocalTime(10,25),"thursday", 0);
@@ -396,16 +397,17 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertLecture(activity, db);
         activity = new Activity("STAT203", "lecture", "35 00 18", new LocalTime(16,45),"thursday", 0);
         insertLecture(activity, db);
+        //Friday Lectures
         activity = new Activity("WRMS302", "lecture", "09 02 02", new LocalTime(9,5), "friday", 0);
         insertLecture(activity, db);
-
+        //Assignments
         activity = new Activity("WRAP302", "assignment", "Assignment 5", new LocalDate(2017,9,12), new LocalTime(23,35), 0);
         insertAssignment(activity, db);
         activity = new Activity("STAT203", "assignment", "Prac 2", new LocalDate(2017,9,12), new LocalTime(14,5), 0);
         insertAssignment(activity, db);
         activity = new Activity("WRR301", "assignment", "Final", new LocalDate(2017,10,23), new LocalTime(12,0), 0);
         insertAssignment(activity, db);
-
+        //Tests
         activity = new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48");
         insertTest(activity, db);
         activity = new Activity("MATH214", "test", "Seme Test 2",new LocalDate(2017,9,14),new LocalTime(18,0), "Heinz Benz Hall");

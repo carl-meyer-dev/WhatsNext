@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String[] moduleInfo = userToAdd.getModules();
 
+
         for (String moduleDetail: moduleInfo)
         {
             localDB.addLecture(moduleDetail, ITSdb);

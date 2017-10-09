@@ -4,6 +4,7 @@ package com.a2pt.whatsnext.activities;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.support.v4.app.FragmentManager;
@@ -356,4 +357,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
         finish();
     }
+
+
 }

@@ -16,6 +16,7 @@ import com.a2pt.whatsnext.adapters.AssignmentAdapter;
 import com.a2pt.whatsnext.adapters.TestAdapter;
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.services.Utility;
+import com.a2pt.whatsnext.services.dbManager;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -43,11 +44,15 @@ public class HomeFragment extends Fragment {
 
     View view;
     TextView tvDate;
+    dbManager localDB;
+    Calendar calendar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_layout, container, false);
+        calendar = Calendar.getInstance();
+        localDB = new dbManager(getActivity());
 
         tvDate = (TextView)view.findViewById(R.id.home_tvDate);
 
@@ -56,8 +61,11 @@ public class HomeFragment extends Fragment {
         lvLectures = (ListView)view.findViewById(R.id.home_lvLectures);
 
         setDateHeader();
-
-        final List<Activity> Lectures = new ArrayList<>();
+        //Get today's Day Of Week
+        String dayOfWeek =  calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()).toLowerCase();
+        System.out.println("DEBUG HomeFragment: DayOfWeek = " + dayOfWeek);
+        final List<Activity> Lectures = localDB.getLecturesSpecificDay(dayOfWeek); //set List to List of Lecture for Today
+        System.out.println(Lectures.toString());
         final List<Activity> Assignments = new ArrayList<>();
         final List<Activity> Tests = new ArrayList<>();
 
@@ -68,6 +76,7 @@ public class HomeFragment extends Fragment {
         Lectures.add(new Activity("WRR301", Activity.Activity_Type.LECTURE, "09 02 04", new LocalTime(10,25)));
         Lectures.add(new Activity("MATH214", Activity.Activity_Type.LECTURE, "07 02 50", new LocalTime(14,5)));
         Lectures.add(new Activity("WRAP Prac", Activity.Activity_Type.LECTURE, "09 02 04", new LocalTime(15,25)));*/
+
 
         lecturesAdapter = new ActivityAdapter(getActivity(), Lectures);
         lvLectures.setAdapter(lecturesAdapter);
@@ -95,12 +104,14 @@ public class HomeFragment extends Fragment {
 
     private void setDateHeader(){
 
-        Calendar calendar = Calendar.getInstance();
+
         String curDate = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()) + " " + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " + calendar.get(Calendar.YEAR);
 
         tvDate.setText(curDate);
 
     }
+
+
 
 
 }
