@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.adapters.ActivityAdapter;
@@ -21,7 +22,10 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Carl on 2017-07-29.
@@ -38,15 +42,20 @@ public class HomeFragment extends Fragment {
 
 
     View view;
+    TextView tvDate;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_layout, container, false);
 
+        tvDate = (TextView)view.findViewById(R.id.home_tvDate);
+
         lvAssignments = (ListView)view.findViewById(R.id.home_lvAssignments);
         lvTests = (ListView)view.findViewById(R.id.home_lvTests);
         lvLectures = (ListView)view.findViewById(R.id.home_lvLectures);
+
+        setDateHeader();
 
         final List<Activity> Lectures = new ArrayList<>();
         final List<Activity> Assignments = new ArrayList<>();
@@ -79,6 +88,19 @@ public class HomeFragment extends Fragment {
         lvTests.setAdapter(testsAdapter);
         Utility.setListViewHeightBasedOnChildren(lvTests, 180);
 
+
+
         return view;
     }
+
+    private void setDateHeader(){
+
+        Calendar calendar = Calendar.getInstance();
+        String curDate = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()) + " " + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " + calendar.get(Calendar.YEAR);
+
+        tvDate.setText(curDate);
+
+    }
+
+
 }
