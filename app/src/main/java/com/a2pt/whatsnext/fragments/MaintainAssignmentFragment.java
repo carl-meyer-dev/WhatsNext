@@ -60,18 +60,17 @@ public class MaintainAssignmentFragment extends Fragment {
             modules.add(string); //add each module to the List
         }
         System.out.println("MODULES LIST IS = " + modules.toString());
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, modules);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnAssignments.setAdapter(dataAdapter);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, modules); //set List to Adapter
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //make the drop down list look nice
+        spnAssignments.setAdapter(dataAdapter); //set the spinner's adapter
         assignments = new ArrayList<>();
-        spnAssignments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnAssignments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {  //when an item on the drop down list is chosen
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedModule = spnAssignments.getItemAtPosition(position).toString();
-                System.out.println("SELECTED MODULE IS = " + selectedModule);
-                assignments = localDB.getAssignmentsByID(selectedModule);
-                adapter = new AssignmentAdapter(getActivity(), assignments);
-                lvAssignments.setAdapter(adapter);
+                selectedModule = spnAssignments.getItemAtPosition(position).toString(); //get the selected module
+                assignments = localDB.getAssignmentsByID(selectedModule);   //query db for all assignments from that module
+                adapter = new AssignmentAdapter(getActivity(), assignments);    //set the adapter data to the queried data
+                lvAssignments.setAdapter(adapter);  //set List View adapter to display Assignments
             }
 
             @Override
@@ -79,9 +78,7 @@ public class MaintainAssignmentFragment extends Fragment {
 
             }
         });
-        //This code is for Testing purposes, it should be replaced with a proper adapter that obtains items from Database
-        //https://developer.android.com/guide/topics/ui/controls/spinner.html
-        //TODO: Change adapter correct adapter obtaining info from Database
+
 
         fabNew = (FloatingActionButton)view.findViewById(R.id.fabNewAssignment);
 

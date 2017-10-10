@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -15,6 +16,8 @@ import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.activities.MainActivity;
 import com.a2pt.whatsnext.adapters.TestAdapter;
 import com.a2pt.whatsnext.models.Activity;
+import com.a2pt.whatsnext.models.User;
+import com.a2pt.whatsnext.services.dbManager;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -34,29 +37,47 @@ public class MaintainTestFragment extends Fragment {
     NewTestFragment newTestFragment = new NewTestFragment();
     ListView lvTests;
     TestAdapter adapter;
+    User user;
+    List<Activity> tests;
+    String selectedModule;
+    dbManager localDB;
+    MainActivity main;
+    Spinner spnTests;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.maintain_test_layout, container, false);
-
+        localDB = new dbManager(getActivity());
         lvTests = (ListView)view.findViewById(R.id.mt_lvTests);
+        spnTests = (Spinner)view.findViewById(R.id.spnModulesTest);
+        main = (MainActivity) getActivity();
+        user = main.getCurUser();
+        final List<String> modules = new ArrayList<>();
+        for (String string : user.getModules()){
+            modules.add(string);
+        }
+        System.out.println("MODULES LIST IS = " + modules.toString());
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, modules);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnTests.setAdapter(dataAdapter);
 
-        final List<Activity> tests = new ArrayList<>();
+        tests = new ArrayList<>();
 
-        tests.add(new Activity("WRAP302", "test", "Semester Test 2",new LocalDate(2017,10,6),new LocalTime(14,0), "09 02 04"));
+        spnTests.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedModule = spnTests.getItemAtPosition(position).toString();
+                tests = localDB.getTestsByID(selectedModule);
+                adapter = new TestAdapter(getActivity(), tests);
+                lvTests.setAdapter(adapter);
+            }
 
-        adapter = new TestAdapter(getActivity(), tests);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-        lvTests.setAdapter(adapter);
-
-        //This code is for Testing purposes, it should be replaced with a proper adapter that obtains items from Database
-        //https://developer.android.com/guide/topics/ui/controls/spinner.html
-        //TODO: Change adapter correct adapter obtaining info from Database
-        Spinner spinner = (Spinner)view.findViewById(R.id.spnModulesTest);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.modules, android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            }
+        });
 
         fabNew = (FloatingActionButton)view.findViewById(R.id.fabNewTest);
 
