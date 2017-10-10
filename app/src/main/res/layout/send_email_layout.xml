@@ -19,7 +19,7 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <Spinner
-        android:id="@+id/spnModulesAssignment"
+        android:id="@+id/spnSendEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -54,7 +54,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/txtSubject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -71,18 +71,18 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/txtBody"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:ems="10"
             android:gravity="top"
             android:hint="message text"
-            android:inputType="textMultiLine"/>
+            android:inputType="textMultiLine" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSend"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="100dp"
