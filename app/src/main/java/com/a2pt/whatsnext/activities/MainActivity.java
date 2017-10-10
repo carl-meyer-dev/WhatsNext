@@ -2,6 +2,7 @@ package com.a2pt.whatsnext.activities;
 
 
 import android.content.ContentUris;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,15 +12,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.a2pt.whatsnext.fragments.HomeFragment;
 import com.a2pt.whatsnext.fragments.MaintainAssignmentFragment;
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity
     int userType = 0;
     User user;
     dbManager localDB;
-    ITSdbManager itSdbManager;
+    ITSdbManager ITSdb;
 
     //Make View Variables
     //==============================================================================================
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity
         //==========================================================================================
         //get reference to local database
         localDB = new dbManager(this);
+        ITSdb = new ITSdbManager(this);
 
         //Get Bundle, Set Nav Menu and User Info
         //Bundle bundle = getIntent().getExtras();
@@ -203,9 +208,43 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_maintain_timetable) {
-            //Resynchronize Time Table
+            //TODO: Resynchronize Time Table
             //Make Popup Dialog "Do you want to resynchronise timetable?"
-            //Run SQL Query to refresh time table
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes Button Clicked
+                            //Run SQL Query to refresh time table
+                            ITSdb.TestRefresh();
+                            localDB.clearLocalDB();
+                            ITSdb.setupLocalDB(user, localDB, ITSdb);
+                            Toast toast = Toast.makeText(MainActivity.this, "Refreshed Local DB", Toast.LENGTH_LONG);
+                            toast.show();
+                            //TODO: need to refresh Home Fragment
+                            Fragment homeFrag = new HomeFragment(); //get new Home Fragment
+                            fragmentManager.beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragment_container)).commit(); //Removes all fragments from container
+                            fragmentManager.beginTransaction().add(R.id.fragment_container, homeFrag).commit(); //add new Home Fragment to container
+
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No Button Clicked
+                            //DO Nothing
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme); //This changes the YES/NO Button's colours so it is visible
+            //Code below Shows the PopupDialog and calls the dialogClickedListener Events
+            builder.setMessage("Are you sure you want to resynchronize databse?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+
+
+
+
+
         } else if (id == R.id.nav_maintain_lecture_times) {
             //similarly replace the fragment_container with Maintain Lecture Times Fragment
             MaintainLectureTimesFragment maintainLectureTimesFragment = new MaintainLectureTimesFragment();

@@ -336,6 +336,24 @@ public class ITSdbManager extends SQLiteOpenHelper{
         return validLogin;
     }
 
+    public void setupLocalDB(User userToAdd, dbManager localDB, ITSdbManager ITSdb) {
+
+
+
+        localDB.insertData(userToAdd);
+
+        String[] moduleInfo = userToAdd.getModules();
+
+
+        for (String moduleDetail: moduleInfo)
+        {
+            localDB.addLecture(moduleDetail, ITSdb);
+            localDB.addAssignment(moduleDetail, ITSdb);
+            localDB.addTest(moduleDetail, ITSdb);
+        }
+
+    }
+
     public void insertDummyData(SQLiteDatabase db){
         //Gonna use Dummy Variables here but we will have to set up a fake acounts from Textfile or List or something
 
@@ -369,8 +387,11 @@ public class ITSdbManager extends SQLiteOpenHelper{
         activity = new Activity("WRAP302", "lecture", "35 01 01", new LocalTime(9,5), "monday", 0);
         insertLecture(activity, db);
         //Tuesday Lectures
-        activity = new Activity("MATH214", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 0);
+        activity = new Activity("MATH214", "lecture", "04 00 01", new LocalTime(7,45), "tuesday", 1);
         insertLecture(activity, db);
+        activity = new Activity("MATH214", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 1);
+        insertLecture(activity, db);
+
         activity = new Activity("STAT203", "lecture", "04 00 3", new LocalTime(14,5), "tuesday", 0);
         insertLecture(activity, db);
         activity = new Activity("STAT203","lecture", "07 02 48", new LocalTime(15,30), "tuesday", 0);
@@ -433,5 +454,11 @@ public class ITSdbManager extends SQLiteOpenHelper{
         activity = new Activity("WRR301", "test", "Dummy Test",new LocalDate(2017,10,9),new LocalTime(18,0), "My Room");
         insertTest(activity, db);
 
+    }
+
+    public void TestRefresh(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Activity activity = new Activity("WRR301", "lecture", "09 02 04", new LocalTime(11,35), "tuesday", 1);
+        insertLecture(activity, db);
     }
 }

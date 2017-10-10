@@ -12,7 +12,8 @@
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:tag="home_screen"/>
 
     <LinearLayout
         android:layout_width="match_parent"

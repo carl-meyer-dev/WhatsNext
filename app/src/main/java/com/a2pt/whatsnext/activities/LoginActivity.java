@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             setState(loginUsername, user.getUserType());
 
             //Adding all of the students necessary information into the local.db
-            setupLocalDB(user);
+            ITSdb.setupLocalDB(user, localDB, ITSdb);
 
             //put user inside bundle to be sent
             Bundle bundle= new Bundle();
@@ -121,21 +121,7 @@ public class LoginActivity extends AppCompatActivity {
     //Adds the user to the database
     //Pulls all assignments, tests and modules from ITSdatabase
     //adds to the local.db
-    private void setupLocalDB(User userToAdd) {
 
-        localDB.insertData(userToAdd);
-
-        String[] moduleInfo = userToAdd.getModules();
-
-
-        for (String moduleDetail: moduleInfo)
-        {
-            localDB.addLecture(moduleDetail, ITSdb);
-            localDB.addAssignment(moduleDetail, ITSdb);
-            localDB.addTest(moduleDetail, ITSdb);
-        }
-
-    }
 
     private void setState(String usertype, String loginUsername) {
         SharedPreferences preferences = getSharedPreferences("State", MODE_PRIVATE);
