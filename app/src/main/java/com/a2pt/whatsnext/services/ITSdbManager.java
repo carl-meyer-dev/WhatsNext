@@ -210,6 +210,27 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
     }
 
+    public void insertAssignment(Activity activity){
+        System.out.println("DEBUG ITSdbManager: INSERT ASSIGNMENT");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        System.out.println(activity.getAssignmentDueDate().toString());
+
+        values.put(KEY_ACT_MOD_ID, activity.getModID());
+        values.put(KEY_ACT_ACT_TYPE, activity.getActType());
+        values.put(KEY_ACT_TITLE, activity.getAssignmentTitle());
+        values.put(KEY_ACT_DUE_DATE, activity.getAssignmentDueDate().toString());
+        values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString().substring(0,5));
+        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
+
+        db.insert(TABLE_ACTIVITY, null, values);
+        db.close();
+
+    }
+
     public void insertTest(Activity activity, SQLiteDatabase db){
 
 
@@ -224,6 +245,24 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
         db.insert(TABLE_ACTIVITY, null, values);
 
+
+    }
+
+    public void insertTest(Activity activity){
+        System.out.println("DEBUG ITSdbManager: INSERT ASSIGNMENT");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_ACT_MOD_ID, activity.getModID());
+        values.put(KEY_ACT_ACT_TYPE, activity.getActType());
+        values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
+        values.put(KEY_ACT_TEST_DATE, activity.getTestDate().toString());
+        values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString().substring(0,5));
+        values.put(KEY_ACT_VENUE, activity.getTestVenue());
+
+        db.insert(TABLE_ACTIVITY, null, values);
+        db.close();
 
     }
 

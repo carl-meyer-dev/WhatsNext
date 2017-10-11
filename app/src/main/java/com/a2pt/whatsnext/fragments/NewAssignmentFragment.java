@@ -11,11 +11,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.a2pt.whatsnext.R;
+import com.a2pt.whatsnext.models.Activity;
+import com.a2pt.whatsnext.services.ITSdbManager;
+import com.a2pt.whatsnext.services.dbManager;
+
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 import java.util.Calendar;
 
@@ -29,11 +37,22 @@ public class NewAssignmentFragment extends Fragment {
     //Custom Variables
     private FloatingActionButton fabDate;
     private FloatingActionButton fabTime;
+    private Button btnCreateAssignment;
     private View view;
     private TextView tvDate;
     private TextView tvTime;
+    private EditText title;
     private DatePickerDialog.OnDateSetListener dataDateSetListener;
     private TimePickerDialog.OnTimeSetListener timeSetListener;
+    private Bundle bundle;
+
+    //values for new activity retrieved from MaintainAssignmentFragment
+    private String modId;
+    private String actType;
+
+    //Databases
+    dbManager localDB;
+    ITSdbManager itSdbManager;
 
 
     public NewAssignmentFragment() {
@@ -44,10 +63,23 @@ public class NewAssignmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //Instantiate bundle and get values;
+        bundle = this.getArguments();
+        modId = bundle.getString("modId");
+        actType = bundle.getString("actType");
+
+        //Instatiate databases
+        localDB = new dbManager(getActivity());
+        itSdbManager = new ITSdbManager(getActivity());
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.maintain_assignment_new_assignment, container, false);
         tvDate = (TextView)view.findViewById(R.id.tvMA_Date);
         tvTime = (TextView)view.findViewById(R.id.tvMA_Time);
+        title = (EditText)view.findViewById(R.id.txtMA_AssignmentTitle);
+
+        btnCreateAssignment = (Button)view.findViewById(R.id.btnCreateAssignment);
 
         fabDate = (FloatingActionButton) view.findViewById(R.id.fabAssignmentDate);
 
@@ -106,6 +138,36 @@ public class NewAssignmentFragment extends Fragment {
                 tvTime.setText(time);
             }
         };
+
+        btnCreateAssignment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String assignmentTitle = title.getText().toString();
+                String dueDate = tvDate.getText().toString();
+                String dueTime = tvTime.getText().toString();
+
+                String[] temdate = dueDate.split("/"); //split date up into 2017, 10, 23
+                int year = Integer.parseInt(temdate[2]);  //save year as 2017
+                int month = Integer.parseInt(temdate[1]);  //save month as 10
+                int day = Integer.parseInt(temdate[0]); //save day as 23
+                LocalDate dDate = new LocalDate(year, month, day);  //create new local date
+                System.out.println(dDate.toString());
+
+                String[] temptime = dueTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime dTime = new LocalTime(hours, minutes);
+                System.out.println(dTime.toString());
+
+                Activity newActivity = new Activity(modId, actType, assignmentTitle, dDate, dTime, 0);
+                localDB.insertAssignment(newActivity);
+                itSdbManager.insertAssignment(newActivity);
+
+                //returns to previous assignment
+                getFragmentManager().popBackStack();
+            }
+        });
 
         return view;
     }

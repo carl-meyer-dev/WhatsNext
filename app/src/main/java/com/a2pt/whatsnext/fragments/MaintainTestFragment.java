@@ -84,6 +84,13 @@ public class MaintainTestFragment extends Fragment {
         fabNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //add a bundle that can be used to push through relevant information to allow the activity to be created
+                Bundle bundleToSend = new Bundle();
+                bundleToSend.putString("modId", selectedModule);
+                bundleToSend.putString("actType", "test");
+                newTestFragment.setArguments(bundleToSend);
+
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, newTestFragment).addToBackStack(null).commit();
             }
         });

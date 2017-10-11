@@ -75,7 +75,7 @@ public class MaintainAssignmentFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                selectedModule = spnAssignments.getItemAtPosition(0).toString();
             }
         });
 
@@ -85,6 +85,13 @@ public class MaintainAssignmentFragment extends Fragment {
         fabNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //add a bundle that can be used to push through relevant information to allow the activity to be created
+                Bundle bundleToSend = new Bundle();
+                bundleToSend.putString("modId", selectedModule);
+                bundleToSend.putString("actType", "assignment");
+                newAssignmentFragment.setArguments(bundleToSend);
+
+                //Create new fragment and send through bundle
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, newAssignmentFragment).addToBackStack(null).commit();
             }
         });
