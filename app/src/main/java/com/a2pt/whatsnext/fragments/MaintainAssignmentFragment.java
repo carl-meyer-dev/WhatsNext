@@ -35,6 +35,7 @@ public class MaintainAssignmentFragment extends Fragment {
     View view;
     FloatingActionButton fabNew;
     NewAssignmentFragment newAssignmentFragment = new NewAssignmentFragment();
+    MaintainEditAssignment maintainEditAssignmentFragment = new MaintainEditAssignment();
     ListView lvAssignments;
     List<Activity> assignments;
     AssignmentAdapter adapter;
@@ -63,6 +64,8 @@ public class MaintainAssignmentFragment extends Fragment {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, modules); //set List to Adapter
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //make the drop down list look nice
         spnAssignments.setAdapter(dataAdapter); //set the spinner's adapter
+
+
         assignments = new ArrayList<>();
         spnAssignments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {  //when an item on the drop down list is chosen
             @Override
@@ -93,6 +96,31 @@ public class MaintainAssignmentFragment extends Fragment {
 
                 //Create new fragment and send through bundle
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, newAssignmentFragment).addToBackStack(null).commit();
+            }
+        });
+
+
+
+
+
+        lvAssignments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //get Assignment of Selected item
+                System.out.println("ITEM IN LIST CLICKED");
+                Activity assignment = assignments.get(position);
+                System.out.println("DEBUG ON MAINTAIN ASSIGNMENTS:");
+                System.out.println("SELECTED ASSIGNMENT IS = " + assignment.getAssignmentTitle() + " with actID = " + assignment.getActID());
+
+                //add a bundle that can be used to push through relevant information to allow the activity to be created
+                Bundle bundleToSend = new Bundle();
+                bundleToSend.putString("modId", selectedModule);
+                bundleToSend.putString("actType", "assignment");
+                bundleToSend.putSerializable("assignment", assignment);
+                maintainEditAssignmentFragment.setArguments(bundleToSend);
+
+                //Create new fragment and send through bundle
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainEditAssignmentFragment).addToBackStack(null).commit();
             }
         });
 

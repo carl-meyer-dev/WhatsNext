@@ -1,10 +1,11 @@
 package com.a2pt.whatsnext.fragments;
 
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -24,20 +25,17 @@ import com.a2pt.whatsnext.services.dbManager;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Calendar;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
- */
-public class NewAssignmentFragment extends Fragment {
+
+public class MaintainEditAssignment extends Fragment {
     //Custom Variables
     private FloatingActionButton fabDate;
     private FloatingActionButton fabTime;
-    private Button btnCreateAssignment;
+    private Button btnSaveAssignment, btnDeleteAssignment;
     private View view;
     private TextView tvDate;
     private TextView tvTime;
@@ -45,6 +43,7 @@ public class NewAssignmentFragment extends Fragment {
     private DatePickerDialog.OnDateSetListener dataDateSetListener;
     private TimePickerDialog.OnTimeSetListener timeSetListener;
     private Bundle bundle;
+    private Activity assignment;
 
     //values for new activity retrieved from MaintainAssignmentFragment
     private String modId;
@@ -55,7 +54,7 @@ public class NewAssignmentFragment extends Fragment {
     ITSdbManager itSdbManager;
 
 
-    public NewAssignmentFragment() {
+    public MaintainEditAssignment() {
         // Required empty public constructor
     }
 
@@ -68,20 +67,29 @@ public class NewAssignmentFragment extends Fragment {
         bundle = this.getArguments();
         modId = bundle.getString("modId");
         actType = bundle.getString("actType");
+        assignment = (Activity) bundle.getSerializable("assignment");
+        System.out.println("Assignment is = " + assignment.getAssignmentTitle());
 
         //Instatiate databases
         localDB = new dbManager(getActivity());
         itSdbManager = new ITSdbManager(getActivity());
 
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.maintain_assignment_new_assignment, container, false);
-        tvDate = (TextView)view.findViewById(R.id.tvMA_Date);
-        tvTime = (TextView)view.findViewById(R.id.tvMA_Time);
-        title = (EditText)view.findViewById(R.id.txtMA_AssignmentTitle);
+        view = inflater.inflate(R.layout.maintain_assignment_edit_assignment, container, false);
+        tvDate = (TextView)view.findViewById(R.id.tvEA_Date);
+        tvTime = (TextView)view.findViewById(R.id.tvEA_Time);
+        title = (EditText)view.findViewById(R.id.txtEA_AssignmentTitle);
 
-        btnCreateAssignment = (Button)view.findViewById(R.id.btnCreateAssignment);
+        //Insert assignments values
 
-        fabDate = (FloatingActionButton) view.findViewById(R.id.fabAssignmentDate);
+        tvDate.setText(assignment.getAssignmentDueDateString());
+        tvTime.setText(assignment.getAssignmentDueTime().toString().substring(0,5));
+        title.setText(assignment.getAssignmentTitle());
+
+        btnSaveAssignment = (Button)view.findViewById(R.id.btnEA_Save);
+        btnDeleteAssignment = (Button)view.findViewById(R.id.btnEA_Delete);
+
+        fabDate = (FloatingActionButton) view.findViewById(R.id.fabEditAssignmentDate);
 
         fabDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +106,7 @@ public class NewAssignmentFragment extends Fragment {
         });
 
 
-        fabTime = (FloatingActionButton)view.findViewById(R.id.fabAssignmentTime);
+        fabTime = (FloatingActionButton)view.findViewById(R.id.fabEditAssignmentTime);
 
         fabTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,16 +138,16 @@ public class NewAssignmentFragment extends Fragment {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String time;
                 if(minute == 0){
-                     time = hourOfDay + ":" + minute + "0";
+                    time = hourOfDay + ":" + minute + "0";
                 }else {
-                     time = hourOfDay + ":" + minute;
+                    time = hourOfDay + ":" + minute;
                 }
 
                 tvTime.setText(time);
             }
         };
 
-        btnCreateAssignment.setOnClickListener(new View.OnClickListener() {
+        btnSaveAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -161,15 +169,30 @@ public class NewAssignmentFragment extends Fragment {
                 System.out.println(dTime.toString());
 
                 Activity newActivity = new Activity(modId, actType, assignmentTitle, dDate, dTime, 0);
-                localDB.insertAssignment(newActivity);
-                itSdbManager.insertAssignment(newActivity);
+
+                //TODO: instead of insert, Update current Assignment
+
+                localDB.updateAssignment(newActivity, assignment.getActID());
+                itSdbManager.updateAssignment(newActivity, itSdbManager.getAssignmentID(assignment));
 
                 //returns to previous assignment
                 getFragmentManager().popBackStack();
             }
         });
 
+        btnDeleteAssignment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                localDB.deleteAssignment(assignment.getActID());
+                itSdbManager.deleteAssignment(itSdbManager.getAssignmentID(assignment));
+
+                getFragmentManager().popBackStack();
+            }
+        });
+
         return view;
     }
+
 
 }

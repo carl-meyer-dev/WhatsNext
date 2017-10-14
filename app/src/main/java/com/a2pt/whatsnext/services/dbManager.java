@@ -292,6 +292,28 @@ public class dbManager extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public void updateAssignment(Activity assignment, int actID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "UPDATE " + TABLE_ACTIVITY + " SET " + KEY_ACT_TITLE + " = '" + assignment.getAssignmentTitle()
+                + "' , " + KEY_ACT_DUE_DATE + " = '" + assignment.getAssignmentDueDate() + "' , " + KEY_ACT_SUBMISSION_TIME + " = '" + assignment.getAssignmentDueTime()
+                + "' WHERE " + KEY_ACT_ID + " = " + actID;
+
+
+        db.execSQL(query);
+    }
+
+    public void deleteAssignment(int actID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "DELETE FROM " + TABLE_ACTIVITY +" WHERE " + KEY_ACT_ID +" = " + actID;
+        db.execSQL(query);
+
+    }
+
     public User getUser(String username){
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -779,8 +801,8 @@ public class dbManager extends SQLiteOpenHelper {
 
             do {
 
-
-                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                int id = cursor.getInt(cursor.getColumnIndex(KEY_ACT_ID));
+                String mod_id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
                 String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
                 String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TITLE));
                 String dueDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_DUE_DATE));
@@ -804,7 +826,8 @@ public class dbManager extends SQLiteOpenHelper {
                 LocalTime dTime = new LocalTime(hours, minutes);
                 System.out.println(dTime.toString());
 
-                Activity activity = new Activity(id, typeOfActivity, title, dDate, dTime, status);
+                Activity activity = new Activity(mod_id, typeOfActivity, title, dDate, dTime, status);
+                activity.setActID(id);
                 assignments.add(activity);
 
 

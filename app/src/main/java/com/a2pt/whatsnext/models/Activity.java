@@ -15,6 +15,7 @@ public class Activity implements Serializable {
 
     private String modID;
     private String actType;
+    private int actID;
 
     //Assignment variables
     private String assignmentTitle;
@@ -146,8 +147,24 @@ public class Activity implements Serializable {
         return assignmentDueTime;
     }
 
+    public String getAssignmentDueDateString(){
+        String dueDate = getAssignmentDueDate().toString();
+        String[] temp = dueDate.split("-");
+        dueDate = temp[2] + "-" + temp[1] + "-" + temp[0];
+        return dueDate;
+    }
+
+
     public LocalTime getTestTime() {
         return testTime;
+    }
+
+    public int getActID() {
+        return actID;
+    }
+
+    public void setActID(int actID) {
+        this.actID = actID;
     }
 }
 

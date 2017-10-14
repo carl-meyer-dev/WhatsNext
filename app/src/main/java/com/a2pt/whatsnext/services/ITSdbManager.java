@@ -191,6 +191,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         db.insert(TABLE_ACTIVITY, null, values);
 
 
+
     }
 
     public void insertAssignment(Activity activity, SQLiteDatabase db){
@@ -308,6 +309,20 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
     }
 
+    public void updateAssignment(Activity assignment, int actID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String query = "UPDATE " + TABLE_ACTIVITY + " SET " + KEY_ACT_TITLE + " = '" + assignment.getAssignmentTitle()
+                + "' , " + KEY_ACT_DUE_DATE + " = '" + assignment.getAssignmentDueDate() + "' , " + KEY_ACT_SUBMISSION_TIME + " = '" + assignment.getAssignmentDueTime()
+                + "' WHERE " + KEY_ACT_ID + " = " + actID;
+
+
+        db.execSQL(query);
+    }
+
+
     public User getUser(String username){
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -339,22 +354,19 @@ public class ITSdbManager extends SQLiteOpenHelper{
         boolean validLogin = false;
 
         //Get all the Usernames and Passwords from the Users Table
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS, null);
+        String query = "SELECT * FROM " + TABLE_USERS;
+        Cursor cursor = db.rawQuery(query, null);
         System.out.println("SUCESSFULLY QUERIED DB");
 
-        //get Column index of userID and password fields
-        int userIDIndex = cursor.getColumnIndex(KEY_ID);
-        int passwordIndex = cursor.getColumnIndex(KEY_PASSWORD);
-        cursor.moveToFirst();
-        System.out.println(cursor.moveToFirst());
 
         // loop through data to get and compare login details
-        if(true){ //Go to first entry
+        if(cursor != null & cursor.moveToFirst()){ //Go to first entry
             do {
                 System.out.println("DB DEBUG: getting username and password from Table");
-                String dbUsername = cursor.getString(userIDIndex);
-                String dbPassword = cursor.getString(passwordIndex);
-
+                String dbUsername = cursor.getString(cursor.getColumnIndex(KEY_ID));
+                String dbPassword = cursor.getString(cursor.getColumnIndex(KEY_PASSWORD));
+                System.out.println(dbUsername);
+                System.out.println(dbPassword);
                 System.out.println("DB DEBUG: dbUsername = " + dbUsername);
                 System.out.println("DB DEBUG: dbPassword = " + dbPassword);
 
@@ -393,17 +405,34 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
     }
 
+    public int getAssignmentID(Activity assignment){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT " + KEY_ACT_ID + " FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = '" + assignment.getActType()
+                + "' AND " + KEY_ACT_TITLE + " = '" + assignment.getAssignmentTitle() + "' AND " + KEY_ACT_MOD_ID + " = '" + assignment.getModID() + "'";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor != null & cursor.moveToFirst()){
+            int id = cursor.getInt(cursor.getColumnIndex(KEY_ACT_ID));
+            return id;
+        }
+
+        return assignment.getActID();
+    }
+
+    public void deleteAssignment(int actID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "DELETE FROM " + TABLE_ACTIVITY +" WHERE " + KEY_ACT_ID +" = " + actID;
+        db.execSQL(query);
+
+    }
+
     public void insertDummyData(SQLiteDatabase db){
         //Gonna use Dummy Variables here but we will have to set up a fake acounts from Textfile or List or something
-
-        //Dummy Users
-        String insertUserQuery = "INSERT INTO " + TABLE_USERS + "(" + KEY_ID + ", " + KEY_USERNAME + ", " + KEY_USEREMAIL + ", " + KEY_PASSWORD + ", " + KEY_TYPE_OF_USER + ", " + KEY_COURSEINFO + ", " + KEY_MODULE_INFO + " ) values";
-
-       // db.execSQL(insertUserQuery + "(s215006941, Carl Meyer, s215006941@nmmu.ac.za, abc123, student, BSc Computer Science, WRAP302#WRL301#MATH214#MATH203#TAT203#WRR301)");
-       // db.execSQL(insertUserQuery + "(s215144988, Gerrit Naude, ss215144988@nmmu.ac.za, def456, student, BSc Information Systems, WRAP302#EBM302#WRUI301#WRB302#WRR301)");
-       // db.execSQL(insertUserQuery + "(Vogts.Dieter, Dieter Vogts, Vogts.Dieter@nmmu.ac.za, wrap2017, lecturer, Computer Science, WRAP301#WRAP302#WRA301)");
-       // db.execSQL(insertUserQuery + "(Nel.Janine, Janine Nel, Nel.Janine@nmmu.ac.za, wrr301, lecturer, Computer Science, WRR301#WRI201#WRI202)");
-
         //Insert Activities
 
 
@@ -469,10 +498,6 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertAssignment(activity, db);
         activity = new Activity("WRAP302", "assignment", "Mark Assignment 6", new LocalDate(2017,10,9), new LocalTime(23,0), 0);
         insertAssignment(activity, db);
-        activity = new Activity("WRR301", "assignment", "KYK PAPPA", new LocalDate(2017,10,9), new LocalTime(23,0), 0);
-        insertAssignment(activity, db);
-        activity = new Activity("MATH203", "assignment", "KYK MAMMA", new LocalDate(2017,10,9), new LocalTime(23,0), 0);
-        insertAssignment(activity, db);
         activity = new Activity("WRAP301", "assignment", "Assignment 01", new LocalDate(2017,3,16), new LocalTime(23,0), 0);
         insertAssignment(activity, db);
         activity = new Activity("WRA301", "assignment", "Research Paper", new LocalDate(2017,4,23), new LocalTime(23,0), 0);
@@ -490,8 +515,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertTest(activity, db);
         activity = new Activity("MATH203", "test", "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre");
         insertTest(activity, db);
-        activity = new Activity("WRR301", "test", "Dummy Test",new LocalDate(2017,10,9),new LocalTime(18,0), "My Room");
-        insertTest(activity, db);
+
 
     }
 
