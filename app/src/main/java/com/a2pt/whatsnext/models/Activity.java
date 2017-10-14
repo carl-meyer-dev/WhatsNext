@@ -154,6 +154,13 @@ public class Activity implements Serializable {
         return dueDate;
     }
 
+    public String getTestDateString(){
+        String dueDate = getTestDate().toString();
+        String[] temp = dueDate.split("-");
+        dueDate = temp[2] + "-" + temp[1] + "-" + temp[0];
+        return dueDate;
+    }
+
 
     public LocalTime getTestTime() {
         return testTime;

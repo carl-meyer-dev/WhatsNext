@@ -19,9 +19,6 @@ import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.models.User;
 import com.a2pt.whatsnext.services.dbManager;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +32,7 @@ public class MaintainTestFragment extends Fragment {
     View view;
     FloatingActionButton fabNew;
     NewTestFragment newTestFragment = new NewTestFragment();
+    MaintainEditTest maintainEditTest = new MaintainEditTest();
     ListView lvTests;
     TestAdapter adapter;
     User user;
@@ -92,6 +90,27 @@ public class MaintainTestFragment extends Fragment {
                 newTestFragment.setArguments(bundleToSend);
 
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, newTestFragment).addToBackStack(null).commit();
+            }
+        });
+
+        lvTests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //get Assignment of Selected item
+                System.out.println("ITEM IN LIST CLICKED");
+                Activity test = tests.get(position);
+                System.out.println("DEBUG ON MAINTAIN TEST:");
+                System.out.println("SELECTED TEST IS = " + test.getTestDate() + " with actID = " + test.getActID());
+
+                //add a bundle that can be used to push through relevant information to allow the activity to be created
+                Bundle bundleToSend = new Bundle();
+                bundleToSend.putString("modId", selectedModule);
+                bundleToSend.putString("actType", "test");
+                bundleToSend.putSerializable("test", test);
+                maintainEditTest.setArguments(bundleToSend);
+
+                //Create new fragment and send through bundle
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainEditTest).addToBackStack(null).commit();
             }
         });
 

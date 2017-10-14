@@ -129,7 +129,7 @@ public class dbManager extends SQLiteOpenHelper {
                 + KEY_ACT_TEST_TIME + " TIME,"
                 + KEY_ACT_TEST_DATE + " DATE,"
                 + KEY_ACT_VENUE + " TEXT,"
-                + KEY_ACT_LECTURE_START_TIME + " TEXT,"
+                + KEY_ACT_LECTURE_START_TIME + " DATE,"
                 + KEY_ACT_LECTURE_DAY_OF_WEEK + " TEXT,"
                 + KEY_ACT_LECTURE_DUPLICATE + " INTEGER"
                 + ")";
@@ -305,7 +305,20 @@ public class dbManager extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void deleteAssignment(int actID){
+    public void updateTest(Activity test, int actID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String query = "UPDATE " + TABLE_ACTIVITY + " SET " + KEY_ACT_VENUE + " = '" + test.getTestVenue()
+                + "' , " + KEY_ACT_TEST_DATE + " = '" + test.getTestDate() + "' , " + KEY_ACT_TEST_TIME + " = '" + test.getTestTime()
+                + "' WHERE " + KEY_ACT_ID + " = " + actID;
+
+
+        db.execSQL(query);
+    }
+
+    public void deleteActivity(int actID){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -313,6 +326,8 @@ public class dbManager extends SQLiteOpenHelper {
         db.execSQL(query);
 
     }
+
+
 
     public User getUser(String username){
 
@@ -853,7 +868,8 @@ public class dbManager extends SQLiteOpenHelper {
 
 
             do {
-                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                int id = cursor.getInt(cursor.getColumnIndex(KEY_ACT_ID));
+                String mod_id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
                 String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
                 String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_NAME));
                 String testDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_DATE));
@@ -876,8 +892,8 @@ public class dbManager extends SQLiteOpenHelper {
                 int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
                 LocalTime startTime = new LocalTime(hours, minutes);
 
-                Activity activity = new Activity(id, typeOfActivity, title, tDate, startTime, venue);
-
+                Activity activity = new Activity(mod_id, typeOfActivity, title, tDate, startTime, venue);
+                activity.setActID(id);
                 tests.add(activity);
             } while (cursor.moveToNext());
 

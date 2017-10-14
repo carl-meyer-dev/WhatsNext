@@ -25,73 +25,64 @@ import com.a2pt.whatsnext.services.dbManager;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Calendar;
 
 
+public class MaintainEditTest extends Fragment {
 
-public class MaintainEditAssignment extends Fragment {
     //Custom Variables
     private FloatingActionButton fabDate;
     private FloatingActionButton fabTime;
-    private Button btnSaveAssignment, btnDeleteAssignment;
     private View view;
     private TextView tvDate;
     private TextView tvTime;
-    private EditText txtTitle;
     private DatePickerDialog.OnDateSetListener dataDateSetListener;
     private TimePickerDialog.OnTimeSetListener timeSetListener;
     private Bundle bundle;
-    private Activity assignment;
-
-    //values for new activity retrieved from MaintainAssignmentFragment
+    private Activity test;
+    //instatiate values from the MaintainTestFragment
     private String modId;
     private String actType;
+    private EditText venue;
 
-    //Databases
+    //instantiate the databases
     dbManager localDB;
     ITSdbManager itSdbManager;
 
-
-    public MaintainEditAssignment() {
+    public MaintainEditTest() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.maintain_assignment_edit_assignment, container, false);
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.maintain_edit_test, container, false);
 
         //Instantiate bundle and get values;
         bundle = this.getArguments();
         modId = bundle.getString("modId");
         actType = bundle.getString("actType");
-        assignment = (Activity) bundle.getSerializable("assignment");
-        System.out.println("Assignment is = " + assignment.getAssignmentTitle());
+        test = (Activity) bundle.getSerializable("test");
 
+        Button btnSaveTest = (Button) view.findViewById(R.id.btnET_Save);
+        Button btnDeleteTest = (Button) view.findViewById(R.id.btnET_Delete);
         //Instatiate databases
         localDB = new dbManager(getActivity());
         itSdbManager = new ITSdbManager(getActivity());
+        tvDate = (TextView) view.findViewById(R.id.tvET_Date);
+        tvTime = (TextView) view.findViewById(R.id.tvET_Time);
+        venue = (EditText) view.findViewById(R.id.txtET_Title);
 
-        // Inflate the layout for this fragment
+        tvDate.setText(test.getTestDateString());
+        tvTime.setText(test.getTestTime().toString().substring(0,5));
+        venue.setText(test.getTestVenue());
 
-        tvDate = (TextView)view.findViewById(R.id.tvEA_Date);
-        tvTime = (TextView)view.findViewById(R.id.tvEA_Time);
-        txtTitle = (EditText)view.findViewById(R.id.txtEA_AssignmentTitle);
 
-        //Insert assignments values
 
-        tvDate.setText(assignment.getAssignmentDueDateString());
-        tvTime.setText(assignment.getAssignmentDueTime().toString().substring(0,5));
-        txtTitle.setText(assignment.getAssignmentTitle());
-
-        btnSaveAssignment = (Button)view.findViewById(R.id.btnEA_Save);
-        btnDeleteAssignment = (Button)view.findViewById(R.id.btnEA_Delete);
-
-        fabDate = (FloatingActionButton) view.findViewById(R.id.fabEditAssignmentDate);
+        fabDate = (FloatingActionButton) view.findViewById(R.id.fabEditTestDate);
 
         fabDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +99,7 @@ public class MaintainEditAssignment extends Fragment {
         });
 
 
-        fabTime = (FloatingActionButton)view.findViewById(R.id.fabEditAssignmentTime);
+        fabTime = (FloatingActionButton) view.findViewById(R.id.fabEditTestTime);
 
         fabTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +114,7 @@ public class MaintainEditAssignment extends Fragment {
             }
         });
 
-        dataDateSetListener = new DatePickerDialog.OnDateSetListener(){
+        dataDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -139,9 +130,9 @@ public class MaintainEditAssignment extends Fragment {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String time;
-                if(minute == 0){
+                if (minute == 0) {
                     time = hourOfDay + ":" + minute + "0";
-                }else {
+                } else {
                     time = hourOfDay + ":" + minute;
                 }
 
@@ -149,11 +140,11 @@ public class MaintainEditAssignment extends Fragment {
             }
         };
 
-        btnSaveAssignment.setOnClickListener(new View.OnClickListener() {
+        btnSaveTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String assignmentTitle = txtTitle.getText().toString();
+                String testVenue = venue.getText().toString();
                 String dueDate = tvDate.getText().toString();
                 String dueTime = tvTime.getText().toString();
 
@@ -170,26 +161,25 @@ public class MaintainEditAssignment extends Fragment {
                 LocalTime dTime = new LocalTime(hours, minutes);
                 System.out.println(dTime.toString());
 
-                Activity newActivity = new Activity(modId, actType, assignmentTitle, dDate, dTime, 0);
-
+                Activity newActivity = new Activity(modId, actType, "", dDate, dTime, testVenue);
+                System.out.println("NEW TEST TIME OF TEST IS = " + newActivity.getTestTime());
                 //TODO: instead of insert, Update current Assignment
 
-                localDB.updateAssignment(newActivity, assignment.getActID());
-                itSdbManager.updateAssignment(newActivity, itSdbManager.getAssignmentID(assignment));
+                localDB.updateTest(newActivity, test.getActID());
+                System.out.println("DEBUG EDIT TEST: ITS TEST ID IS = " + itSdbManager.getTestID(test));
+                itSdbManager.updateTest(newActivity, itSdbManager.getTestID(test));
 
                 //returns to previous assignment
-
-
                 getFragmentManager().popBackStack();
             }
         });
 
-        btnDeleteAssignment.setOnClickListener(new View.OnClickListener() {
+        btnDeleteTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                localDB.deleteActivity(assignment.getActID());
-                itSdbManager.deleteActivity(itSdbManager.getAssignmentID(assignment));
+                localDB.deleteActivity(test.getActID());
+                itSdbManager.deleteActivity(itSdbManager.getTestID(test));
 
                 getFragmentManager().popBackStack();
             }
@@ -197,6 +187,4 @@ public class MaintainEditAssignment extends Fragment {
 
         return view;
     }
-
-
 }

@@ -128,7 +128,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_ACT_TEST_TIME + " TIME,"
                 + KEY_ACT_TEST_DATE + " DATE,"
                 + KEY_ACT_VENUE + " TEXT,"
-                + KEY_ACT_LECTURE_START_TIME + " TEXT,"
+                + KEY_ACT_LECTURE_START_TIME + " DATE,"
                 + KEY_ACT_LECTURE_DAY_OF_WEEK + " TEXT,"
                 + KEY_ACT_LECTURE_DUPLICATE + " INTEGER"
                 + ")";
@@ -322,6 +322,19 @@ public class ITSdbManager extends SQLiteOpenHelper{
         db.execSQL(query);
     }
 
+    public void updateTest(Activity test, int actID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String query = "UPDATE " + TABLE_ACTIVITY + " SET " + KEY_ACT_VENUE + " = '" + test.getTestVenue()
+                + "' , " + KEY_ACT_TEST_DATE + " = '" + test.getTestDate() + "' , " + KEY_ACT_TEST_TIME + " = '" + test.getTestTime().toString().substring(0,5)
+                + "' WHERE " + KEY_ACT_ID + " = " + actID;
+
+
+        db.execSQL(query);
+    }
+
 
     public User getUser(String username){
 
@@ -422,7 +435,25 @@ public class ITSdbManager extends SQLiteOpenHelper{
         return assignment.getActID();
     }
 
-    public void deleteAssignment(int actID){
+    public int getTestID(Activity test){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT " + KEY_ACT_ID + " FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = 'test' AND "
+                + KEY_ACT_VENUE + " = '" + test.getTestVenue() + "' AND " + KEY_ACT_MOD_ID + " = '" + test.getModID()
+                + "' AND " + KEY_ACT_TEST_DATE + " = '" + test.getTestDate().toString() + "' AND " + KEY_ACT_TEST_TIME + " = '" + test.getTestTime().toString().substring(0,5) + "'";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor != null & cursor.moveToFirst()){
+            int id = cursor.getInt(cursor.getColumnIndex(KEY_ACT_ID));
+            return id;
+        }
+        System.out.println("!!!!! COULD NOT FIND TEST ID !!!!!!!");
+        return 0;
+    }
+
+    public void deleteActivity(int actID){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
