@@ -932,6 +932,17 @@ public class dbManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("delete from "+ TABLE_USERS);
+        db.execSQL("delete from "+ TABLE_ACTIVITY); //doesnt delete lectures
+        db.execSQL("delete from "+ TABLE_MODULE);
+        db.execSQL("delete from "+ TABLE_SESSION);
+        db.execSQL("delete from "+ TABLE_TEACHES);
+
+    }
+    public void clearLocalAssignmentsTests(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("delete from "+ TABLE_USERS);
         db.execSQL("delete from "+ TABLE_ACTIVITY + " WHERE NOT " + KEY_ACT_ACT_TYPE + " = 'lecture' "); //doesnt delete lectures
         db.execSQL("delete from "+ TABLE_MODULE);
         db.execSQL("delete from "+ TABLE_SESSION);

@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity
                         case DialogInterface.BUTTON_POSITIVE:
                             //Yes Button Clicked
                             //Run SQL Query to refresh time table
-                            localDB.clearLocalDB();
+                            localDB.clearLocalAssignmentsTests();
                             ITSdb.refreshLocalDB(user, localDB, ITSdb);
                             Toast toast = Toast.makeText(MainActivity.this, "Refreshed Local DB", Toast.LENGTH_LONG);
                             toast.show();

@@ -28,7 +28,7 @@ import java.util.List;
 public class ITSdbManager extends SQLiteOpenHelper{
 
     // ITS Database Schema
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "ITS.db";
 
     //Creating the User table
@@ -142,6 +142,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         db.execSQL(CREATE_SESSION_TABLE);
         db.execSQL(CREATE_ACTIVITY_TABLE);
         insertDummyData(db);
+
     }
 
     @Override
@@ -363,15 +364,11 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
         System.out.println("CHECKING LOGIN DETAILS");
         SQLiteDatabase db = this.getReadableDatabase();
-
-
-
         boolean validLogin = false;
 
         //Get all the Usernames and Passwords from the Users Table
         String query = "SELECT * FROM " + TABLE_USERS;
         Cursor cursor = db.rawQuery(query, null);
-        System.out.println("SUCESSFULLY QUERIED DB");
 
 
         // loop through data to get and compare login details
