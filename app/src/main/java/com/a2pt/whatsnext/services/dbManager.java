@@ -327,7 +327,15 @@ public class dbManager extends SQLiteOpenHelper {
 
     }
 
+    //Need to correct the Query for this. It is incorrect
+    public void deleteLecture(String lectureStartTime, String lectureDayOfTheWeek, String modID)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        String query = "DELETE FROM " + TABLE_ACTIVITY +" WHERE " + KEY_ACT_LECTURE_START_TIME +" = " + lectureStartTime + " AND " + KEY_ACT_LECTURE_DAY_OF_WEEK +
+                " = " + lectureDayOfTheWeek + " AND " + KEY_ACT_ID + " = " + modID;
+        db.execSQL(query);
+    }
 
     public User getUser(String username){
 
@@ -914,5 +922,47 @@ public class dbManager extends SQLiteOpenHelper {
         db.execSQL("delete from "+ TABLE_SESSION);
         db.execSQL("delete from "+ TABLE_TEACHES);
 
+    }
+
+    public List<Activity> getDuplicateLectures(String selectedModule) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Activity> lectures = new ArrayList<>();
+
+        Cursor cursor = null;
+
+        String query = "SELECT * FROM " + TABLE_ACTIVITY +
+                " WHERE " + KEY_ACT_ACT_TYPE +" = ? AND " + KEY_ACT_LECTURE_DUPLICATE + " = ? AND " + KEY_ACT_MOD_ID + " = ? ORDER BY " + KEY_ACT_LECTURE_START_TIME + " ASC";
+
+        String[] values = { "lecture", "1", selectedModule};
+        cursor = db.rawQuery(query, values);
+
+        if(cursor != null && cursor.moveToFirst()){
+            System.out.println("DEBUG Duplicate Lectures is:" + cursor.getCount());
+            do{
+
+                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_VENUE));
+                String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_START_TIME));
+                String lectureDayOfWeek = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DAY_OF_WEEK));
+                int duplicate = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
+
+
+                //Note that in the Database the time is stores like this - 17:45
+                //Note that Local Time takes in (int Hours, int Minutes)_ as parameters
+
+                String[] temptime = lectureTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime startTime = new LocalTime(hours, minutes);
+
+                Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate);
+                lectures.add(activity);
+
+            }while (cursor.moveToNext());
+
+        }
+
+        return lectures;
     }
 }
