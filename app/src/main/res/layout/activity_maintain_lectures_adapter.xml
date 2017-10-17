@@ -3,10 +3,10 @@
     android:id="@+id/linLayLectureSelection"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
     android:background="@android:color/holo_blue_dark"
-    android:orientation="horizontal"
-    android:paddingBottom="7dp"
-    android:paddingTop="7dp">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tvLect4"
@@ -55,6 +55,5 @@
     <CheckBox
         android:id="@+id/cbLectureSelection"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content" />
 </LinearLayout>

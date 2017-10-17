@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,6 @@ import android.widget.Spinner;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.activities.MainActivity;
-import com.a2pt.whatsnext.adapters.ActivityAdapter;
-import com.a2pt.whatsnext.adapters.AssignmentAdapter;
 import com.a2pt.whatsnext.adapters.MaintainLecturesActivityAdapter;
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.models.User;
@@ -91,25 +90,39 @@ public class MaintainLectureTimesFragment extends Fragment {
 
                 List<Activity>  lecturesToRemove = new ArrayList<Activity>();
 
+
                 for (int i = 0; i < adapter.getIsCheckedLength(); i++)
                 {
-                    if(!adapter.getIsCheckedState(i))
+                    if(!adapter.getSelected(i))
                     {
-                        lecturesToRemove.add(lectures.get(i));
+
+                        //Instead of adding it to an array, just Delete it directly
+
+                        Activity lecture = lectures.get(i);
+                        System.out.println("DEBUG THE LECTURES TO REMOVE = " + lecture.getModID() + ", " + lecture.getActType() + ", " + lecture.getLecStartTime() + ", " + lecture.getDayOfWeek());
+                        int lecActID = localDB.getLectureActID(lecture);
+                        System.out.println("DEBUG LECTURE ID IS = " + lecActID);
+                        localDB.deleteActivity(lecActID);
                     }
                 }
+
+                getFragmentManager().popBackStack();
+
+                /*
+
 
                 for (int i = 0; i < lecturesToRemove.size(); i++ )
                 {
                     Activity activityToDelete = lecturesToRemove.get(i);
-
+                    System.out.println(activityToDelete.getLecStartTime());
                     String lectureStartTime = (String) activityToDelete.getLecStartTime().toString().subSequence(0,5);
-                    lectureStartTime.replace(":", "");
+                   // lectureStartTime.replace(":", "");
                     String dayOfTheweek = activityToDelete.getDayOfWeek();
                     String modID = activityToDelete.getModID();
 
-                    localDB.deleteLecture(lectureStartTime, dayOfTheweek, modID);
+
                 }
+                */
             }
         });
 

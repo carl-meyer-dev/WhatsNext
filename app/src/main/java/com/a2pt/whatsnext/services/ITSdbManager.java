@@ -420,6 +420,19 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
     }
 
+    public void refreshLocalDB(User userToAdd, dbManager localDB, ITSdbManager ITSdb){
+        localDB.insertData(userToAdd);
+
+        String[] moduleInfo = userToAdd.getModules();
+
+
+        for (String moduleDetail: moduleInfo)
+        {
+            localDB.addAssignment(moduleDetail, ITSdb);
+            localDB.addTest(moduleDetail, ITSdb);
+        }
+    }
+
     public int getAssignmentID(Activity assignment){
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -479,7 +492,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         if(cursor != null && cursor.moveToFirst()){
             System.out.println("DEBUG Duplicate Lectures is:" + cursor.getCount());
             do{
-
+                int ActID = cursor.getInt(cursor.getColumnIndex(KEY_ACT_ID));
                 String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
                 String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
                 String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_VENUE));
@@ -497,6 +510,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 LocalTime startTime = new LocalTime(hours, minutes);
 
                 Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate);
+                activity.setActID(ActID);
                 lectures.add(activity);
 
             }while (cursor.moveToNext());
@@ -594,9 +608,5 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
     }
 
-    public void TestRefresh(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Activity activity = new Activity("WRR301", "lecture", "09 02 04", new LocalTime(11,35), "tuesday", 1);
-        insertLecture(activity, db);
-    }
+
 }

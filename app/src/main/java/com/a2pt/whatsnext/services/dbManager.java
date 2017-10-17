@@ -327,14 +327,29 @@ public class dbManager extends SQLiteOpenHelper {
 
     }
 
-    //Need to correct the Query for this. It is incorrect
-    public void deleteLecture(String lectureStartTime, String lectureDayOfTheWeek, String modID)
+    //Get Activity ID
+    public int getLectureActID(Activity lecture)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "DELETE FROM " + TABLE_ACTIVITY +" WHERE " + KEY_ACT_LECTURE_START_TIME +" = " + lectureStartTime + " AND " + KEY_ACT_LECTURE_DAY_OF_WEEK +
-                " = " + lectureDayOfTheWeek + " AND " + KEY_ACT_ID + " = " + modID;
-        db.execSQL(query);
+
+        String query = "SELECT " + KEY_ACT_ID
+                + " FROM " + TABLE_ACTIVITY
+                + " WHERE " + KEY_ACT_ACT_TYPE + " = '" + lecture.getActType()
+                + "' AND " + KEY_ACT_LECTURE_START_TIME +" = '" + lecture.getLecStartTime().toString().substring(0,5)
+                + "' AND " + KEY_ACT_LECTURE_DAY_OF_WEEK + " = '" + lecture.getDayOfWeek()
+                + "' AND " + KEY_ACT_MOD_ID + " = '" + lecture.getModID() + "' AND " + KEY_ACT_VENUE + " = '" + lecture.getLectureVenue() + "'";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor != null && cursor.moveToFirst()){
+            int ActID = cursor.getInt(cursor.getColumnIndex(KEY_ACT_ID));
+
+            return ActID;
+        }
+
+        return -1;
+
     }
 
     public User getUser(String username){
@@ -917,7 +932,7 @@ public class dbManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("delete from "+ TABLE_USERS);
-        db.execSQL("delete from "+ TABLE_ACTIVITY);
+        db.execSQL("delete from "+ TABLE_ACTIVITY + " WHERE NOT " + KEY_ACT_ACT_TYPE + " = 'lecture' "); //doesnt delete lectures
         db.execSQL("delete from "+ TABLE_MODULE);
         db.execSQL("delete from "+ TABLE_SESSION);
         db.execSQL("delete from "+ TABLE_TEACHES);

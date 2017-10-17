@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,11 +26,12 @@ import java.util.List;
 
 public class MaintainLecturesActivityAdapter extends ArrayAdapter<Activity> {
 
-    boolean[] isChecked;
+    boolean[] selected;
+
 
     public MaintainLecturesActivityAdapter(@NonNull Context context, List<Activity> activities) {
         super(context,R.layout.activity_maintain_lectures_adapter,activities);
-        isChecked = new boolean[activities.size()];
+        selected = new boolean[activities.size()];
 
     }
     private static class ViewHolder
@@ -44,65 +46,64 @@ public class MaintainLecturesActivityAdapter extends ArrayAdapter<Activity> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        View view;
+        View view = convertView;
         final ViewHolder viewHolder;
 
-        if(convertView == null){
-            viewHolder = new ViewHolder();
 
+        if(view == null){
             LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.activity_maintain_lectures_adapter, parent, false);
-
-
-            viewHolder.tvLect1 = (TextView)view.findViewById(R.id.tvLect1);
-            viewHolder.tvLect2 = (TextView)view.findViewById(R.id.tvLect2);
-            viewHolder.tvLect3 = (TextView)view.findViewById(R.id.tvLect3);
-            viewHolder.tvLect4 = (TextView)view.findViewById(R.id.tvLect4);
-            viewHolder.cbSelection = (CheckBox) view.findViewById(R.id.cbLectureSelection);
-            viewHolder.lLayout = (LinearLayout)view.findViewById(R.id.linLayLectureSelection);
-
-        }
-        else
-        {
-            viewHolder = (ViewHolder)convertView.getTag();
-            view = convertView;
         }
 
-
-        view.setTag(getItem(position));
-
+        view.setTag(position);
+        TextView tvValue1 = (TextView)view.findViewById(R.id.tvLect1);
+        TextView tvValue2 = (TextView)view.findViewById(R.id.tvLect2);
+        TextView tvValue3 = (TextView)view.findViewById(R.id.tvLect3);
+        TextView tvValue4 = (TextView)view.findViewById(R.id.tvLect4);
+        CheckBox cbSelection = (CheckBox)view.findViewById(R.id.cbLectureSelection);
+        LinearLayout lLayout = (LinearLayout)view.findViewById(R.id.linLayLectureSelection);
 
         Activity activity = getItem(position);
 
         //Change colour of background
-        viewHolder.lLayout.setBackgroundColor(Color.parseColor("#1E88E5"));
+        lLayout.setBackgroundColor(Color.parseColor("#1E88E5"));
 
-        viewHolder.tvLect1.setText(activity.getLecStartTime().toString().substring(0,5));
-        viewHolder.tvLect2.setText(activity.getModID());
-        viewHolder.tvLect3.setText(activity.getLectureVenue());
-        viewHolder.tvLect4.setText(activity.getDayOfWeek());
+        tvValue1.setText(activity.getLecStartTime().toString().substring(0,5));
+        tvValue2.setText(activity.getModID());
+        tvValue3.setText(activity.getLectureVenue());
+        tvValue4.setText(activity.getDayOfWeek());
 
-        if(isChecked[position])
+        if(selected[position])
         {
-            viewHolder.cbSelection.setChecked(true);
+            cbSelection.setChecked(true);
         }
         else
         {
-            viewHolder.cbSelection.setChecked(false);
+            cbSelection.setChecked(false);
         }
+
+        cbSelection.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               selected[position] = isChecked;
+                System.out.println("DEBUG CHECKBOX SELECTED = " + isChecked);
+            }
+        });
 
         return view;
     }
 
-    public boolean getIsCheckedState(int position)
+    public boolean getSelected(int position)
     {
-        return isChecked[position];
+        return selected[position];
     }
 
     public int getIsCheckedLength()
     {
-        return isChecked.length;
+        return selected.length;
     }
+
+
 }
