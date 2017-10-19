@@ -627,7 +627,7 @@ public class dbManager extends SQLiteOpenHelper {
         String type = "assignment";
         //TODO: Filter out assignments that have due dates that is already over
 
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ?";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? ORDER BY " + KEY_ACT_SUBMISSION_TIME + ", " + KEY_ACT_DUE_DATE + " ASC";
 
         String[] values = { type};
 
@@ -680,7 +680,7 @@ public class dbManager extends SQLiteOpenHelper {
 
     public List<Activity> getUpcomingTests(){
         String type = "test";
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ?";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? ORDER BY " + KEY_ACT_TEST_TIME + ", " + KEY_ACT_TEST_DATE + " ASC";
         List<Activity> tests = new ArrayList<>();
         String[] values = { type};
         SQLiteDatabase db = this.getReadableDatabase();
@@ -734,7 +734,7 @@ public class dbManager extends SQLiteOpenHelper {
         String type = "assignment";
         //TODO: Filter out assignments that have due dates that is already over
 
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " = ?";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " = ? ORDER BY " + KEY_ACT_SUBMISSION_TIME + " ASC";
 
         String[] values = {type, date};
 
@@ -788,7 +788,7 @@ public class dbManager extends SQLiteOpenHelper {
 
     public List<Activity> getTodayTests(String date){
         String type = "test";
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_TEST_DATE + " = ?";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_TEST_DATE + " = ? ORDER BY " + KEY_ACT_TEST_TIME + " ASC";
         List<Activity> tests = new ArrayList<>();
         String[] values = { type, date};
         SQLiteDatabase db = this.getReadableDatabase();
