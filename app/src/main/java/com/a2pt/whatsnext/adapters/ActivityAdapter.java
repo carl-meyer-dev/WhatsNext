@@ -46,6 +46,7 @@ public class ActivityAdapter extends ArrayAdapter<Activity>{
         TextView tvValue1 = (TextView)view.findViewById(R.id.tvActValue1);
         TextView tvValue2 = (TextView)view.findViewById(R.id.tvActValue2);
         TextView tvValue3 = (TextView)view.findViewById(R.id.tvActValue3);
+        TextView tvValue4 = (TextView)view.findViewById(R.id.tvValue4);
         LinearLayout lLayout = (LinearLayout)view.findViewById(R.id.linlayActivity);
 
 
@@ -74,6 +75,7 @@ public class ActivityAdapter extends ArrayAdapter<Activity>{
             tvValue1.setText(activity.getLecStartTime().toString().substring(0,5));
             tvValue2.setText(activity.getModID());
             tvValue3.setText(activity.getLectureVenue());
+            tvValue4.setText(activity.getTypeOfLecture());
 
         }
 

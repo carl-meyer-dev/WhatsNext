@@ -108,21 +108,8 @@ public class MaintainLectureTimesFragment extends Fragment {
 
                 getFragmentManager().popBackStack();
 
-                /*
 
 
-                for (int i = 0; i < lecturesToRemove.size(); i++ )
-                {
-                    Activity activityToDelete = lecturesToRemove.get(i);
-                    System.out.println(activityToDelete.getLecStartTime());
-                    String lectureStartTime = (String) activityToDelete.getLecStartTime().toString().subSequence(0,5);
-                   // lectureStartTime.replace(":", "");
-                    String dayOfTheweek = activityToDelete.getDayOfWeek();
-                    String modID = activityToDelete.getModID();
-
-
-                }
-                */
             }
         });
 

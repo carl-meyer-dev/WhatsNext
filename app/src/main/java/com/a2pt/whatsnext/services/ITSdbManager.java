@@ -57,6 +57,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
     private static final String KEY_ACT_LECTURE_START_TIME = "lecture_start_time";
     private static final String KEY_ACT_LECTURE_DAY_OF_WEEK = "lecture_day_of_week";
     private static final String KEY_ACT_LECTURE_DUPLICATE = "duplicate_lecture";
+    private static final String KEY_ACT_TYPE_OF_LECTURE = "type_of_lecture";
 
     //Creating the Module Table
     private static final String TABLE_MODULE = "modules";
@@ -132,7 +133,8 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + KEY_ACT_VENUE + " TEXT,"
                 + KEY_ACT_LECTURE_START_TIME + " DATE,"
                 + KEY_ACT_LECTURE_DAY_OF_WEEK + " TEXT,"
-                + KEY_ACT_LECTURE_DUPLICATE + " INTEGER"
+                + KEY_ACT_LECTURE_DUPLICATE + " INTEGER,"
+                + KEY_ACT_TYPE_OF_LECTURE + " TEXT"
                 + ")";
 
 
@@ -179,7 +181,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
      * Instead have separate insert methods for each activity type.
      * Then there wont be null exceptions
      */
-    public void insertLecture(Activity activity, SQLiteDatabase db){
+    private void insertLecture(Activity activity, SQLiteDatabase db){
 
 
         ContentValues values = new ContentValues();
@@ -190,6 +192,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString().substring(0,5));
         values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
         values.put(KEY_ACT_LECTURE_DUPLICATE, activity.getIsDuplicate());
+        values.put(KEY_ACT_TYPE_OF_LECTURE, activity.getTypeOfLecture());
 
         db.insert(TABLE_ACTIVITY, null, values);
 
@@ -496,6 +499,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_START_TIME));
                 String lectureDayOfWeek = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DAY_OF_WEEK));
                 int duplicate = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
+                String lectType = cursor.getString(cursor.getColumnIndex(KEY_ACT_TYPE_OF_LECTURE));
 
 
                 //Note that in the Database the time is stores like this - 17:45
@@ -506,7 +510,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
                 LocalTime startTime = new LocalTime(hours, minutes);
 
-                Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate);
+                Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate, lectType);
                 activity.setActID(ActID);
                 lectures.add(activity);
 
@@ -536,44 +540,44 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
         //Insert Activities
         //Monday Lectures
-        Activity activity = new Activity("MATH203", "lecture", "35 00 17", new LocalTime(7,45),"monday", 0);
+        Activity activity = new Activity("MATH203", "lecture", "35 00 17", new LocalTime(7,45),"monday", 0, "L");
         insertLecture(activity, db);
-        activity = new Activity("WRAP302", "lecture", "35 01 01", new LocalTime(9,5), "monday", 0);
+        activity = new Activity("WRAP302", "lecture", "35 01 01", new LocalTime(9,5), "monday", 0, "L");
         insertLecture(activity, db);
         //Tuesday Lectures
-        activity = new Activity("MATH214", "lecture", "04 00 01", new LocalTime(7,45), "tuesday", 1);
+        activity = new Activity("MATH214", "lecture", "04 00 01", new LocalTime(7,45), "tuesday", 1, "L");
         insertLecture(activity, db);
-        activity = new Activity("MATH214", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 1);
+        activity = new Activity("MATH214", "lecture", "04 00 01", new LocalTime(9,5), "tuesday", 1, "L");
         insertLecture(activity, db);
 
-        activity = new Activity("STAT203", "lecture", "04 00 3", new LocalTime(14,5), "tuesday", 0);
+        activity = new Activity("STAT203", "lecture", "04 00 3", new LocalTime(14,5), "tuesday", 0, "L");
         insertLecture(activity, db);
-        activity = new Activity("STAT203","lecture", "07 02 48", new LocalTime(15,30), "tuesday", 0);
+        activity = new Activity("STAT203","lecture", "07 02 48", new LocalTime(15,30), "tuesday", 0, "P");
         insertLecture(activity, db);
-        activity = new Activity("STAT203","lecture", "07 02 48", new LocalTime(16,45), "tuesday", 0);
+        activity = new Activity("STAT203","lecture", "07 02 48", new LocalTime(16,45), "tuesday", 0, "T");
         insertLecture(activity, db);
         //Wednesday Lectures
-        activity = new Activity("STAT203", "lecture", "35 00 17", new LocalTime(7,45),"wednesday", 0);
+        activity = new Activity("STAT203", "lecture", "35 00 17", new LocalTime(7,45),"wednesday", 0, "L");
         insertLecture(activity, db);
-        activity = new Activity("MATH203", "lecture", "35 00 18", new LocalTime(9,5),"wednesday", 0);
+        activity = new Activity("MATH203", "lecture", "35 00 18", new LocalTime(9,5),"wednesday", 0, "L");
         insertLecture(activity, db);
-        activity = new Activity("WRR301", "lecture", "09 02 02", new LocalTime(10,25),"wednesday", 0);
+        activity = new Activity("WRR301", "lecture", "09 02 02", new LocalTime(10,25),"wednesday", 0, "L");
         insertLecture(activity, db);
-        activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(14,5),"wednesday", 0);
+        activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(14,5),"wednesday", 0, "L");
         insertLecture(activity, db);
-        activity = new Activity("WRAP302", "lecture", "09 02 04", new LocalTime(15,35),"wednesday", 0);
+        activity = new Activity("WRAP302", "lecture", "09 02 04", new LocalTime(15,35),"wednesday", 0, "P");
         insertLecture(activity, db);
         //Thursday Lectures
-        activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(7,45),"thursday", 0);
+        activity = new Activity("MATH214", "lecture", "07 02 50", new LocalTime(7,45),"thursday", 0, "L");
         insertLecture(activity, db);
-        activity = new Activity("WRL301", "lecture", "35 00 18", new LocalTime(10,25),"thursday", 0);
+        activity = new Activity("WRL301", "lecture", "35 00 18", new LocalTime(10,25),"thursday", 0, "L");
         insertLecture(activity, db);
-        activity = new Activity("WRL301", "lecture", "35 00 16", new LocalTime(14,5),"thursday", 0);
+        activity = new Activity("WRL301", "lecture", "35 00 16", new LocalTime(14,5),"thursday", 0, "T");
         insertLecture(activity, db);
-        activity = new Activity("STAT203", "lecture", "35 00 18", new LocalTime(16,45),"thursday", 0);
+        activity = new Activity("STAT203", "lecture", "35 00 18", new LocalTime(16,45),"thursday", 0, "L");
         insertLecture(activity, db);
         //Friday Lectures
-        activity = new Activity("WRMS302", "lecture", "09 02 02", new LocalTime(9,5), "friday", 0);
+        activity = new Activity("WRMS302", "lecture", "09 02 02", new LocalTime(9,5), "friday", 0, "L");
         insertLecture(activity, db);
         //Assignments
         activity = new Activity("WRAP302", "assignment", "Assignment 5", new LocalDate(2017,9,12), new LocalTime(23,35), 0);

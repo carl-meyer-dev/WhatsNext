@@ -12,6 +12,7 @@
         android:id="@+id/tvLect4"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:text="Monday"
         android:textAlignment="textStart"
         android:textColor="@color/colorAccent"
@@ -34,8 +35,18 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingLeft="10dp"
         android:text="MATH203"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvLect5"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="L"
         android:textAlignment="textStart"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
@@ -55,5 +66,6 @@
     <CheckBox
         android:id="@+id/cbLectureSelection"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp" />
 </LinearLayout>

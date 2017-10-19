@@ -62,6 +62,7 @@ public class MaintainLecturesActivityAdapter extends ArrayAdapter<Activity> {
         TextView tvValue2 = (TextView)view.findViewById(R.id.tvLect2);
         TextView tvValue3 = (TextView)view.findViewById(R.id.tvLect3);
         TextView tvValue4 = (TextView)view.findViewById(R.id.tvLect4);
+        TextView tvValue5 = (TextView)view.findViewById(R.id.tvLect5);
         CheckBox cbSelection = (CheckBox)view.findViewById(R.id.cbLectureSelection);
         LinearLayout lLayout = (LinearLayout)view.findViewById(R.id.linLayLectureSelection);
 
@@ -74,6 +75,8 @@ public class MaintainLecturesActivityAdapter extends ArrayAdapter<Activity> {
         tvValue2.setText(activity.getModID());
         tvValue3.setText(activity.getLectureVenue());
         tvValue4.setText(activity.getDayOfWeek());
+        tvValue5.setText(activity.getTypeOfLecture());
+
 
         if(selected[position])
         {

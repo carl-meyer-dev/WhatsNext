@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 public class dbManager extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "local.db";
 
     //Creating the User table
@@ -58,6 +58,7 @@ public class dbManager extends SQLiteOpenHelper {
     private static final String KEY_ACT_LECTURE_START_TIME = "lecture_start_time";
     private static final String KEY_ACT_LECTURE_DAY_OF_WEEK = "lecture_day_of_week";
     private static final String KEY_ACT_LECTURE_DUPLICATE = "duplicate_lecture";
+    private static final String KEY_ACT_TYPE_OF_LECTURE = "type_of_lecture";
 
     //Creating the Module Table
     private static final String TABLE_MODULE = "modules";
@@ -131,7 +132,8 @@ public class dbManager extends SQLiteOpenHelper {
                 + KEY_ACT_VENUE + " TEXT,"
                 + KEY_ACT_LECTURE_START_TIME + " DATE,"
                 + KEY_ACT_LECTURE_DAY_OF_WEEK + " TEXT,"
-                + KEY_ACT_LECTURE_DUPLICATE + " INTEGER"
+                + KEY_ACT_LECTURE_DUPLICATE + " INTEGER,"
+                + KEY_ACT_TYPE_OF_LECTURE + " TEXT"
                 + ")";
 
 
@@ -167,34 +169,13 @@ public class dbManager extends SQLiteOpenHelper {
         values.put(KEY_COURSEINFO, user.getCourseInfo());
         values.put(KEY_MODULE_INFO, user.getModuleString());
 
+
         db.insert(TABLE_USERS, null, values);
         db.close();
     }
 
-    /*
-    public void insertActivity(Activity activity)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-
-        values.put(KEY_ACT_MOD_ID, activity.getModID());
-        values.put(KEY_ACT_ACT_TYPE, activity.getActType().toString());
-        values.put(KEY_ACT_TITLE, activity.getAssignmentTitle());
-        values.put(KEY_ACT_DUE_DATE, activity.getAssignmentDueDate().toString());
-        values.put(KEY_ACT_SUBMISSION_TIME, activity.getAssignmentDueTime().toString());
-        values.put(KEY_ACT_STATUS, activity.getAssignmentStatus());
-        values.put(KEY_ACT_TEST_NAME, activity.getTestDescriiption());
-        values.put(KEY_ACT_TEST_TIME, activity.getTestTime().toString());
-        values.put(KEY_ACT_VENUE, activity.getTestVenue());
-        values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString());
-        values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
-
-        db.insert(TABLE_ACTIVITY, null, values);
-        db.close();
-    }
-*/
-    public void insertLecture(Activity activity){
+    private void insertLecture(Activity activity){
         System.out.println("DEBUG ITSdbManager: INSERT LECTURE");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -205,6 +186,7 @@ public class dbManager extends SQLiteOpenHelper {
         values.put(KEY_ACT_LECTURE_START_TIME, activity.getLecStartTime().toString().substring(0,5));
         values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
         values.put(KEY_ACT_LECTURE_DUPLICATE, activity.getIsDuplicate());
+        values.put(KEY_ACT_TYPE_OF_LECTURE, activity.getTypeOfLecture());
 
         db.insert(TABLE_ACTIVITY, null, values);
         db.close();
@@ -537,6 +519,7 @@ public class dbManager extends SQLiteOpenHelper {
                     String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_START_TIME));
                     String lectureDayOfWeek = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DAY_OF_WEEK));
                     int duplicate = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
+                    String typeOfLecture = cursor.getString(cursor.getColumnIndex(KEY_ACT_TYPE_OF_LECTURE));
 
 
                     //Note that in the Database the time is stores like this - 17:45
@@ -547,7 +530,7 @@ public class dbManager extends SQLiteOpenHelper {
                     int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
                     LocalTime startTime = new LocalTime(hours, minutes);
 
-                    Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate);
+                    Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate, typeOfLecture);
 
                     insertLecture(activity);
 
@@ -583,6 +566,7 @@ public class dbManager extends SQLiteOpenHelper {
                 String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_START_TIME));
                 String lectureDayOfWeek = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DAY_OF_WEEK));
                 int duplicate = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
+                String typeOfLecture = cursor.getString(cursor.getColumnIndex(KEY_ACT_TYPE_OF_LECTURE));
 
 
                 //Note that in the Database the time is stores like this - 17:45
@@ -593,7 +577,7 @@ public class dbManager extends SQLiteOpenHelper {
                 int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
                 LocalTime startTime = new LocalTime(hours, minutes);
 
-                Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate);
+                Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate, typeOfLecture);
                 lectures.add(activity);
 
             }while (cursor.moveToNext());
@@ -972,6 +956,7 @@ public class dbManager extends SQLiteOpenHelper {
                 String lectureTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_START_TIME));
                 String lectureDayOfWeek = cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DAY_OF_WEEK));
                 int duplicate = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_LECTURE_DUPLICATE)));
+                String typeOfLecture = cursor.getString(cursor.getColumnIndex(KEY_ACT_TYPE_OF_LECTURE));
 
 
                 //Note that in the Database the time is stores like this - 17:45
@@ -982,7 +967,7 @@ public class dbManager extends SQLiteOpenHelper {
                 int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
                 LocalTime startTime = new LocalTime(hours, minutes);
 
-                Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate);
+                Activity activity = new Activity(id, typeOfActivity, venue, startTime, lectureDayOfWeek, duplicate, typeOfLecture);
                 lectures.add(activity);
 
             }while (cursor.moveToNext());
