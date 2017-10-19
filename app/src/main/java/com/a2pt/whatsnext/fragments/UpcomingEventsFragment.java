@@ -20,7 +20,11 @@ import com.a2pt.whatsnext.services.dbManager;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,11 +52,23 @@ public class UpcomingEventsFragment extends Fragment {
         final List<Activity> assignments = localDB.getUpcomingAssignments();
         final List<Activity> tests = localDB.getUpcomingTests();
 
-        assignmentsAdapter = new AssignmentAdapter(getActivity(), assignments);
+        /*assignmentsAdapter = new AssignmentAdapter(getActivity(), assignments);
         testsAdapter = new TestAdapter(getActivity(), tests);
 
         lvAssignments.setAdapter(assignmentsAdapter);
+        lvTests.setAdapter(testsAdapter);*/
+
+        //---------------------------------------------------------------------------------------
+        //Editted On this page Gerrit
+        final List<Activity> updateAssignments = checkAssignmentDateandTime(assignments);
+        final List<Activity> updateTest = checkTestDateandTime(tests);
+
+        assignmentsAdapter = new AssignmentAdapter(getActivity(), updateAssignments);
+        testsAdapter = new TestAdapter(getActivity(), updateTest);
+
+        lvAssignments.setAdapter(assignmentsAdapter);
         lvTests.setAdapter(testsAdapter);
+        //---------------------------------------------------------------------------------------
 
         Utility.setListViewHeightBasedOnChildren(lvAssignments, 240);
         Utility.setListViewHeightBasedOnChildren(lvTests, 240);
@@ -61,5 +77,71 @@ public class UpcomingEventsFragment extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         return view;
+    }
+
+    private List<Activity> checkAssignmentDateandTime(List<Activity> list) {
+        List<Activity> newList = new ArrayList<>();
+
+        //This is to see if we can remove past events (Date has exceeded)
+        Calendar c = Calendar.getInstance(); // Create a new calendar instance
+        String date = c.get(Calendar.YEAR) + c.get(Calendar.MONTH) + c.get(Calendar.DATE)+"";
+        String time = c.get(Calendar.HOUR) + c.get(Calendar.MINUTE) + "";
+        System.out.println("Debug: Date:" + date);
+        System.out.println("Debug: Time:" + time);
+
+        DateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = dfDate.format(date);
+
+        DateFormat dfTime = new SimpleDateFormat("hh:mm");
+        String strTime = dfTime.format(time);
+        System.out.println("Debug formatted Date: " + strDate);
+        System.out.println("Debug formatted Time: " + strTime);
+
+        for (int i = 0; i< list.size(); i++)
+        {
+            String tempTime = list.get(i).getAssignmentDueTime().toString();
+            String tempDate = list.get(i).getAssignmentDueDateString();
+
+            if (strDate.equals(tempDate) && strTime.equals(tempTime))
+            {
+                newList.add(list.get(i));
+            }
+
+        }
+
+        return newList;
+    }
+
+    private List<Activity> checkTestDateandTime(List<Activity> list) {
+        List<Activity> newList = new ArrayList<>();
+
+        //This is to see if we can remove past events (Date has exceeded)
+        Calendar c = Calendar.getInstance(); // Create a new calendar instance
+        String date = c.get(Calendar.YEAR) + c.get(Calendar.MONTH) + c.get(Calendar.DATE)+"";
+        String time = c.get(Calendar.HOUR) + c.get(Calendar.MINUTE) + "";
+        System.out.println("Debug: Date:" + date);
+        System.out.println("Debug: Time:" + time);
+
+        DateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = dfDate.format(date);
+
+        DateFormat dfTime = new SimpleDateFormat("hh:mm");
+        String strTime = dfTime.format(time);
+        System.out.println("Debug formatted Date: " + strDate);
+        System.out.println("Debug formatted Time: " + strTime);
+
+        for (int i = 0; i< list.size(); i++)
+        {
+            String tempTime = list.get(i).getAssignmentDueTime().toString();
+            String tempDate = list.get(i).getAssignmentDueDateString();
+
+            if (strDate.equals(tempDate) && strTime.equals(tempTime))
+            {
+                newList.add(list.get(i));
+            }
+
+        }
+
+        return newList;
     }
 }
