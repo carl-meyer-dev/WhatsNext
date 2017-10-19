@@ -22,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     User user;
     dbManager localDB;
     ITSdbManager ITSdb;
+    boolean refreshLectures = false;
 
     //Make View Variables
     //==============================================================================================
@@ -216,9 +219,17 @@ public class MainActivity extends AppCompatActivity
                     switch (which){
                         case DialogInterface.BUTTON_POSITIVE:
                             //Yes Button Clicked
-                            //Run SQL Query to refresh time table
-                            localDB.clearLocalAssignmentsTests();
-                            ITSdb.refreshLocalDB(user, localDB, ITSdb);
+                            if(refreshLectures){
+                                localDB.clearLocalDB(); //deletes all tables including lectures
+                                ITSdb.setupLocalDB(user, localDB, ITSdb); //import all activities including lectures (this will reset duplicate lectures)
+                            }else {
+                                //Lectures will not be affected by this operation
+                                localDB.clearLocalAssignmentsTests();   //this wil delete all Tests and Assignments
+                                ITSdb.refreshLocalDB(user, localDB, ITSdb); //this will import all tests and assignments
+                            }
+
+
+
                             Toast toast = Toast.makeText(MainActivity.this, "Refreshed Local DB", Toast.LENGTH_LONG);
                             toast.show();
                             //TODO: need to refresh Home Fragment
@@ -236,9 +247,28 @@ public class MainActivity extends AppCompatActivity
                 }
             };
 
+
+            View checkboxView = View.inflate(this, R.layout.checkboxlayout, null);
+            CheckBox checkBox = (CheckBox)checkboxView.findViewById(R.id.cbRefreshLectures);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    refreshLectures = isChecked;
+                }
+            });
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme); //This changes the YES/NO Button's colours so it is visible
             //Code below Shows the PopupDialog and calls the dialogClickedListener Events
-            builder.setMessage("Are you sure you want to resynchronize databse?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+            //builder.setMessage("Are you sure you want to resynchronize databse?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+
+            builder.setTitle("Refresh Database")
+                    .setMessage("Are you sure you want to resynchronize database?")
+                    .setView(checkboxView)
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener)
+                    .show();
+
 
 
 
