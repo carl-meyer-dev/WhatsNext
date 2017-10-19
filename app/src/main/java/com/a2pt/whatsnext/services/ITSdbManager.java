@@ -197,6 +197,8 @@ public class ITSdbManager extends SQLiteOpenHelper{
         values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
         values.put(KEY_ACT_LECTURE_DUPLICATE, activity.getIsDuplicate());
         values.put(KEY_ACT_TYPE_OF_LECTURE, activity.getTypeOfLecture());
+        values.put(KEY_ACT_START_DATE, activity.getStartDate().toString());
+        values.put(KEY_ACT_END_DATE, activity.getEndDate().toString());
 
         db.insert(TABLE_ACTIVITY, null, values);
 
@@ -558,7 +560,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
         LocalDate firstSemesterStart = new LocalDate(2017, 02,06);
         LocalDate firstSemesterEnd = new LocalDate(2017, 05, 26);
-
+        System.out.println(firstSemesterEnd);
         LocalDate secondSemesterStart = new LocalDate(2017, 06, 17);
         LocalDate secondSemesterEnd = new LocalDate(2017, 10, 27);
 

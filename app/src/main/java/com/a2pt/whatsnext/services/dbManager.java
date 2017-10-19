@@ -22,6 +22,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.File;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -191,6 +192,8 @@ public class dbManager extends SQLiteOpenHelper {
         values.put(KEY_ACT_LECTURE_DAY_OF_WEEK, activity.getDayOfWeek());
         values.put(KEY_ACT_LECTURE_DUPLICATE, activity.getIsDuplicate());
         values.put(KEY_ACT_TYPE_OF_LECTURE, activity.getTypeOfLecture());
+        values.put(KEY_ACT_START_DATE, activity.getStartDate().toString());
+        values.put(KEY_ACT_END_DATE, activity.getEndDate().toString());
 
         db.insert(TABLE_ACTIVITY, null, values);
         db.close();
@@ -527,7 +530,8 @@ public class dbManager extends SQLiteOpenHelper {
                     String startDateString = cursor.getString(cursor.getColumnIndex(KEY_ACT_START_DATE));
                     String endDateString = cursor.getString(cursor.getColumnIndex(KEY_ACT_END_DATE));
 
-
+                    System.out.println(startDateString);
+                    System.out.println(endDateString);
                     //Note that in the Database the time is stores like this - 17:45
                     //Note that Local Time takes in (int Hours, int Minutes)_ as parameters
 
@@ -625,11 +629,17 @@ public class dbManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Activity> assignments = new ArrayList<>();
         String type = "assignment";
+
+        final Calendar c = Calendar.getInstance();
+        int yearC = c.get(Calendar.YEAR);
+        int monthC = c.get(Calendar.MONTH);
+        int dayC = c.get(Calendar.DAY_OF_MONTH);
+        String date = dayC + "-" + monthC + "-"+yearC;
         //TODO: Filter out assignments that have due dates that is already over
 
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? ORDER BY " + KEY_ACT_SUBMISSION_TIME + ", " + KEY_ACT_DUE_DATE + " ASC";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " >= ? ORDER BY " + KEY_ACT_DUE_DATE + ", " +  KEY_ACT_SUBMISSION_TIME+ " ASC";
 
-        String[] values = { type};
+        String[] values = { type, date};
 
         Cursor cursor = null;
 
@@ -680,9 +690,16 @@ public class dbManager extends SQLiteOpenHelper {
 
     public List<Activity> getUpcomingTests(){
         String type = "test";
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? ORDER BY " + KEY_ACT_TEST_TIME + ", " + KEY_ACT_TEST_DATE + " ASC";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_TEST_DATE + " >= ? ORDER BY " +  KEY_ACT_TEST_DATE+ ", " + KEY_ACT_TEST_TIME + " ASC";
         List<Activity> tests = new ArrayList<>();
-        String[] values = { type};
+
+        final Calendar c = Calendar.getInstance();
+        int yearC = c.get(Calendar.YEAR);
+        int monthC = c.get(Calendar.MONTH);
+        int dayC = c.get(Calendar.DAY_OF_MONTH);
+        String date = dayC + "-" + monthC + "-"+yearC;
+
+        String[] values = { type, date};
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
 
@@ -734,7 +751,7 @@ public class dbManager extends SQLiteOpenHelper {
         String type = "assignment";
         //TODO: Filter out assignments that have due dates that is already over
 
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " = ? ORDER BY " + KEY_ACT_SUBMISSION_TIME + " ASC";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " >= ? ORDER BY " + KEY_ACT_SUBMISSION_TIME + " ASC";
 
         String[] values = {type, date};
 

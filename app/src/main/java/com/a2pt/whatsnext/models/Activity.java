@@ -167,6 +167,29 @@ public class Activity implements Serializable {
         return dueDate;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public String getStartDateString()
+    {
+        String startDate = getStartDate().toString();
+        String[] temp = startDate.split("-");
+        startDate = temp[2] + "-" + temp[1] + "-" + temp[0];
+        return startDate;
+    }
+
+    public String getEndDateString()
+    {
+        String endDate = getEndDate().toString();
+        String[] temp = endDate.split("-");
+        endDate = temp[2] + "-" + temp[1] + "-" + temp[0];
+        return endDate;
+    }
 
     public LocalTime getTestTime() {
         return testTime;

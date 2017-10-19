@@ -21,6 +21,7 @@ import com.a2pt.whatsnext.models.User;
 import com.a2pt.whatsnext.services.dbManager;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -117,6 +118,8 @@ public class MaintainTestFragment extends Fragment {
 
         //Sets orientation to portrait (User is unable to change orientation)
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
 
         return view;
     }
