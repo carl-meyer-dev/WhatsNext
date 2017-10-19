@@ -36,6 +36,8 @@ public class Activity implements Serializable {
     private String dayOfWeek;
     private int isDuplicate;
     private String typeOfLecture;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     //Constructor for Assignment Activity
     public Activity(String modID, String actType, String assignmentTitle, LocalDate assignmentDueDate, LocalTime assignmentDueTime, int assignmentStatus) {
@@ -58,7 +60,7 @@ public class Activity implements Serializable {
     }
 
     //constructor for Lecture Activity
-    public Activity(String modID, String actType, String lectureVenue, LocalTime lecStartTime, String dayOfWeek, int isDuplicate, String typeOfLecture) {
+    public Activity(String modID, String actType, String lectureVenue, LocalTime lecStartTime, String dayOfWeek, int isDuplicate, String typeOfLecture, LocalDate startDate, LocalDate endDate) {
         this.modID = modID;
         this.actType = actType;
         this.lectureVenue = lectureVenue;
@@ -66,6 +68,8 @@ public class Activity implements Serializable {
         this.dayOfWeek = dayOfWeek;
         this.isDuplicate = isDuplicate;
         this.typeOfLecture = typeOfLecture;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     //GETTERS & SETTERS
