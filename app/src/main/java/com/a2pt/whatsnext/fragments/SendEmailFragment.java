@@ -1,6 +1,7 @@
 package com.a2pt.whatsnext.fragments;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -100,6 +101,8 @@ public class SendEmailFragment extends Fragment {
             }
         });
 
+        //Sets orientation to portrait (User is unable to change orientation)
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         return view;
     }

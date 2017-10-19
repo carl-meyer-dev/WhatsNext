@@ -1,5 +1,6 @@
 package com.a2pt.whatsnext.fragments;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -81,7 +82,8 @@ public class HomeFragment extends Fragment {
         lvTests.setAdapter(testsAdapter);
         Utility.setListViewHeightBasedOnChildren(lvTests, 180);
 
-
+        //Sets orientation to portrait (User is unable to change orientation)
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         return view;
     }

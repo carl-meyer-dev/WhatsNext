@@ -3,6 +3,7 @@ package com.a2pt.whatsnext.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -168,6 +169,9 @@ public class NewAssignmentFragment extends Fragment {
                 getFragmentManager().popBackStack();
             }
         });
+
+        //Sets orientation to portrait (User is unable to change orientation)
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         return view;
     }

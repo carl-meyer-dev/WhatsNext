@@ -1,5 +1,6 @@
 package com.a2pt.whatsnext.fragments;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -112,6 +113,9 @@ public class MaintainLectureTimesFragment extends Fragment {
 
             }
         });
+
+        //Sets orientation to portrait (User is unable to change orientation)
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         return view;
     }
