@@ -995,7 +995,8 @@ public class dbManager extends SQLiteOpenHelper {
         String type = "assignment";
         //TODO: Filter out assignments that have due dates that is already over
 
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_MOD_ID + " = ?";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
+                + KEY_ACT_MOD_ID + " = ? ORDER BY " + KEY_ACT_DUE_DATE + ", " + KEY_ACT_SUBMISSION_TIME + " ASC";
 
         String[] values = {type, modID};
 
@@ -1049,7 +1050,8 @@ public class dbManager extends SQLiteOpenHelper {
 
     public List<Activity> getTestsByID(String modID){
         String type = "test";
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_MOD_ID + " = ?";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
+                + KEY_ACT_MOD_ID + " = ? ORDER BY " + KEY_ACT_TEST_DATE + ", " + KEY_ACT_TEST_TIME + " ASC";
         List<Activity> tests = new ArrayList<>();
         String[] values = { type, modID};
         SQLiteDatabase db = this.getReadableDatabase();

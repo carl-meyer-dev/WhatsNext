@@ -573,6 +573,12 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertData(user, db);
         user = new User("Oosthuizen.Nadine", "Nadine Oosthuizen", "oosthuizen.nadine@mandela.ac.za", "ebm", "lecturer", "Business", "EBM202");
         insertData(user, db);
+        user = new User("Campbell.E", "E Campbell", "campbell.e@mandela.ac.za", "bot230", "lecturer", "Botany", "BOT230");
+        insertData(user, db);
+        user = new User("Brunsdon.G", "G Brunsdon", "brunsdon.g@mandela.ac.za", "GGL303", "lecturer", "Geology", "GGL303");
+        insertData(user, db);
+        user = new User("Williams.L", "L Williams", "williams.l@mandela.ac.za", "gen312", "lecturer", "Botany", "GEN312");
+        insertData(user, db);
 
 
 
