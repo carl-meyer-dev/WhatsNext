@@ -641,6 +641,45 @@ public class ITSdbManager extends SQLiteOpenHelper{
         activity = new Activity("WRR301", "lecture", "35 01 01", new LocalTime(9,5), "friday", 0, "L", firstSemesterStart, secondSemesterEnd);
         insertLecture(activity, db);
 
+        //Insert Jacques Time Table Data
+        //Monday Lectures
+        activity = new Activity("BOT140", "lecture", "127 00 02", new LocalTime(7,45),"monday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("GEN211", "lecture", "127 00 02", new LocalTime(14,5), "monday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("BOT210", "lecture", "127 00 17", new LocalTime(16,45), "monday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+
+        //Tuesday Lectures
+        activity = new Activity("GGL201", "lecture", "13 03 61", new LocalTime(7,45), "tuesday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("BOT210", "lecture", "127 00 17", new LocalTime(9,5), "tuesday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("GGL114", "lecture", "13 03 69", new LocalTime(14,5), "tuesday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("BOT210","lecture", "12 01 05", new LocalTime(15,25), "tuesday", 0, "P", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+
+        //Wednesday Lectures
+        activity = new Activity("BOT210", "lecture", "35 00 17", new LocalTime(9,5),"wednesday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("GGL201", "lecture", "13 03 61", new LocalTime(14,5),"wednesday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+
+        //Thursday Lectures
+        activity = new Activity("GGL201", "lecture", "13 03 61", new LocalTime(7,45),"thursday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("GEN211", "lecture", "127 00 02", new LocalTime(9,5),"thursday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("GGL201", "lecture", "13 03 69", new LocalTime(15,25),"thursday", 0, "P", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+
+        //Friday Lectures
+        activity = new Activity("GGL201", "lecture", "13 03 69", new LocalTime(10,25), "friday", 0, "P", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("GEN211", "lecture", "12 01 05", new LocalTime(15,25), "friday", 0, "P", secondSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
+
 
     }
 

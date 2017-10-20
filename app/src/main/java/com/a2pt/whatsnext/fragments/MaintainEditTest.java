@@ -202,9 +202,9 @@ public class MaintainEditTest extends Fragment {
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                tvDate.setText(test.getAssignmentDueDateString());
-                tvTime.setText(test.getAssignmentDueTime().toString().substring(0,5));
-                txtVenue.setText(test.getAssignmentTitle());
+                tvDate.setText(test.getTestDateString());
+                tvTime.setText(test.getTestTime().toString().substring(0,5));
+                txtVenue.setText(test.getTestVenue());
             }
         });
 
