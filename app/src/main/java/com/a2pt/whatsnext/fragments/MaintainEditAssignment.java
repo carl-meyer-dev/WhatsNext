@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -198,6 +199,15 @@ public class MaintainEditAssignment extends Fragment {
 
         //Sets orientation to portrait (User is unable to change orientation)
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                tvDate.setText(assignment.getAssignmentDueDateString());
+                tvTime.setText(assignment.getAssignmentDueTime().toString().substring(0,5));
+                txtTitle.setText(assignment.getAssignmentTitle());
+            }
+        });
 
         return view;
     }

@@ -558,10 +558,10 @@ public class ITSdbManager extends SQLiteOpenHelper{
         user = new User("admin", "admin", "admin@nmmu.ac.za", "admin", "lecturer", "admin", "admin");
         insertData(user, db);
 
-        LocalDate firstSemesterStart = new LocalDate(2017, 02,06);
-        LocalDate firstSemesterEnd = new LocalDate(2017, 05, 26);
+        LocalDate firstSemesterStart = new LocalDate(2017, 2,6);
+        LocalDate firstSemesterEnd = new LocalDate(2017, 5, 26);
         System.out.println(firstSemesterEnd);
-        LocalDate secondSemesterStart = new LocalDate(2017, 06, 17);
+        LocalDate secondSemesterStart = new LocalDate(2017, 6, 17);
         LocalDate secondSemesterEnd = new LocalDate(2017, 10, 27);
 
 
@@ -620,7 +620,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         activity = new Activity("WRA301", "assignment", "Research Paper", new LocalDate(2017,4,23), new LocalTime(23,0), 0);
         insertAssignment(activity, db);
         //Tests
-        activity = new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,9,12),new LocalTime(18,0), "07 02 48");
+        activity = new Activity("STAT203", "test", "Tut Test 2",new LocalDate(2017,10,24),new LocalTime(18,0), "07 02 48");
         insertTest(activity, db);
         activity = new Activity("MATH214", "test", "Seme Test 2",new LocalDate(2017,9,14),new LocalTime(18,0), "Heinz Benz Hall");
         insertTest(activity, db);
@@ -632,6 +632,14 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertTest(activity, db);
         activity = new Activity("MATH203", "test", "Seme Test 2",new LocalDate(2017,10,12),new LocalTime(18,0), "Indoor Sport Centre");
         insertTest(activity, db);
+
+        //TESTING to see if IT WORKS WITH LECTURES OF FIRST SEMESTER IN ITS
+        activity = new Activity("MATH211", "lecture", "35 00 17", new LocalTime(9,5),"monday", 0, "L", firstSemesterStart, firstSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("WRAP301", "lecture", "35 01 01", new LocalTime(10,25), "monday", 0, "L", firstSemesterStart, firstSemesterEnd);
+        insertLecture(activity, db);
+        activity = new Activity("WRR301", "lecture", "35 01 01", new LocalTime(9,5), "friday", 0, "L", firstSemesterStart, secondSemesterEnd);
+        insertLecture(activity, db);
 
 
     }

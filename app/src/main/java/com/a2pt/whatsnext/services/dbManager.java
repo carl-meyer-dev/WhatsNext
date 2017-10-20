@@ -505,7 +505,7 @@ public class dbManager extends SQLiteOpenHelper {
         System.out.println("DEBUG in dbManager. Adding Lecture for module = " + modCode);
         String type = "lecture";
         String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
-                + KEY_ACT_MOD_ID + " = ?";
+                + KEY_ACT_MOD_ID + " = ? AND " + KEY_ACT_START_DATE + " <= DATE() AND " + KEY_ACT_END_DATE + " >= DATE()";
 
         String[] values = { type, modCode};
         SQLiteDatabase dbToCheck = itsDatabase.getReadableDatabase();
@@ -629,17 +629,86 @@ public class dbManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Activity> assignments = new ArrayList<>();
         String type = "assignment";
-
+/*
         final Calendar c = Calendar.getInstance();
         int yearC = c.get(Calendar.YEAR);
         int monthC = c.get(Calendar.MONTH);
         int dayC = c.get(Calendar.DAY_OF_MONTH);
         String date = dayC + "-" + monthC + "-"+yearC;
-        //TODO: Filter out assignments that have due dates that is already over
+        */
 
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " >= ? ORDER BY " + KEY_ACT_DUE_DATE + ", " +  KEY_ACT_SUBMISSION_TIME+ " ASC";
 
-        String[] values = { type, date};
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " >= DATE() ORDER BY " + KEY_ACT_DUE_DATE + ", " +  KEY_ACT_SUBMISSION_TIME+ " ASC";
+
+        //String[] values = { type, date};
+        String[] values = { type};
+
+        Cursor cursor = null;
+
+
+        cursor = db.rawQuery(query, values);
+
+        if(cursor != null && cursor.moveToFirst()) {
+
+
+            do {
+
+
+                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TITLE));
+                String dueDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_DUE_DATE));
+                String submissionTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SUBMISSION_TIME));
+                int status = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_STATUS)));
+
+
+                //The Dates in the databse will be like 2017/10/23
+                //The TIme in the databse will be like 17:45
+
+                String[] temdate = dueDate.split("-"); //split date up into 2017, 10, 23
+                int year = Integer.parseInt(temdate[0]);  //save year as 2017
+                int month = Integer.parseInt(temdate[1]);  //save month as 10
+                int day = Integer.parseInt(temdate[2]); //save day as 23
+                LocalDate dDate = new LocalDate(year, month, day);  //create new local date
+                System.out.println(dDate.toString());
+
+                String[] temptime = submissionTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime dTime = new LocalTime(hours, minutes);
+                System.out.println(dTime.toString());
+
+                Activity activity = new Activity(id, typeOfActivity, title, dDate, dTime, status);
+                assignments.add(activity);
+
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+        }
+        return assignments;
+    }
+
+
+    public List<Activity> getAllAssignments(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Activity> assignments = new ArrayList<>();
+        String type = "assignment";
+/*
+        final Calendar c = Calendar.getInstance();
+        int yearC = c.get(Calendar.YEAR);
+        int monthC = c.get(Calendar.MONTH);
+        int dayC = c.get(Calendar.DAY_OF_MONTH);
+        String date = dayC + "-" + monthC + "-"+yearC;
+        */
+
+
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? ORDER BY " + KEY_ACT_DUE_DATE + ", " +  KEY_ACT_SUBMISSION_TIME+ " ASC";
+
+        //String[] values = { type, date};
+        String[] values = { type};
 
         Cursor cursor = null;
 
@@ -690,8 +759,9 @@ public class dbManager extends SQLiteOpenHelper {
 
     public List<Activity> getUpcomingTests(){
         String type = "test";
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_TEST_DATE + " >= ? ORDER BY " +  KEY_ACT_TEST_DATE+ ", " + KEY_ACT_TEST_TIME + " ASC";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_TEST_DATE + " >= DATE() ORDER BY " +  KEY_ACT_TEST_DATE+ ", " + KEY_ACT_TEST_TIME + " ASC";
         List<Activity> tests = new ArrayList<>();
+/*      INSTEAD USE DATE() FUNCTION IN SQL
 
         final Calendar c = Calendar.getInstance();
         int yearC = c.get(Calendar.YEAR);
@@ -700,6 +770,9 @@ public class dbManager extends SQLiteOpenHelper {
         String date = dayC + "-" + monthC + "-"+yearC;
 
         String[] values = { type, date};
+        */
+        String[] values = { type};
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
 
@@ -744,16 +817,78 @@ public class dbManager extends SQLiteOpenHelper {
         return tests;
     }
 
-    public List<Activity> getTodaysAssignments(String date){
+    public List<Activity> getAllTests(){
+        String type = "test";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? ORDER BY " +  KEY_ACT_TEST_DATE+ ", " + KEY_ACT_TEST_TIME + " ASC";
+        List<Activity> tests = new ArrayList<>();
+/*      INSTEAD USE DATE() FUNCTION IN SQL
+
+        final Calendar c = Calendar.getInstance();
+        int yearC = c.get(Calendar.YEAR);
+        int monthC = c.get(Calendar.MONTH);
+        int dayC = c.get(Calendar.DAY_OF_MONTH);
+        String date = dayC + "-" + monthC + "-"+yearC;
+
+        String[] values = { type, date};
+        */
+        String[] values = { type};
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        cursor = db.rawQuery(query, values);
+
+        if(cursor != null && cursor.moveToFirst()) {
+
+
+            do {
+                String id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_NAME));
+                String testDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_DATE));
+                String testTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_TIME));
+                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_VENUE));
+
+
+                //The Dates in the databse will be like 2017/10/23
+                //The TIme in the databse will be like 17:45
+
+                String[] temdate = testDate.split("-"); //split date up into 2017, 10, 23
+                int year = Integer.parseInt(temdate[0]);  //save year as 2017
+                int month = Integer.parseInt(temdate[1]);  //save month as 10
+                int day = Integer.parseInt(temdate[2]); //save day as 23
+                LocalDate tDate = new LocalDate(year, month, day);  //create new local date
+
+
+                String[] temptime = testTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime startTime = new LocalTime(hours, minutes);
+
+                Activity activity = new Activity(id, typeOfActivity, title, tDate, startTime, venue);
+
+                tests.add(activity);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+        }
+
+        return tests;
+    }
+
+    public List<Activity> getTodaysAssignments(){
 
         SQLiteDatabase db = this.getReadableDatabase();
         List<Activity> assignments = new ArrayList<>();
         String type = "assignment";
+
         //TODO: Filter out assignments that have due dates that is already over
 
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " >= ? ORDER BY " + KEY_ACT_SUBMISSION_TIME + " ASC";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_DUE_DATE + " = DATE() ORDER BY " + KEY_ACT_SUBMISSION_TIME + " ASC";
 
-        String[] values = {type, date};
+        //String[] values = {type, date};
+        String[] values = {type};
 
         Cursor cursor = null;
 
@@ -803,11 +938,13 @@ public class dbManager extends SQLiteOpenHelper {
 
     }
 
-    public List<Activity> getTodayTests(String date){
+    public List<Activity> getTodayTests(){
         String type = "test";
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_TEST_DATE + " = ? ORDER BY " + KEY_ACT_TEST_TIME + " ASC";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND " + KEY_ACT_TEST_DATE + " = DATE() ORDER BY " + KEY_ACT_TEST_TIME + " ASC";
         List<Activity> tests = new ArrayList<>();
-        String[] values = { type, date};
+        //String[] values = { type, date};
+        String[] values = { type};
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
 

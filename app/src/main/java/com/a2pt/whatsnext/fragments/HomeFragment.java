@@ -62,11 +62,13 @@ public class HomeFragment extends Fragment {
         setDateHeader();
         //Get today's Day Of Week
         String dayOfWeek =  calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()).toLowerCase();
+        /*
         String date = DateTime.now().toString("yyyy-MM-dd");
         System.out.println("DEBUG homeFragment: TODAY'S DATE IS = " + date);
+        */
         final List<Activity> Lectures = localDB.getLecturesSpecificDay(dayOfWeek); //set List to List of Lecture for Today
-        final List<Activity> Assignments = localDB.getTodaysAssignments(date);
-        final List<Activity> Tests = localDB.getTodayTests(date);
+        final List<Activity> Assignments = localDB.getTodaysAssignments();
+        final List<Activity> Tests = localDB.getTodayTests();
 
 
         lecturesAdapter = new ActivityAdapter(getActivity(), Lectures);

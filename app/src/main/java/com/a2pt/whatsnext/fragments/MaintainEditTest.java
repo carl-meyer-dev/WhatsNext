@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class MaintainEditTest extends Fragment {
     //instatiate values from the MaintainTestFragment
     private String modId;
     private String actType;
-    private EditText venue;
+    private EditText txtVenue;
 
     //instantiate the databases
     dbManager localDB;
@@ -75,11 +76,11 @@ public class MaintainEditTest extends Fragment {
         itSdbManager = new ITSdbManager(getActivity());
         tvDate = (TextView) view.findViewById(R.id.tvET_Date);
         tvTime = (TextView) view.findViewById(R.id.tvET_Time);
-        venue = (EditText) view.findViewById(R.id.txtET_Title);
+        txtVenue = (EditText) view.findViewById(R.id.txtET_Title);
 
         tvDate.setText(test.getTestDateString());
         tvTime.setText(test.getTestTime().toString().substring(0,5));
-        venue.setText(test.getTestVenue());
+        txtVenue.setText(test.getTestVenue());
 
 
 
@@ -145,7 +146,7 @@ public class MaintainEditTest extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String testVenue = venue.getText().toString();
+                String testVenue = txtVenue.getText().toString();
                 String dueDate = tvDate.getText().toString();
                 String dueTime = tvTime.getText().toString();
 
@@ -188,6 +189,15 @@ public class MaintainEditTest extends Fragment {
 
         //Sets orientation to portrait (User is unable to change orientation)
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                tvDate.setText(test.getAssignmentDueDateString());
+                tvTime.setText(test.getAssignmentDueTime().toString().substring(0,5));
+                txtVenue.setText(test.getAssignmentTitle());
+            }
+        });
 
         return view;
     }
