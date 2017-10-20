@@ -10,10 +10,10 @@
 
     <TextView
         android:id="@+id/tvLect4"
-        android:layout_width="80dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:text="Monday"
+        android:text="wednesday"
         android:textAlignment="textStart"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/tvLect1"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="07:45"

@@ -270,10 +270,6 @@ public class MainActivity extends AppCompatActivity
                     .show();
 
 
-
-
-
-
         } else if (id == R.id.nav_maintain_lecture_times) {
             //similarly replace the fragment_container with Maintain Lecture Times Fragment
             MaintainLectureTimesFragment maintainLectureTimesFragment = new MaintainLectureTimesFragment();
@@ -368,47 +364,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void SwitchUser(MenuItem item) {
-        //TODO: This will be set Dynamically according to user log in
-
-        if(userType == 0){
-            //Clear the current Drawer Menu
-            navigationView.getMenu().clear();
-            //inflate the new drawer menu (lecturer Drawer Menu)
-            navigationView.inflateMenu(R.menu.activity_main_drawer_lecturer);
-            userType = 1;
-            //remove all fragments from fragmentStack to go back to HomeFragment
-            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            //set the NavHeader Textviews text (this will later be done when Logged in. This is only for testing purposes)
-            tvNavHeaderDegree = (TextView)findViewById(R.id.tvNavHeaderDegree);
-            tvNavHeaderName = (TextView)findViewById(R.id.tvNavHeaderName);
-            tvNavHeaderUsername = (TextView)findViewById(R.id.tvNavHeaderUsername);
-
-            tvNavHeaderName.setText("Dieter Vogts");
-            tvNavHeaderUsername.setText("Dieter.Vogts@nmu.ac.za");
-            tvNavHeaderDegree.setText("WRAP301, WRAP302, WRA301");
-
-
-        }else {
-            //Clear the current Drawer Menu
-            navigationView.getMenu().clear();
-            //inflate the new drawer menu (lecturer Drawer Menu)
-            navigationView.inflateMenu(R.menu.activity_main_drawer_student);
-            userType = 0;
-            //remove all fragments from fragmentStack to go back to HomeFragment
-            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            //set the NavHeader Textviews text (this will later be done when Logged in. This is only for testing purposes)
-            tvNavHeaderDegree = (TextView)findViewById(R.id.tvNavHeaderDegree);
-            tvNavHeaderName = (TextView)findViewById(R.id.tvNavHeaderName);
-            tvNavHeaderUsername = (TextView)findViewById(R.id.tvNavHeaderUsername);
-
-            tvNavHeaderName.setText("Carl Meyer");
-            tvNavHeaderUsername.setText("s215006941@nmmu.ac.za");
-            tvNavHeaderDegree.setText("BSc Computer Science");
-
-        }
-
-    }
 
     /**
      * This will return the currently logged in user. This is so that Fragments can get hold of List of Modules fot the spinners

@@ -549,7 +549,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
         User user = new User("s215006941", "Carl Meyer", "s215006941@nmmu.ac.za", "abc123", "student", "BSc Computer Science", "WRAP302,WRL301,MATH214,MATH203,STAT203,WRR301");
         insertData(user, db);
-        user = new User("s215144988", "Gerrit Naude", "s215144988@nmmu.ac.za", "def456", "student", "BSc Information Systems","WRAP302,EBM302,WRUI301,WRB302,WRR301");
+        user = new User("s215144988", "Gerrit Naude", "s215144988@nmmu.ac.za", "def456", "student", "BSc Information Systems","WRAP302,EBM202,WRUI301,WRB302,WRR301");
         insertData(user, db);
         user = new User("s215039882", "Jacques De Bruyn", "ss215144988@nmmu.ac.za", "rock", "student", "BSc Geology","BOT140,GEN211,BOT210,GGL201,GGL114,BOT230,GGL303,GEN312,BOT240,GGL304,GIS211");
         insertData(user, db);
@@ -739,13 +739,13 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
 
         //Thursday Lectures
-        activity = new Activity("WRUI", "lecture", "09 02 06", new LocalTime(7,45),"thursday", 0, "L", secondSemesterStart, secondSemesterEnd);
+        activity = new Activity("WRUI301", "lecture", "09 02 06", new LocalTime(7,45),"thursday", 0, "L", secondSemesterStart, secondSemesterEnd);
         insertLecture(activity, db);
 
         //Friday Lectures
         activity = new Activity("EBM202", "lecture", "35 00 05", new LocalTime(9,5), "friday", 1, "L", secondSemesterStart, secondSemesterEnd);
         insertLecture(activity, db);
-        activity = new Activity("EBM", "lecture", "35 00 40", new LocalTime(14,5), "friday", 1, "L", secondSemesterStart, secondSemesterEnd);
+        activity = new Activity("EBM202", "lecture", "35 00 40", new LocalTime(14,5), "friday", 1, "L", secondSemesterStart, secondSemesterEnd);
         insertLecture(activity, db);
 
 

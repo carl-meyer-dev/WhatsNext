@@ -7,10 +7,4 @@
         android:orderInCategory="100"
         android:title="@string/action_settings_logout"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_settings_switch_user"
-        android:onClick="SwitchUser"
-        android:orderInCategory="100"
-        android:title="@string/action_settings_switch_user"
-        app:showAsAction="never" />
 </menu>

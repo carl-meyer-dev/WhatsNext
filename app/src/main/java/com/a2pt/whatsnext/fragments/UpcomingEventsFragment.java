@@ -60,7 +60,7 @@ public class UpcomingEventsFragment extends Fragment {
 
 
         Utility.setListViewHeightBasedOnChildren(lvAssignments, 240);
-        Utility.setListViewHeightBasedOnChildren(lvTests, 240);
+        Utility.setListViewHeightBasedOnChildren(lvTests, 200);
 
         //Sets orientation to portrait (User is unable to change orientation)
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
