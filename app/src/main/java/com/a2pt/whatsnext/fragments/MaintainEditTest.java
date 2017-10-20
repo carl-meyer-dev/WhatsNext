@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.models.Activity;
@@ -150,29 +151,37 @@ public class MaintainEditTest extends Fragment {
                 String dueDate = tvDate.getText().toString();
                 String dueTime = tvTime.getText().toString();
 
-                String[] temdate = dueDate.split("-"); //split date up into 2017, 10, 23
-                int year = Integer.parseInt(temdate[2]);  //save year as 2017
-                int month = Integer.parseInt(temdate[1]);  //save month as 10
-                int day = Integer.parseInt(temdate[0]); //save day as 23
-                LocalDate dDate = new LocalDate(year, month, day);  //create new local date
-                System.out.println(dDate.toString());
+                if(testVenue.equalsIgnoreCase("") || dueDate.equalsIgnoreCase("") || dueTime.equalsIgnoreCase("")){
 
-                String[] temptime = dueTime.split(":");  //Split the Time string into 17 abd 45
-                int hours = Integer.parseInt(temptime[0]); //set the hours integer
-                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
-                LocalTime dTime = new LocalTime(hours, minutes);
-                System.out.println(dTime.toString());
+                    //All or some of the fields are empty
+                    Toast toast = Toast.makeText(getActivity(), "Invalid Entry", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else {
 
-                Activity newActivity = new Activity(modId, actType, "", dDate, dTime, testVenue);
-                System.out.println("NEW TEST TIME OF TEST IS = " + newActivity.getTestTime());
-                //TODO: instead of insert, Update current Assignment
+                    String[] temdate = dueDate.split("-"); //split date up into 2017, 10, 23
+                    int year = Integer.parseInt(temdate[2]);  //save year as 2017
+                    int month = Integer.parseInt(temdate[1]);  //save month as 10
+                    int day = Integer.parseInt(temdate[0]); //save day as 23
+                    LocalDate dDate = new LocalDate(year, month, day);  //create new local date
+                    System.out.println(dDate.toString());
 
-                localDB.updateTest(newActivity, test.getActID());
-                System.out.println("DEBUG EDIT TEST: ITS TEST ID IS = " + itSdbManager.getTestID(test));
-                itSdbManager.updateTest(newActivity, itSdbManager.getTestID(test));
+                    String[] temptime = dueTime.split(":");  //Split the Time string into 17 abd 45
+                    int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                    int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                    LocalTime dTime = new LocalTime(hours, minutes);
+                    System.out.println(dTime.toString());
 
-                //returns to previous assignment
-                getFragmentManager().popBackStack();
+                    Activity newActivity = new Activity(modId, actType, "", dDate, dTime, testVenue);
+                    System.out.println("NEW TEST TIME OF TEST IS = " + newActivity.getTestTime());
+                    //TODO: instead of insert, Update current Assignment
+
+                    localDB.updateTest(newActivity, test.getActID());
+                    System.out.println("DEBUG EDIT TEST: ITS TEST ID IS = " + itSdbManager.getTestID(test));
+                    itSdbManager.updateTest(newActivity, itSdbManager.getTestID(test));
+
+                    //returns to previous assignment
+                    getFragmentManager().popBackStack();
+                }
             }
         });
 

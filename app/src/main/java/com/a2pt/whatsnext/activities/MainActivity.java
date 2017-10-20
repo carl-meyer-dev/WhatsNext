@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-                            Toast toast = Toast.makeText(MainActivity.this, "Refreshed Local DB", Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(MainActivity.this, "Refreshed Database", Toast.LENGTH_LONG);
                             toast.show();
                             //TODO: need to refresh Home Fragment
                             Fragment homeFrag = new HomeFragment(); //get new Home Fragment

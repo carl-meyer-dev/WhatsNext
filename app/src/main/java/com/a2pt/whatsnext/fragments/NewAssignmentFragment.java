@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.models.Activity;
@@ -144,29 +145,40 @@ public class NewAssignmentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+
+                //Check if empty field
+
+
                 String assignmentTitle = title.getText().toString();
                 String dueDate = tvDate.getText().toString();
                 String dueTime = tvTime.getText().toString();
 
-                String[] temdate = dueDate.split("-"); //split date up into 2017, 10, 23
-                int year = Integer.parseInt(temdate[2]);  //save year as 2017
-                int month = Integer.parseInt(temdate[1]);  //save month as 10
-                int day = Integer.parseInt(temdate[0]); //save day as 23
-                LocalDate dDate = new LocalDate(year, month, day);  //create new local date
-                System.out.println(dDate.toString());
+                if(assignmentTitle.equalsIgnoreCase("") || dueDate.equalsIgnoreCase("") || dueTime.equalsIgnoreCase("")){
+                    //All or some of the fields are empty
+                    Toast toast = Toast.makeText(getActivity(), "Invalid Entry", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else{
+                    String[] temdate = dueDate.split("-"); //split date up into 2017, 10, 23
 
-                String[] temptime = dueTime.split(":");  //Split the Time string into 17 abd 45
-                int hours = Integer.parseInt(temptime[0]); //set the hours integer
-                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
-                LocalTime dTime = new LocalTime(hours, minutes);
-                System.out.println(dTime.toString());
+                    int year = Integer.parseInt(temdate[2]);  //save year as 2017
+                    int month = Integer.parseInt(temdate[1]);  //save month as 10
+                    int day = Integer.parseInt(temdate[0]); //save day as 23
+                    LocalDate dDate = new LocalDate(year, month, day);  //create new local date
+                    System.out.println(dDate.toString());
 
-                Activity newActivity = new Activity(modId, actType, assignmentTitle, dDate, dTime, 0);
-                localDB.insertAssignment(newActivity);
-                itSdbManager.insertAssignment(newActivity);
+                    String[] temptime = dueTime.split(":");  //Split the Time string into 17 abd 45
+                    int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                    int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                    LocalTime dTime = new LocalTime(hours, minutes);
+                    System.out.println(dTime.toString());
 
-                //returns to previous assignment
-                getFragmentManager().popBackStack();
+                    Activity newActivity = new Activity(modId, actType, assignmentTitle, dDate, dTime, 0);
+                    localDB.insertAssignment(newActivity);
+                    itSdbManager.insertAssignment(newActivity);
+
+                    //returns to previous assignment
+                    getFragmentManager().popBackStack();
+                }
             }
         });
 

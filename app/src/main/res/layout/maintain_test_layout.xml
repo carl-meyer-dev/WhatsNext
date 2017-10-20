@@ -94,7 +94,7 @@
         app:backgroundTint="@color/colorPrimary"
         app:elevation="5dp"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add_black_48dp"
+        app:srcCompat="@drawable/ic_add_black_24dp"
         tools:layout_editor_absoluteX="264dp"
         tools:layout_editor_absoluteY="29dp" />
 
