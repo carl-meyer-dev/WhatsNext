@@ -45,7 +45,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="s123456789@nmmu.ac.za"
+            android:hint="s123456789"
             android:inputType="textPersonName" />
 
         <TextView

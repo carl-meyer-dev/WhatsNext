@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/als_linLayPast"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:background="#808080"
+    android:orientation="horizontal"
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp">
+
+    <TextView
+        android:id="@+id/als_tvDatePast"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
+        android:text="09 / 20"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/als_tvTimePast"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:text="07:45"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/als_tvTitlePast"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Assignment 5"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/als_tvModulePast"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="WRAP302"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</LinearLayout>

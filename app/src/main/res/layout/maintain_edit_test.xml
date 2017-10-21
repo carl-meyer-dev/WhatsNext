@@ -26,7 +26,8 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Venue"
-        android:inputType="text" />
+        android:inputType="text"
+        android:maxLength="20"/>
 
     <TextView
         android:id="@+id/textView3"

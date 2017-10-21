@@ -995,8 +995,67 @@ public class dbManager extends SQLiteOpenHelper {
         String type = "assignment";
         //TODO: Filter out assignments that have due dates that is already over
 
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
-                + KEY_ACT_MOD_ID + " = ? ORDER BY " + KEY_ACT_DUE_DATE + ", " + KEY_ACT_SUBMISSION_TIME + " ASC";
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " =? AND " +
+                KEY_ACT_MOD_ID + " = ? AND " + KEY_ACT_DUE_DATE + " >= DATE() ORDER BY " + KEY_ACT_DUE_DATE  + ", "+ KEY_ACT_SUBMISSION_TIME + " ASC";
+
+        String[] values = {type, modID};
+
+        Cursor cursor = null;
+
+
+        cursor = db.rawQuery(query, values);
+
+        if(cursor != null && cursor.moveToFirst()) {
+
+
+            do {
+
+                int id = cursor.getInt(cursor.getColumnIndex(KEY_ACT_ID));
+                String mod_id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TITLE));
+                String dueDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_DUE_DATE));
+                String submissionTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_SUBMISSION_TIME));
+                int status = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ACT_STATUS)));
+
+
+                //The Dates in the databse will be like 2017/10/23
+                //The TIme in the databse will be like 17:45
+
+                String[] temdate = dueDate.split("-"); //split date up into 2017, 10, 23
+                int year = Integer.parseInt(temdate[0]);  //save year as 2017
+                int month = Integer.parseInt(temdate[1]);  //save month as 10
+                int day = Integer.parseInt(temdate[2]); //save day as 23
+                LocalDate dDate = new LocalDate(year, month, day);  //create new local date
+                System.out.println(dDate.toString());
+
+                String[] temptime = submissionTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime dTime = new LocalTime(hours, minutes);
+                System.out.println(dTime.toString());
+
+                Activity activity = new Activity(mod_id, typeOfActivity, title, dDate, dTime, status);
+                activity.setActID(id);
+                assignments.add(activity);
+
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+        }
+        return assignments;
+    }
+
+    public List<Activity> getPastAssignmentsByID(String modID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Activity> assignments = new ArrayList<>();
+        String type = "assignment";
+        //TODO: Filter out assignments that have due dates that is already over
+
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " =? AND " +
+                KEY_ACT_MOD_ID + " = ? AND " + KEY_ACT_DUE_DATE + " < DATE() ORDER BY " + KEY_ACT_DUE_DATE  + ", "+ KEY_ACT_SUBMISSION_TIME + " ASC";
 
         String[] values = {type, modID};
 
@@ -1050,8 +1109,62 @@ public class dbManager extends SQLiteOpenHelper {
 
     public List<Activity> getTestsByID(String modID){
         String type = "test";
-        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " = ? AND "
-                + KEY_ACT_MOD_ID + " = ? ORDER BY " + KEY_ACT_TEST_DATE + ", " + KEY_ACT_TEST_TIME + " ASC";
+
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " =? AND " +
+                KEY_ACT_MOD_ID + " = ? AND " + KEY_ACT_TEST_DATE + " >= DATE() ORDER BY " + KEY_ACT_TEST_DATE  + ", "+ KEY_ACT_TEST_TIME + " ASC";
+
+        List<Activity> tests = new ArrayList<>();
+        String[] values = { type, modID};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        cursor = db.rawQuery(query, values);
+
+        if(cursor != null && cursor.moveToFirst()) {
+
+
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(KEY_ACT_ID));
+                String mod_id = cursor.getString(cursor.getColumnIndex(KEY_ACT_MOD_ID));
+                String typeOfActivity = cursor.getString(cursor.getColumnIndex(KEY_ACT_ACT_TYPE));
+                String title = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_NAME));
+                String testDate = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_DATE));
+                String testTime = cursor.getString(cursor.getColumnIndex(KEY_ACT_TEST_TIME));
+                String venue = cursor.getString(cursor.getColumnIndex(KEY_ACT_VENUE));
+
+
+                //The Dates in the databse will be like 2017/10/23
+                //The TIme in the databse will be like 17:45
+
+                String[] temdate = testDate.split("-"); //split date up into 2017, 10, 23
+                int year = Integer.parseInt(temdate[0]);  //save year as 2017
+                int month = Integer.parseInt(temdate[1]);  //save month as 10
+                int day = Integer.parseInt(temdate[2]); //save day as 23
+                LocalDate tDate = new LocalDate(year, month, day);  //create new local date
+
+
+                String[] temptime = testTime.split(":");  //Split the Time string into 17 abd 45
+                int hours = Integer.parseInt(temptime[0]); //set the hours integer
+                int minutes = Integer.parseInt(temptime[1]); //set the minutes integer
+                LocalTime startTime = new LocalTime(hours, minutes);
+
+                Activity activity = new Activity(mod_id, typeOfActivity, title, tDate, startTime, venue);
+                activity.setActID(id);
+                tests.add(activity);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+        }
+
+        return tests;
+    }
+
+    public List<Activity> getPastTestsByID(String modID){
+        String type = "test";
+
+        String query = "SELECT * FROM " + TABLE_ACTIVITY + " WHERE " + KEY_ACT_ACT_TYPE + " =? AND " +
+                KEY_ACT_MOD_ID + " = ? AND " + KEY_ACT_TEST_DATE + " < DATE() ORDER BY " + KEY_ACT_TEST_DATE  + ", "+ KEY_ACT_TEST_TIME + " ASC";
         List<Activity> tests = new ArrayList<>();
         String[] values = { type, modID};
         SQLiteDatabase db = this.getReadableDatabase();

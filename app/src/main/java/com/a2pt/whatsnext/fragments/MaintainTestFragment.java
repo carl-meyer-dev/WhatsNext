@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.activities.MainActivity;
+import com.a2pt.whatsnext.adapters.PastTestAdapter;
 import com.a2pt.whatsnext.adapters.TestAdapter;
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.models.User;
@@ -36,9 +37,12 @@ public class MaintainTestFragment extends Fragment {
     NewTestFragment newTestFragment = new NewTestFragment();
     MaintainEditTest maintainEditTest = new MaintainEditTest();
     ListView lvTests;
+    ListView lvTestsPast;
     TestAdapter adapter;
+    PastTestAdapter pastAdapter;
     User user;
     List<Activity> tests;
+    List<Activity> pastTests;
     String selectedModule;
     dbManager localDB;
     MainActivity main;
@@ -50,6 +54,8 @@ public class MaintainTestFragment extends Fragment {
         view = inflater.inflate(R.layout.maintain_test_layout, container, false);
         localDB = new dbManager(getActivity());
         lvTests = (ListView)view.findViewById(R.id.mt_lvTests);
+        lvTestsPast = (ListView)view.findViewById(R.id.mt_lvTestsPast);
+
         spnTests = (Spinner)view.findViewById(R.id.spnModulesTest);
         main = (MainActivity) getActivity();
         user = main.getCurUser();
@@ -63,6 +69,7 @@ public class MaintainTestFragment extends Fragment {
         spnTests.setAdapter(dataAdapter);
 
         tests = new ArrayList<>();
+        pastTests = new ArrayList<>();
 
         spnTests.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -71,6 +78,10 @@ public class MaintainTestFragment extends Fragment {
                 tests = localDB.getTestsByID(selectedModule);
                 adapter = new TestAdapter(getActivity(), tests);
                 lvTests.setAdapter(adapter);
+
+                pastTests = localDB.getPastTestsByID(selectedModule);
+                pastAdapter = new PastTestAdapter(getActivity(), pastTests);
+                lvTestsPast.setAdapter(pastAdapter);
             }
 
             @Override

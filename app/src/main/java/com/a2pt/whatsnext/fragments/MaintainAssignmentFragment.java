@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +12,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.a2pt.whatsnext.R;
 import com.a2pt.whatsnext.activities.MainActivity;
 import com.a2pt.whatsnext.adapters.AssignmentAdapter;
+import com.a2pt.whatsnext.adapters.PastAssignmentAdapter;
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.models.User;
-import com.a2pt.whatsnext.services.Utility;
 import com.a2pt.whatsnext.services.dbManager;
-
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +35,10 @@ public class MaintainAssignmentFragment extends Fragment {
     MaintainEditAssignment maintainEditAssignmentFragment = new MaintainEditAssignment();
     ListView lvAssignments;
     List<Activity> assignments;
+    List<Activity> pastAssignments;
+    ListView lvAssignmentsPast;
     AssignmentAdapter adapter;
+    PastAssignmentAdapter pastAdapter;
     dbManager localDB;
     Spinner spnAssignments;
     MainActivity main;
@@ -53,6 +51,7 @@ public class MaintainAssignmentFragment extends Fragment {
         view = inflater.inflate(R.layout.maintain_assignment_layout, container, false);
         localDB = new dbManager(getActivity()); //get reference to local databse
         lvAssignments = (ListView)view.findViewById(R.id.ma_lvAssignments);
+        lvAssignmentsPast = (ListView)view.findViewById(R.id.ma_LvAssignmentsUpcoming);
 
         //Set Spinner Content and grab selected item on SpinnerClick
         spnAssignments = (Spinner)view.findViewById(R.id.spnModulesAssignment);
@@ -69,6 +68,7 @@ public class MaintainAssignmentFragment extends Fragment {
 
 
         assignments = new ArrayList<>();
+        pastAssignments = new ArrayList<>();
         spnAssignments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {  //when an item on the drop down list is chosen
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -76,6 +76,11 @@ public class MaintainAssignmentFragment extends Fragment {
                 assignments = localDB.getAssignmentsByID(selectedModule);   //query db for all assignments from that module
                 adapter = new AssignmentAdapter(getActivity(), assignments);    //set the adapter data to the queried data
                 lvAssignments.setAdapter(adapter);  //set List View adapter to display Assignments
+
+                pastAssignments = localDB.getPastAssignmentsByID(selectedModule);
+                pastAdapter = new PastAssignmentAdapter(getActivity(), pastAssignments);
+                lvAssignmentsPast.setAdapter(pastAdapter);
+
             }
 
             @Override

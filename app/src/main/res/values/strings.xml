@@ -43,5 +43,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_message">Incorrect username/password.</string>
+    <string name="title_activity_upcoming_adapter">UpcomingActivityAdapter</string>
+    <string name="title_activity_past_test_adapter">PastTestAdapter</string>
 
 </resources>

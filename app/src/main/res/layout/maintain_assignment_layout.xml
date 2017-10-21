@@ -84,6 +84,11 @@
         android:layout_margin="5dp"
         android:dividerHeight="5dp" />
 
+    <ListView
+        android:id="@+id/ma_LvAssignmentsUpcoming"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabNewAssignment"
         android:layout_width="match_parent"

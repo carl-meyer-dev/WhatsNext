@@ -68,7 +68,8 @@
             android:text="Email Message"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxLength="30"/>
 
         <EditText
             android:id="@+id/txtBody"
