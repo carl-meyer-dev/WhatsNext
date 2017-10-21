@@ -48,7 +48,7 @@ public class PastAssignmentAdapter extends ArrayAdapter<Activity> {
         Activity activity = getItem(position);
 
         //Change colour of background
-        lLayout.setBackgroundColor(Color.parseColor("#8BC34A"));
+        lLayout.setBackgroundColor(Color.parseColor("#808080"));
         //set text view values
         tvDate.setText(activity.getAssignmentDueDate().toString().substring(5));
         tvTime.setText(activity.getAssignmentDueTime().toString().substring(0,5));

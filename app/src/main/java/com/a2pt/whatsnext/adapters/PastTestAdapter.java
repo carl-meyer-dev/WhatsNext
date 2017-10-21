@@ -54,7 +54,7 @@ public class PastTestAdapter extends ArrayAdapter<Activity> {
         Activity activity = getItem(position);
 
         //Change colour of background
-        lLayout.setBackgroundColor(Color.parseColor("#f44336"));
+        lLayout.setBackgroundColor(Color.parseColor("#808080"));
         //set text view values
         tvDate.setText(activity.getTestDate().toString().substring(5));
         tvTime.setText(activity.getTestTime().toString().substring(0, 5));
