@@ -63,23 +63,6 @@ public class dbManager extends SQLiteOpenHelper {
     private static final String KEY_ACT_START_DATE = "lecture_start_date";
     private static final String KEY_ACT_END_DATE = "lecture_end_date";
 
-    //Creating the Module Table
-    private static final String TABLE_MODULE = "modules";
-    private static final String KEY_MODULE_MOD_ID = "mod_id";
-    private static final String KEY_MODULE_MOD_NAME = "mod_name";
-
-    //Creating the Teaches Table
-    private static final String TABLE_TEACHES = "teaches";
-    private static final String KEY_TEACHES_SESSION_ID = "session_id";
-    private static final String KEY_TEACHES_ID = "teaches_id"; //This is the same as the userid
-    private static final String KEY_TEACHES_MOD_ID = "mod_id";
-
-    //Creating the Session Table
-    private static final String TABLE_SESSION = "sessions";
-    private static final String KEY_SESSION_SESSION_ID = "session_id";
-    private static final String KEY_SESSION_SESSION_START = "session_start";
-    private static final String KEY_SESSION_SESSION_END = "session_end";
-    private static final String KEY_SESSION_DAY_OF_WEEK = "session_day_of_week";
 
 
 
@@ -103,23 +86,7 @@ public class dbManager extends SQLiteOpenHelper {
                 + KEY_MODULE_INFO + " TEXT"
                 + ")";
 
-        String CREATE_MODULE_TABLE = "CREATE TABLE " + TABLE_MODULE + " ("
-                + KEY_MODULE_MOD_ID + " TEXT PRIMARY KEY,"
-                + KEY_MODULE_MOD_NAME + " TEXT"
-                + ")";
 
-        String CREATE_TEACHES_TABLE = "CREATE TABLE " + TABLE_TEACHES + " ("
-                + KEY_TEACHES_SESSION_ID + " INTEGER PRIMARY KEY,"
-                + KEY_TEACHES_ID + " TEXT,"
-                + KEY_TEACHES_MOD_ID + " TEXT, "
-                + "FOREIGN KEY(" + KEY_TEACHES_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + "), "
-                + "FOREIGN KEY (" + KEY_TEACHES_MOD_ID + ") REFERENCES " + TABLE_MODULE + "(" + KEY_MODULE_MOD_ID + "))";
-
-        String CREATE_SESSION_TABLE = "CREATE TABLE " + TABLE_SESSION + " ("
-                + KEY_SESSION_SESSION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_SESSION_SESSION_START + " TIME,"
-                + KEY_SESSION_SESSION_END + " TIME,"
-                + KEY_SESSION_DAY_OF_WEEK + " TEXT)";
 
         String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + TABLE_ACTIVITY + " ("
                 + KEY_ACT_ID + " INTEGER PRIMARY KEY,"
@@ -143,9 +110,6 @@ public class dbManager extends SQLiteOpenHelper {
 
 
         db.execSQL(CREATE_USERS_TABLE);
-        db.execSQL(CREATE_MODULE_TABLE);
-        db.execSQL(CREATE_TEACHES_TABLE);
-        db.execSQL(CREATE_SESSION_TABLE);
         db.execSQL(CREATE_ACTIVITY_TABLE);
     }
 
@@ -153,9 +117,7 @@ public class dbManager extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MODULE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SESSION);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEACHES);
+
         onCreate(db);
     }
 
@@ -237,48 +199,6 @@ public class dbManager extends SQLiteOpenHelper {
         db.insert(TABLE_ACTIVITY, null, values);
         db.close();
 
-    }
-
-    public void insertSession(Session session)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(KEY_SESSION_SESSION_ID, session.getSessionID());
-        values.put(KEY_SESSION_SESSION_START, session.getStartTime().toString());
-        values.put(KEY_SESSION_SESSION_END, session.getEndTime().toString());
-        values.put(KEY_SESSION_DAY_OF_WEEK, session.getDayOfWeek().toString());
-
-        db.insert(TABLE_SESSION, null, values);
-        db.close();
-    }
-
-    public void insertTeaches(Teaches teaches)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(KEY_TEACHES_SESSION_ID, teaches.getSessionID());
-        values.put(KEY_TEACHES_ID, teaches.getUserID());
-        values.put(KEY_TEACHES_MOD_ID, teaches.getModID());
-
-        db.insert(TABLE_TEACHES, null, values);
-        db.close();
-    }
-
-    public void insertModule(Module module)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(KEY_MODULE_MOD_ID, module.getModID());
-        values.put(KEY_MODULE_MOD_NAME, module.getModName());
-
-        db.insert(TABLE_MODULE, null, values);
-        db.close();
     }
 
 
@@ -1218,9 +1138,7 @@ public class dbManager extends SQLiteOpenHelper {
 
         db.execSQL("delete from "+ TABLE_USERS);
         db.execSQL("delete from "+ TABLE_ACTIVITY); //doesnt delete lectures
-        db.execSQL("delete from "+ TABLE_MODULE);
-        db.execSQL("delete from "+ TABLE_SESSION);
-        db.execSQL("delete from "+ TABLE_TEACHES);
+
 
     }
     public void clearLocalAssignmentsTests(){
@@ -1229,9 +1147,6 @@ public class dbManager extends SQLiteOpenHelper {
 
         db.execSQL("delete from "+ TABLE_USERS);
         db.execSQL("delete from "+ TABLE_ACTIVITY + " WHERE NOT " + KEY_ACT_ACT_TYPE + " = 'lecture' "); //doesnt delete lectures
-        db.execSQL("delete from "+ TABLE_MODULE);
-        db.execSQL("delete from "+ TABLE_SESSION);
-        db.execSQL("delete from "+ TABLE_TEACHES);
 
     }
 

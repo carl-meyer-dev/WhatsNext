@@ -8,22 +8,14 @@ import java.io.Serializable;
 
 public class Teaches implements Serializable{
 
-    private int sessionID;
+
     private String userID;
     private String modID;
 
-    public Teaches(int sessionID, String userID, String modID) {
-        this.sessionID = sessionID;
+    public Teaches(String userID, String modID) {
+
         this.userID = userID;
         this.modID = modID;
-    }
-
-    public int getSessionID() {
-        return sessionID;
-    }
-
-    public void setSessionID(int sessionID) {
-        this.sessionID = sessionID;
     }
 
     public String getUserID() {

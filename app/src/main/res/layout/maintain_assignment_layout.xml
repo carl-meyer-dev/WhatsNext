@@ -55,7 +55,7 @@
         android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:background="@android:color/darker_gray" />
 
     <LinearLayout
@@ -102,7 +102,7 @@
         android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:background="@android:color/darker_gray" />
 
     <TextView
@@ -110,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:text="Upcoming Assighments"
+        android:text="Upcoming Assignments"
         android:textAlignment="textStart"
         android:textSize="12sp" />
 
@@ -118,9 +118,7 @@
         android:id="@+id/view6"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_margin="5dp"
         android:background="@android:color/darker_gray" />
 
     <ListView
@@ -135,7 +133,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:text="Expired Assighments"
+        android:text="Expired Assignments"
         android:textAlignment="textStart"
         android:textSize="12sp" />
 
@@ -143,10 +141,7 @@
         android:id="@+id/view5"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_margin="5dp"
         android:background="@android:color/darker_gray" />
 
     <ListView

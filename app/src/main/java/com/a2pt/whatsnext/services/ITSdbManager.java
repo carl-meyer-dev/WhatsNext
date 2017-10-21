@@ -72,12 +72,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
     private static final String KEY_TEACHES_ID = "user_id"; //This is the same as the userid
     private static final String KEY_TEACHES_MOD_ID = "mod_id";
 
-    //Creating the Session Table
-    private static final String TABLE_SESSION = "sessions";
-    private static final String KEY_SESSION_SESSION_ID = "session_id";
-    private static final String KEY_SESSION_SESSION_START = "session_start";
-    private static final String KEY_SESSION_SESSION_END = "session_end";
-    private static final String KEY_SESSION_DAY_OF_WEEK = "session_day_of_week";
+
 
 
 
@@ -115,11 +110,6 @@ public class ITSdbManager extends SQLiteOpenHelper{
                 + "FOREIGN KEY(" + KEY_TEACHES_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_ID + "), "
                 + "FOREIGN KEY (" + KEY_TEACHES_MOD_ID + ") REFERENCES " + TABLE_MODULE + "(" + KEY_MODULE_MOD_ID + "))";
 
-        String CREATE_SESSION_TABLE = "CREATE TABLE " + TABLE_SESSION + " ("
-                + KEY_SESSION_SESSION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_SESSION_SESSION_START + " TIME,"
-                + KEY_SESSION_SESSION_END + " TIME,"
-                + KEY_SESSION_DAY_OF_WEEK + " TEXT)";
 
         String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + TABLE_ACTIVITY + " ("
                 + KEY_ACT_ID + " INTEGER PRIMARY KEY,"
@@ -145,7 +135,6 @@ public class ITSdbManager extends SQLiteOpenHelper{
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_MODULE_TABLE);
         db.execSQL(CREATE_TEACHES_TABLE);
-        db.execSQL(CREATE_SESSION_TABLE);
         db.execSQL(CREATE_ACTIVITY_TABLE);
         insertDummyData(db);
 
@@ -156,7 +145,6 @@ public class ITSdbManager extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTIVITY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MODULE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SESSION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEACHES);
         onCreate(db);
     }
@@ -279,20 +267,6 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
     }
 
-    public void insertSession(Session session, SQLiteDatabase db)
-    {
-
-
-        ContentValues values = new ContentValues();
-
-        values.put(KEY_SESSION_SESSION_ID, session.getSessionID());
-        values.put(KEY_SESSION_SESSION_START, session.getStartTime().toString());
-        values.put(KEY_SESSION_SESSION_END, session.getEndTime().toString());
-        values.put(KEY_SESSION_DAY_OF_WEEK, session.getDayOfWeek().toString());
-
-        db.insert(TABLE_SESSION, null, values);
-
-    }
 
     public void insertTeaches(Teaches teaches, SQLiteDatabase db)
     {
@@ -300,7 +274,6 @@ public class ITSdbManager extends SQLiteOpenHelper{
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_TEACHES_SESSION_ID, teaches.getSessionID());
         values.put(KEY_TEACHES_ID, teaches.getUserID());
         values.put(KEY_TEACHES_MOD_ID, teaches.getModID());
 
@@ -567,7 +540,7 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertData(user, db);
         user = new User("Duplessis.MC", "MC Duplessis", "duplessis.mc@mandela.ac.za", "language", "lecturer", "Computer Science", "WRL301");
         insertData(user, db);
-        user = new User("Barnard.Lynette", "Lynette Barnard", "barnard.lynette@mandela.ac.za", "dbui", "lecturer", "Computer Science", "WRUI");
+        user = new User("Barnard.Lynette", "Lynette Barnard", "barnard.lynette@mandela.ac.za", "dbui", "lecturer", "Computer Science", "WRUI301");
         insertData(user, db);
         user = new User("Vanderpost.Lida", "Lida Van Der Post", "vanderpost.lida@mandela.ac.za", "wrb", "lecturer", "Computer Science", "WRB302");
         insertData(user, db);
@@ -753,6 +726,77 @@ public class ITSdbManager extends SQLiteOpenHelper{
         insertLecture(activity, db);
         activity = new Activity("EBM202", "lecture", "35 00 40", new LocalTime(14,5), "friday", 1, "L", secondSemesterStart, secondSemesterEnd);
         insertLecture(activity, db);
+
+
+        Module module = new Module("WRAP302", "Advanced Programming 2");
+        insertModule(module, db);
+        module = new Module("WRL301", "Language And Automata Theory");
+        insertModule(module, db);
+        module = new Module("MATH214", "Real Analysis");
+        insertModule(module, db);
+        module = new Module("MATH203", "Linear Algebra");
+        insertModule(module, db);
+        module = new Module("STAT203", "Regression Analysis");
+        insertModule(module, db);
+        module = new Module("WRR301", "Year Project");
+        insertModule(module, db);
+        module = new Module("EBM202", "Supply Management & Logistics");
+        insertModule(module, db);
+        module = new Module("WRB302", "Business Management");
+        insertModule(module, db);
+        module = new Module("BOT140", "Introduction to Botany");
+        insertModule(module, db);
+        module = new Module("GEN211", "Genetics 2");
+        insertModule(module, db);
+        module = new Module("BOT210", "Botany 2");
+        insertModule(module, db);
+        module = new Module("GGL201", "Geography 2");
+        insertModule(module, db);
+        module = new Module("GGL144", "Industrial Geology");
+        insertModule(module, db);
+        module = new Module("GGL303", "Advanced Geology 3");
+        insertModule(module, db);
+        module = new Module("GEN312", "Human Genome Analysis");
+        insertModule(module, db);
+        module = new Module("BOT240", "Photosynthesis Analysis");
+        insertModule(module, db);
+        module = new Module("GGL304", "Vulcanic Reactions");
+        insertModule(module, db);
+        module = new Module("GIS211", "Information Geology");
+        insertModule(module, db);
+
+        Teaches teaches = new Teaches("Vogts.Dieter", "WRAP302");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Vogts.Dieter", "WRA301");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Nel.Janine", "WRI202");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Nel.Janine", "WRI201");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Nel.Janine", "WRR301");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Hugo.Johan", "STAT203");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Parsons.Christopher", "MATH203");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Thelejane.Tanki", "MATH214");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Duplessis.MC", "WRL301");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Barnard.Lynette", "WRUI301");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Vanderpost.Lida", "WRB302");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Oosthuizen.Nadine", "EBM202");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("E Campbell", "BOT230");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Brunsdon.G", "GGL303");
+        insertTeaches(teaches, db);
+        teaches = new Teaches("Williams.L", "GEN312");
+        insertTeaches(teaches, db);
+
+
 
 
     }
