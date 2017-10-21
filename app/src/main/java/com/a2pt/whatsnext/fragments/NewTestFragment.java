@@ -116,7 +116,7 @@ public class NewTestFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = dayOfMonth + "/" + month + "/" + year;
+                String date = dayOfMonth + "-" + month + "-" + year;
 
                 tvDate.setText(date);
 
@@ -150,7 +150,7 @@ public class NewTestFragment extends Fragment {
                     Toast toast = Toast.makeText(getActivity(), "Invalid Entry", Toast.LENGTH_SHORT);
                     toast.show();
                 }else {
-                    String[] temdate = dueDate.split("/"); //split date up into 2017, 10, 23
+                    String[] temdate = dueDate.split("-"); //split date up into 2017, 10, 23
                     int year = Integer.parseInt(temdate[2]);  //save year as 2017
                     int month = Integer.parseInt(temdate[1]);  //save month as 10
                     int day = Integer.parseInt(temdate[0]); //save day as 23

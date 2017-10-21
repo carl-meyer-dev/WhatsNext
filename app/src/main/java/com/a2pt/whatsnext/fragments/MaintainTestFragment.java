@@ -127,6 +127,26 @@ public class MaintainTestFragment extends Fragment {
             }
         });
 
+        lvTestsPast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //get Assignment of Selected item
+                System.out.println("ITEM IN LIST CLICKED");
+                Activity test = pastTests.get(position);
+                System.out.println("DEBUG ON MAINTAIN TEST:");
+                System.out.println("SELECTED TEST IS = " + test.getTestDate() + " with actID = " + test.getActID());
+
+                //add a bundle that can be used to push through relevant information to allow the activity to be created
+                Bundle bundleToSend = new Bundle();
+                bundleToSend.putString("modId", selectedModule);
+                bundleToSend.putString("actType", "test");
+                bundleToSend.putSerializable("test", test);
+                maintainEditTest.setArguments(bundleToSend);
+
+                //Create new fragment and send through bundle
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainEditTest).addToBackStack(null).commit();
+            }
+        });
         //Sets orientation to portrait (User is unable to change orientation)
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
