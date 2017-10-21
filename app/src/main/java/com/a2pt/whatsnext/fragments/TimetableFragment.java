@@ -142,60 +142,7 @@ public class TimetableFragment extends Fragment {
         Utility.setListViewHeightBasedOnChildren(lvFriday, 320);
         //I am using Switch cases since the number of items in the list influences the Utility.SetListViewHeight method. So I had to set custom minus values for amount of items in list
         //Utility class is the only way I got the list views displaying properly so I feel like this is our best working solution atm
-        //TODO: THIS IS NOT WORKING FIND ANOTHER WAY TO MAKE LIST SIZE OF CONTENT
-/*
-        switch (tuesday.size()){
 
-            case 1:setMinusAmount(lvTuesday, 320);break;
-            case 2:
-            case 3: setMinusAmount(lvTuesday,320);break;
-            case 4: setMinusAmount(lvTuesday,380);break;
-            case 5:
-            case 6: setMinusAmount(lvTuesday,400);break;
-            case 7:
-            case 8: setMinusAmount(lvTuesday,430);break;
-            default: setMinusAmount(lvTuesday,440);break;
-        }
-
-        switch (wednesday.size()){
-
-            case 1:
-            case 2:
-            case 3:
-            case 4: setMinusAmount(lvWednesday,320);break;
-            case 5: setMinusAmount(lvWednesday,360);break;
-            case 6: setMinusAmount(lvWednesday, 380);break;
-            case 7: setMinusAmount(lvWednesday, 400);break;
-            case 8: setMinusAmount(lvWednesday,420);break;
-            default: setMinusAmount(lvWednesday,430);break;
-        }
-
-        switch (thursday.size()){
-
-            case 1:
-            case 2: setMinusAmount(lvThursday,320);break;
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8: setMinusAmount(lvThursday,340);break;
-            default: setMinusAmount(lvThursday,350);break;
-        }
-
-        switch (friday.size()){
-
-            case 1: setMinusAmount(lvFriday,320);break;
-            case 2:
-            case 3:
-            case 4: setMinusAmount(lvFriday,220);break;
-            case 5:
-            case 6:
-            case 7:
-            case 8: setMinusAmount(lvFriday,200);break;
-            default: setMinusAmount(lvFriday,200);break;
-        }
-*/
 
         //Sets orientation to portrait (User is unable to change orientation)
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

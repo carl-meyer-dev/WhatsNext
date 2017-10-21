@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:weightSum="1">
 
     <TextView
@@ -18,24 +19,38 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <Spinner
-        android:id="@+id/spnModulesAssignment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="15dp"
-        android:entries="@array/modules"
-        android:paddingBottom="25dp"
-        android:paddingTop="25dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:orientation="horizontal">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="10dp"
-        android:background="@android:color/darker_gray" />
+        <Spinner
+            android:id="@+id/spnModulesAssignment"
+            android:layout_width="253dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:entries="@array/modules"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabNewAssignment"
+            android:layout_width="40dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:scaleType="center"
+            app:backgroundTint="@color/colorPrimary"
+            app:elevation="5dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            tools:layout_editor_absoluteX="264dp"
+            tools:layout_editor_absoluteY="29dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,30 +92,62 @@
             android:textAlignment="textStart" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Upcoming Assighments"
+        android:textAlignment="textStart"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
     <ListView
         android:id="@+id/ma_lvAssignments"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="160dp"
         android:layout_margin="5dp"
         android:dividerHeight="5dp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Expired Assighments"
+        android:textAlignment="textStart"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
 
     <ListView
         android:id="@+id/ma_LvAssignmentsUpcoming"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabNewAssignment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="0.03"
-        android:clickable="true"
-        app:backgroundTint="@color/colorPrimary"
-        app:elevation="5dp"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add_black_24dp"
-        tools:layout_editor_absoluteX="264dp"
-        tools:layout_editor_absoluteY="29dp" />
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:dividerHeight="5dp" />
 
 </LinearLayout>

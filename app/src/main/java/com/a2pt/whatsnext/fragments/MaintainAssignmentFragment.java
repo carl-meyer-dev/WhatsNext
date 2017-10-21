@@ -19,6 +19,7 @@ import com.a2pt.whatsnext.adapters.AssignmentAdapter;
 import com.a2pt.whatsnext.adapters.PastAssignmentAdapter;
 import com.a2pt.whatsnext.models.Activity;
 import com.a2pt.whatsnext.models.User;
+import com.a2pt.whatsnext.services.Utility;
 import com.a2pt.whatsnext.services.dbManager;
 
 import java.util.ArrayList;
@@ -77,9 +78,12 @@ public class MaintainAssignmentFragment extends Fragment {
                 adapter = new AssignmentAdapter(getActivity(), assignments);    //set the adapter data to the queried data
                 lvAssignments.setAdapter(adapter);  //set List View adapter to display Assignments
 
+
+
                 pastAssignments = localDB.getPastAssignmentsByID(selectedModule);
                 pastAdapter = new PastAssignmentAdapter(getActivity(), pastAssignments);
                 lvAssignmentsPast.setAdapter(pastAdapter);
+
 
             }
 
@@ -106,10 +110,6 @@ public class MaintainAssignmentFragment extends Fragment {
             }
         });
 
-
-
-
-
         lvAssignments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -130,6 +130,29 @@ public class MaintainAssignmentFragment extends Fragment {
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainEditAssignmentFragment).addToBackStack(null).commit();
             }
         });
+
+        lvAssignmentsPast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //get Assignment of Selected item
+                System.out.println("ITEM IN LIST CLICKED");
+                Activity assignment = pastAssignments.get(position);
+                System.out.println("DEBUG ON MAINTAIN ASSIGNMENTS:");
+                System.out.println("SELECTED ASSIGNMENT IS = " + assignment.getAssignmentTitle() + " with actID = " + assignment.getActID());
+
+                //add a bundle that can be used to push through relevant information to allow the activity to be created
+                Bundle bundleToSend = new Bundle();
+                bundleToSend.putString("modId", selectedModule);
+                bundleToSend.putString("actType", "assignment");
+                bundleToSend.putSerializable("assignment", assignment);
+                maintainEditAssignmentFragment.setArguments(bundleToSend);
+
+                //Create new fragment and send through bundle
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, maintainEditAssignmentFragment).addToBackStack(null).commit();
+            }
+        });
+
+
 
 
 

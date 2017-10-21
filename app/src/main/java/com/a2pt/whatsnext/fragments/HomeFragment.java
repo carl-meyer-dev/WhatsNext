@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
 
         assignmentsAdapter = new AssignmentAdapter(getActivity(), Assignments);
         lvAssignments.setAdapter(assignmentsAdapter);
-        Utility.setListViewHeightBasedOnChildren(lvAssignments, 230);
+        Utility.setListViewHeightBasedOnChildren(lvAssignments, 270);
 
         testsAdapter = new TestAdapter(getActivity(), Tests);
         lvTests.setAdapter(testsAdapter);
